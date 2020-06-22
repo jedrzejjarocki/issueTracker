@@ -29,13 +29,15 @@ const IssuesList = ({ list, project }) => {
   const classes = useStyles();
   return (
     <Paper elevation={2} variant="outlined" className={classes.root}>
-      <Typography
-        variant="subtitle1"
-        color="textSecondary"
-        className={classes.heading}
-      >
-        {list.name || "Backlog"}
-      </Typography>
+      <header>
+        <Typography
+          variant="subtitle"
+          color="textSecondary"
+          className={classes.heading}
+        >
+          {list.name || "Backlog"}
+        </Typography>
+      </header>
       <List dense className={classes.list}>
         {list.issues.map((issue) => (
           <>
