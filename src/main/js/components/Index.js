@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     left: theme.spacing(4),
     zIndex: 100,
-    bottom: "66vh",
+    bottom: "72vh",
     "& > p": {
       color: "white",
     },
