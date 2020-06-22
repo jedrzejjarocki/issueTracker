@@ -1,31 +1,31 @@
-import React, {useState} from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import axios from "axios";
-import * as yup from "yup";
-import {TextField} from "material-ui-formik-components";
-import creators from "../../redux/actions/creators";
-import {BASE_URL} from "../../api/commons";
-import DialogForm from "./DialogForm";
-import FormField from "./FormField";
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import axios from 'axios';
+import * as yup from 'yup';
+import {TextField} from 'material-ui-formik-components';
+import creators from '../../redux/actions/creators';
+import {BASE_URL} from '../../api/commons';
+import DialogForm from './DialogForm';
+import FormField from './FormField';
 
 const schema = yup.object().shape({
-  username: yup.string().required("Must not be empty"),
-  email: yup.string().email("Must be valid email"),
-  password: yup.string().required("Must be 8 characters or more"),
+  username: yup.string().required('Must not be empty'),
+  email: yup.string().email('Must be valid email'),
+  password: yup.string().required('Must be 8 characters or more'),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
 const RegisterForm = ({ setMessage }) => {
   const [responseError, setResponseError] = useState(null);
 
   const initialValues = {
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   };
 
   const onSubmit = async ({ username, password, email }, _, toggle) => {
@@ -38,8 +38,8 @@ const RegisterForm = ({ setMessage }) => {
 
       if (status === 201) {
         setMessage({
-          content: "Account created!",
-          severity: "success",
+          content: 'Account created!',
+          severity: 'success',
         });
         toggle();
       }

@@ -1,38 +1,38 @@
-import React from "react";
-import {connect} from "react-redux";
-import {Button, Card, CardActions, CardContent, makeStyles, Typography,} from "@material-ui/core";
-import PropTypes from "prop-types";
-import {Link as RouterLink, useHistory} from "react-router-dom";
-import {Form, Formik} from "formik";
-import axios from "axios";
-import {TextField} from "material-ui-formik-components/TextField";
-import * as yup from "yup";
-import creators from "../../redux/actions/creators";
-import {BASE_URL} from "../../api/commons";
-import FormField from "../forms/FormField";
-import SubmitButton from "../forms/SubmitButton";
+import React from 'react';
+import {connect} from 'react-redux';
+import {Button, Card, CardActions, CardContent, makeStyles, Typography,} from '@material-ui/core';
+import PropTypes from 'prop-types';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
+import {Form, Formik} from 'formik';
+import axios from 'axios';
+import {TextField} from 'material-ui-formik-components/TextField';
+import * as yup from 'yup';
+import creators from '../../redux/actions/creators';
+import {BASE_URL} from '../../api/commons';
+import FormField from '../forms/FormField';
+import SubmitButton from '../forms/SubmitButton';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
-    "& > *": {
-      display: "flex",
-      flexDirection: "column",
+    '& > *': {
+      display: 'flex',
+      flexDirection: 'column',
       margin: theme.spacing(2, 0),
-      width: "40ch",
-      height: "200",
+      width: '40ch',
+      height: '200',
     },
   },
   justifyRight: {
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     padding: theme.spacing(0, 2, 2),
   },
 }));
 
 const schema = yup.object().shape({
-  password: yup.string().required("Must be 8 characters or more"),
+  password: yup.string().required('Must be 8 characters or more'),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
 const ChangePasswordForm = ({ token }) => {
@@ -47,14 +47,14 @@ const ChangePasswordForm = ({ token }) => {
         password,
       });
       setMessage({
-        content: "Password changed successfully",
-        severity: "success",
+        content: 'Password changed successfully',
+        severity: 'success',
       });
-      redirectPath = "/login";
+      redirectPath = '/login';
     } catch (err) {
       setMessage({
         content: err.response.data,
-        severity: "error",
+        severity: 'error',
       });
     }
     if (redirectPath) history.push(redirectPath);
@@ -64,8 +64,8 @@ const ChangePasswordForm = ({ token }) => {
     <Card variant="outlined">
       <Formik
         initialValues={{
-          password: "",
-          confirmPassword: "",
+          password: '',
+          confirmPassword: '',
         }}
         onSubmit={onSubmit}
         validationSchema={schema}

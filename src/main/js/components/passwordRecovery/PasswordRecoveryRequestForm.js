@@ -1,36 +1,36 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {Link as RouterLink, useHistory} from "react-router-dom";
-import {makeStyles} from "@material-ui/core/styles";
-import {Button, Card, CardActions, CardContent, Typography,} from "@material-ui/core";
-import {Form, Formik} from "formik";
-import axios from "axios";
-import * as yup from "yup";
-import {TextField} from "material-ui-formik-components/TextField";
-import creators from "../../redux/actions/creators";
-import {BASE_URL} from "../../api/commons";
-import SubmitButton from "../forms/SubmitButton";
-import FormField from "../forms/FormField";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
+import {makeStyles} from '@material-ui/core/styles';
+import {Button, Card, CardActions, CardContent, Typography,} from '@material-ui/core';
+import {Form, Formik} from 'formik';
+import axios from 'axios';
+import * as yup from 'yup';
+import {TextField} from 'material-ui-formik-components/TextField';
+import creators from '../../redux/actions/creators';
+import {BASE_URL} from '../../api/commons';
+import SubmitButton from '../forms/SubmitButton';
+import FormField from '../forms/FormField';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
-    "& > *": {
-      display: "flex",
-      flexDirection: "column",
+    '& > *': {
+      display: 'flex',
+      flexDirection: 'column',
       margin: theme.spacing(2, 0),
-      width: "40ch",
-      height: "200",
+      width: '40ch',
+      height: '200',
     },
   },
   justifyRight: {
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     padding: theme.spacing(0, 2, 2),
   },
 }));
 
 const schema = yup.object().shape({
-  email: yup.string().email("Must be valid email").required("Required"),
+  email: yup.string().email('Must be valid email').required('Required'),
 });
 
 const PasswordRecoveryRequestForm = ({ setMessage }) => {
@@ -41,15 +41,15 @@ const PasswordRecoveryRequestForm = ({ setMessage }) => {
     try {
       await axios.post(`${BASE_URL}/users/reset-password`, credentials);
       setMessage({
-        content: "Check your email for password recovery link",
-        severity: "success",
+        content: 'Check your email for password recovery link',
+        severity: 'success',
       });
-      history.push("/");
+      history.push('/');
     } catch (err) {
       if (err.response.status === 401) {
         setMessage({
           content: "User with a given email does't exists",
-          severity: "error",
+          severity: 'error',
         });
       }
     }
@@ -59,7 +59,7 @@ const PasswordRecoveryRequestForm = ({ setMessage }) => {
     <Card variant="outlined">
       <Formik
         initialValues={{
-          email: "",
+          email: '',
         }}
         onSubmit={onSubmit}
         validationSchema={schema}

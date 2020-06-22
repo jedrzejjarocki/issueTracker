@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
-import * as propTypes from "../propTypes";
+import React, {useEffect, useState} from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import * as propTypes from '../propTypes';
 
 const Alert = (props) => <MuiAlert elevation={6} variant="filled" {...props} />;
 
@@ -13,7 +13,7 @@ const InfoSnackbar = ({ message }) => {
   }, [message]);
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
     setOpen(false);

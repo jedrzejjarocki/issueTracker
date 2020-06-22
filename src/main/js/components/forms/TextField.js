@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {TextField} from "@material-ui/core";
-import * as propTypes from "../../propTypes";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {TextField} from '@material-ui/core';
+import * as propTypes from '../../propTypes';
 
 const CustomTextField = ({
   name,
@@ -21,7 +21,7 @@ const CustomTextField = ({
       variant="outlined"
       onChange={handleChange}
       error={!!error}
-      helperText={error || ""}
+      helperText={error || ''}
       {...rest}
     >
       {children}

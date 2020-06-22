@@ -1,8 +1,8 @@
-import React from "react";
-import {makeStyles} from "@material-ui/core";
-import {Route, Switch, useRouteMatch} from "react-router-dom";
-import ProjectsList from "../ProjectsList";
-import Project from "../Project";
+import React from 'react';
+import {makeStyles} from '@material-ui/core';
+import {Route, Switch, useRouteMatch} from 'react-router-dom';
+import ProjectsList from '../ProjectsList';
+import Project from '../Project';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,

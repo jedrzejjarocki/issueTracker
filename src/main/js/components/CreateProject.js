@@ -1,21 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
-import axios from "axios";
-import {connect} from "react-redux";
-import {TextField} from "material-ui-formik-components";
-import * as propTypes from "../propTypes";
-import creators from "../redux/actions/creators";
-import {BASE_URL} from "../api/commons";
-import DialogForm from "./forms/DialogForm";
-import FormField from "./forms/FormField";
+import React from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import {connect} from 'react-redux';
+import {TextField} from 'material-ui-formik-components';
+import creators from '../redux/actions/creators';
+import {BASE_URL} from '../api/commons';
+import DialogForm from './forms/DialogForm';
+import FormField from './forms/FormField';
 
 const CreateProject = ({ first, addProject, setMessage }) => {
   const initialValues = {
-    name: "",
+    name: '',
     key: null,
   };
 
-  const generateKey = (name) => name.split(" ")[0].slice(0, 8).toUpperCase();
+  const generateKey = (name) => name.split(' ')[0].slice(0, 8).toUpperCase();
 
   const onSubmit = async ({ name, key }, { resetForm }) => {
     try {
@@ -27,8 +26,8 @@ const CreateProject = ({ first, addProject, setMessage }) => {
     } catch (err) {
       if (err.response.status <= 400) {
         setMessage({
-          content: "Something went wrong, try again",
-          severity: "error",
+          content: 'Something went wrong, try again',
+          severity: 'error',
         });
       }
     }
@@ -38,7 +37,7 @@ const CreateProject = ({ first, addProject, setMessage }) => {
   return (
     <>
       <DialogForm
-        toggleButtonText={`Create ${first ? "your first" : "new"} project`}
+        toggleButtonText={`Create ${first ? 'your first' : 'new'} project`}
         title="Create project"
         // validate={validate}
         onSubmit={onSubmit}
@@ -79,7 +78,6 @@ CreateProject.defaultProps = {
 
 CreateProject.propTypes = {
   first: PropTypes.bool,
-  projects: PropTypes.arrayOf(propTypes.project).isRequired,
   addProject: PropTypes.func.isRequired,
   setMessage: PropTypes.func.isRequired,
 };

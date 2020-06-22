@@ -1,23 +1,23 @@
-import React from "react";
-import {connect} from "react-redux";
-import {Link as RouterLink} from "react-router-dom";
-import {Divider, Link, List, ListItem, ListItemText, makeStyles, Paper, Typography,} from "@material-ui/core";
-import PropTypes from "prop-types";
-import * as propTypes from "../propTypes";
-import CreateProject from "./CreateProject";
-import Loading from "./Loading";
+import React from 'react';
+import {connect} from 'react-redux';
+import {Link as RouterLink} from 'react-router-dom';
+import {Divider, Link, List, ListItem, ListItemText, makeStyles, Paper, Typography,} from '@material-ui/core';
+import PropTypes from 'prop-types';
+import * as propTypes from '../propTypes';
+import CreateProject from './CreateProject';
+import Loading from './Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
   list: {
     padding: 0,
   },
   itemDetails: {
-    display: "flex",
-    "& > *": {
+    display: 'flex',
+    '& > *': {
       marginLeft: theme.spacing(1),
     },
   },

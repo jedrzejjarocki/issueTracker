@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import PropTypes from "prop-types";
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles,} from "@material-ui/core";
-import {Form, Formik} from "formik";
-import SubmitButton from "./SubmitButton";
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles,} from '@material-ui/core';
+import {Form, Formik} from 'formik';
+import SubmitButton from './SubmitButton';
 
 const DialogForm = ({
   validationSchema,
@@ -26,10 +26,10 @@ const DialogForm = ({
 
   const classes = makeStyles((theme) => ({
     flexContainer: {
-      "& > *": {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
+      '& > *': {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
         marginBottom: theme.spacing(3),
       },
     },

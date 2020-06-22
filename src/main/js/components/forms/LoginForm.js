@@ -1,24 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import axios from "axios";
-import * as yup from "yup";
-import {TextField} from "material-ui-formik-components/TextField";
-import DialogForm from "./DialogForm";
-import creators from "../../redux/actions/creators";
-import RouterLink from "../commons/RouterLink";
-import {BASE_URL} from "../../api/commons";
-import FormField from "./FormField";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import axios from 'axios';
+import * as yup from 'yup';
+import {TextField} from 'material-ui-formik-components/TextField';
+import DialogForm from './DialogForm';
+import creators from '../../redux/actions/creators';
+import RouterLink from '../commons/RouterLink';
+import {BASE_URL} from '../../api/commons';
+import FormField from './FormField';
 
 const LoginForm = ({ setUser, setMessage, setProjects }) => {
   const schema = yup.object().shape({
-    username: yup.string().required("Required"),
-    password: yup.string().required("Must not be empty"),
+    username: yup.string().required('Required'),
+    password: yup.string().required('Must not be empty'),
   });
 
   const initialValues = {
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   };
 
   const onSubmit = async (credentials) => {
@@ -29,8 +29,8 @@ const LoginForm = ({ setUser, setMessage, setProjects }) => {
       setProjects(projects);
     } catch (error) {
       setMessage({
-        content: "Wrong email or password",
-        severity: "error",
+        content: 'Wrong email or password',
+        severity: 'error',
       });
     }
   };

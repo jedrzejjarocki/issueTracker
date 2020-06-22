@@ -1,12 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import clsx from "clsx";
-import {Avatar, makeStyles} from "@material-ui/core";
-import {deepOrange} from "@material-ui/core/colors";
+import React from 'react';
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import {Avatar, makeStyles} from '@material-ui/core';
+import {deepOrange} from '@material-ui/core/colors';
 
 const color = deepOrange[500];
 
-const UserAvatar = ({ name, classes, isCurrentUser, ...rest }) => {
+const UserAvatar = ({
+  name, classes, isCurrentUser, ...rest
+}) => {
   const { currentUserColors } = makeStyles((theme) => ({
     currentUserColors: {
       color: theme.palette.getContrastText(color),

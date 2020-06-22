@@ -1,22 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import axios from "axios";
-import {withRouter} from "react-router-dom";
-import {AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography,} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import * as propTypes from "../../propTypes";
-import creators from "../../redux/actions/creators";
-import Dropdown from "./Dropdown";
-import RouterLink from "../commons/RouterLink";
-import UserAvatar from "../commons/UserAvatar";
-import {BASE_URL} from "../../api/commons";
-import CreateIssue from "../CreateIssue";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import axios from 'axios';
+import {withRouter} from 'react-router-dom';
+import {AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography,} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import * as propTypes from '../../propTypes';
+import creators from '../../redux/actions/creators';
+import Dropdown from './Dropdown';
+import RouterLink from '../commons/RouterLink';
+import UserAvatar from '../commons/UserAvatar';
+import {BASE_URL} from '../../api/commons';
+import CreateIssue from '../CreateIssue';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up('md')]: {
       zIndex: theme.zIndex.drawer + 1,
     },
   },
@@ -28,13 +28,15 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up("md")]: {
-      display: "none",
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
     },
   },
 }));
 
-const TopBar = ({ user, projects, handleDrawerToggle, setUser, match }) => {
+const TopBar = ({
+  user, projects, handleDrawerToggle, setUser, match,
+}) => {
   const classes = useStyles();
 
   const handleLogout = async () => {
@@ -46,7 +48,7 @@ const TopBar = ({ user, projects, handleDrawerToggle, setUser, match }) => {
     }
   };
 
-  const isAllProjectsUrl = match.url === "/projects" && match.isExact;
+  const isAllProjectsUrl = match.url === '/projects' && match.isExact;
   const hasProjects = projects && projects.length;
 
   return (

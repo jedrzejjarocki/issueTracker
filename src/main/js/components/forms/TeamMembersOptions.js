@@ -1,6 +1,6 @@
-import {ListItemIcon, Typography} from "@material-ui/core";
-import React from "react";
-import UserAvatar from "../commons/UserAvatar";
+import {ListItemIcon, Typography} from '@material-ui/core';
+import React from 'react';
+import UserAvatar from '../commons/UserAvatar';
 
 export default (currentProject, user) => {
   const members = [
@@ -27,7 +27,7 @@ export default (currentProject, user) => {
             {username}
             {isCurrentUser && (
               <Typography color="textSecondary" component="i">
-                {` (yourself)`}
+                {' (yourself)'}
               </Typography>
             )}
           </Typography>

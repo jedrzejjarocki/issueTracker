@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {Button} from "@material-ui/core";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Button} from '@material-ui/core';
 
-const SubmitButton = ({ errors = {}, text = "Submit", ...rest }) => {
+const SubmitButton = ({ errors = {}, text = 'Submit', ...rest }) => {
   const hasErrors = (err) => Object.values(err).some((error) => !!error);
   return (
     <Button
@@ -18,7 +18,7 @@ const SubmitButton = ({ errors = {}, text = "Submit", ...rest }) => {
 };
 
 SubmitButton.defaultProps = {
-  text: "Submit",
+  text: 'Submit',
 };
 
 SubmitButton.propTypes = {

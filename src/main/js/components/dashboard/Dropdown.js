@@ -1,7 +1,7 @@
-import React, {useRef, useState} from "react";
-import PropTypes from "prop-types";
-import {ClickAwayListener, Grow, MenuList, Paper, Popper,} from "@material-ui/core";
-import * as propTypes from "../../propTypes";
+import React, {useRef, useState} from 'react';
+import PropTypes from 'prop-types';
+import {ClickAwayListener, Grow, MenuList, Paper, Popper,} from '@material-ui/core';
+import * as propTypes from '../../propTypes';
 
 const Dropdown = ({ children, render }) => {
   const anchorRef = useRef(null);
@@ -20,7 +20,7 @@ const Dropdown = ({ children, render }) => {
   };
 
   const handleListKeyDown = (e) => {
-    if (e.key === "Tab") {
+    if (e.key === 'Tab') {
       e.preventDefault();
       setOpen(false);
     }
@@ -40,7 +40,7 @@ const Dropdown = ({ children, render }) => {
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin: "center bottom",
+              transformOrigin: 'center bottom',
             }}
           >
             <Paper>

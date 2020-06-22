@@ -1,22 +1,24 @@
-import React, {useEffect} from "react";
-import PropTypes from "prop-types";
-import axios from "axios";
-import {connect} from "react-redux";
-import {Redirect, Route} from "react-router-dom";
-import * as propTypes from "./propTypes";
-import creators from "./redux/actions/creators";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Dashboard from "./components/dashboard/Dashboard";
-import Index from "./components/Index";
-import InfoSnackbar from "./components/InfoSnackbars";
-import Loading from "./components/Loading";
-import PasswordRecovery from "./components/passwordRecovery/PasswordRecovery";
+import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import {connect} from 'react-redux';
+import {Redirect, Route} from 'react-router-dom';
+import * as propTypes from './propTypes';
+import creators from './redux/actions/creators';
+import ProtectedRoute from './components/ProtectedRoute';
+import Dashboard from './components/dashboard/Dashboard';
+import Index from './components/Index';
+import InfoSnackbar from './components/InfoSnackbars';
+import Loading from './components/Loading';
+import PasswordRecovery from './components/passwordRecovery/PasswordRecovery';
 
-const App = ({ user, loading, message, setUser, setLoading, setProjects }) => {
+const App = ({
+  user, loading, message, setUser, setLoading, setProjects,
+}) => {
   useEffect(() => {
     (async () => {
       try {
-        const { status, data } = await axios.get("/api/users/current");
+        const { status, data } = await axios.get('/api/users/current');
         if (status === 200) {
           const { id, username, projects } = data;
           setUser({ id, username });

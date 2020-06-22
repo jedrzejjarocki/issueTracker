@@ -1,10 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {Link as ReactRouterLink} from "react-router-dom";
-import {Link, Typography} from "@material-ui/core";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Link as ReactRouterLink} from 'react-router-dom';
+import {Link, Typography} from '@material-ui/core';
 
-const RouterLink = ({ to, text, children, ...rest }) => (
-  <Link component={ReactRouterLink} to={to} {...rest}>
+const RouterLink = ({
+  to, text, children, ...rest
+}) => (
+  <Link component={ReactRouterLink} style={{ textDecoration: 'none', color: 'inherit' }} to={to} {...rest}>
     {children || <Typography>{text}</Typography>}
   </Link>
 );
