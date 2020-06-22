@@ -31,10 +31,8 @@ public class Sprint extends IssueContainer {
     private String goal;
 
     @FutureOrPresent
-    @NotNull
     private Date startDate;
 
     @FutureOrPresent
-    @NotNull
     private Date endDate;
 }

@@ -1,4 +1,4 @@
-import * as actionTypes from "./types";
+import * as actionTypes from './types';
 
 const actionCreators = (types) => {
   const create = (type) => (payload) => ({
