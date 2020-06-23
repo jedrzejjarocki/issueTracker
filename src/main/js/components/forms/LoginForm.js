@@ -24,9 +24,8 @@ const LoginForm = ({ setUser, setMessage, setProjects }) => {
   const onSubmit = async (credentials) => {
     try {
       const { data } = await axios.post(`${BASE_URL}/login`, credentials);
-      const { id, username, projects } = data;
+      const { id, username } = data;
       setUser({ id, username });
-      setProjects(projects);
     } catch (error) {
       setMessage({
         content: 'Wrong email or password',

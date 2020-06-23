@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+    marginBottom: theme.spacing(2),
   },
   list: {
     padding: 0,
@@ -33,18 +34,18 @@ const ProjectsList = ({ projects, loading }) => {
 
   return (
     <>
-      {projects.length ? (
+      {Object.keys(projects).length ? (
         <>
           <Paper elevation={2} variant="outlined" className={classes.root}>
             <List dense className={classes.list}>
-              {projects.map(({ name, id }, idx) => (
+              {Object.values(projects).map(({ name, id }, idx, arr) => (
                 <>
                   <Link component={RouterLink} to={`/projects/${id}`}>
                     <ListItem button key={id}>
                       <ListItemText primary={name} />
                     </ListItem>
                   </Link>
-                  {idx !== projects.length - 1 && <Divider />}
+                  {idx !== arr.length - 1 && <Divider />}
                 </>
               ))}
             </List>

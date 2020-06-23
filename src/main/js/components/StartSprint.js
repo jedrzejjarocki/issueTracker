@@ -14,6 +14,8 @@ import FormField from './forms/FormField';
 import creators from '../redux/actions/creators';
 import DialogForm from './forms/DialogForm';
 import {BASE_URL} from '../api/commons';
+import {getSprintsByProjectId} from '../redux/selectors';
+import withAuth from './withAuth';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -32,18 +34,13 @@ const schema = yup.object().shape({
   duration: yup.number().required(),
 });
 
-const findTeamMemberByUserId = (team, id) => team.find((member) => member.userId === id);
+const isStarted = (sprint) => !!sprint.startDate;
 
 const isEmpty = (sprint) => !sprint.issues || !sprint.issues.length;
 
-const isNotAuthorized = (team, user) => {
-  const teamMember = findTeamMemberByUserId(team, user.id);
-  return !teamMember || teamMember.role !== 'LEADER';
-};
+const projectHasActiveSprint = (sprints) => Object.values(sprints).some((s) => !!s.startDate);
 
-const projectHasActiveSprint = (project) => project.sprints.some((s) => !!s.startDate);
-
-const canBeStarted = (user, sprint, project) => {
+const canBeStarted = (sprint, project) => {
   if (isEmpty(sprint)) return false;
   if (projectHasActiveSprint(project)) return false;
 
@@ -51,7 +48,7 @@ const canBeStarted = (user, sprint, project) => {
 };
 
 const StartSprint = ({
-  user, sprint, project, setSprint,
+  sprint, projectId, updateSprint, sprints, userRole,
 }) => {
   const classes = useStyles();
 
@@ -65,7 +62,7 @@ const StartSprint = ({
   const onSubmit = async ({ name, goal, duration }) => {
     const requestBody = {
       project: {
-        id: project.id,
+        id: projectId,
       },
       name,
       goal,
@@ -74,9 +71,9 @@ const StartSprint = ({
     };
 
     try {
-      const { data } = await axios.put(`${BASE_URL}/projects/${project.id}/sprints/${sprint.id}`, requestBody);
-      setSprint({
-        projectId: project.id,
+      const { data } = await axios.put(`${BASE_URL}/projects/${projectId}/sprints/${sprint.id}`, requestBody);
+      updateSprint({
+        projectId,
         sprint: data,
       });
     } catch (error) {
@@ -86,8 +83,7 @@ const StartSprint = ({
 
   return (
     <>
-      {(!isNotAuthorized(project.team, user) && !sprint.startDate)
-      && (
+      {userRole === 'LEADER' && !isStarted(sprint) && (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DialogForm
           enableReinitialize
@@ -96,10 +92,10 @@ const StartSprint = ({
           validationSchema={schema}
           submitButtonText="Start"
           toggleButtonText="Start"
-          disabled={!canBeStarted(user, sprint, project)}
+          disabled={!canBeStarted(sprint, sprints)}
           toggleButtonTooltipText={isEmpty(sprint)
             ? 'Cannot be started because it contains no issues'
-            : projectHasActiveSprint(project)
+            : projectHasActiveSprint(sprints)
               ? 'Can be planned but not started until the completion of above active sprint'
               : ''}
           initialValues={initialValues}
@@ -153,18 +149,19 @@ const StartSprint = ({
 };
 
 StartSprint.propTypes = {
-  user: propTypes.user.isRequired,
   sprint: propTypes.sprint.isRequired,
-  project: propTypes.project.isRequired,
-  setSprint: PropTypes.func.isRequired,
+  projectId: PropTypes.number.isRequired,
+  updateSprint: PropTypes.func.isRequired,
+  sprints: PropTypes.arrayOf(propTypes.sprint).isRequired,
+  userRole: propTypes.role.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  user: state.user,
+const mapStateToProps = (state, { projectId }) => ({
+  sprints: getSprintsByProjectId(projectId, state),
 });
 
 const mapDispatchToProps = {
-  setSprint: creators.setSprint,
+  updateSprint: creators.updateSprint,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StartSprint);
+export default withAuth(connect(mapStateToProps, mapDispatchToProps)(StartSprint));

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Divider, Drawer, Hidden, List, ListItem, ListItemIcon, ListItemText, makeStyles,} from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/Menu';
 
-const drawerWidth = 200;
+const drawerWidth = 240;
 
 const NavDrawer = ({ mobileOpen, handleDrawerToggle, window }) => {
   const classes = makeStyles((theme) => ({
@@ -38,8 +38,8 @@ const NavDrawer = ({ mobileOpen, handleDrawerToggle, window }) => {
   );
 
   return (
-    <nav className={classes.drawer} aria-label="mailbox folders">
-      <Hidden xlUp implementation="css">
+    <nav className={classes.drawer}>
+      <Hidden mdDown implementation="css">
         <Drawer
           container={container}
           variant="temporary"

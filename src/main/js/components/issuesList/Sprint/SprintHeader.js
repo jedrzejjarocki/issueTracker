@@ -45,7 +45,7 @@ const SprintHeader = ({
         </Typography>
       </Grid>
       { sprint.startDate && <Typography variant="caption">{`${formatDate(sprint.startDate)} \u2022 ${formatDate(sprint.endDate)}`}</Typography>}
-      <StartSprint sprint={sprint} project={project} />
+      <StartSprint sprint={sprint} projectId={project.id} />
     </Grid>
   );
 };

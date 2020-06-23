@@ -15,24 +15,11 @@ import sprintOptions from './forms/SprintsOptions';
 import issueTypeOptions from './forms/issueTypeOptions';
 import DialogForm from './forms/DialogForm';
 import {BASE_URL} from '../api/commons';
+import {getCurrentProjectId, getLoading, getSprintsByProjectId, getTeamMembers,} from '../redux/selectors';
 
-const getCurrentProject = (projects, currentProjectId) => (projects || []).find(({ id }) => id === +currentProjectId);
-
-const useStyles = makeStyles((theme) => ({
-  flexContainer: {
-    '& > *': {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      marginBottom: theme.spacing(3),
-    },
-  },
+const useStyles = makeStyles(() => ({
   halfWidth: {
     width: '50%',
-  },
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
   },
 }));
 
@@ -55,6 +42,8 @@ const CreateIssue = ({
   setCurrentProject,
   addIssue,
   history,
+  teamMembers,
+  sprints,
 }) => {
   const classes = useStyles();
 
@@ -92,10 +81,9 @@ const CreateIssue = ({
       if (values.listId !== 0) url += sprintIdQuery;
 
       const { data } = await axios.post(url, requestBody);
-      addIssue({
-        projectId: currentProjectId,
-        issue: data,
-      });
+      const issueData = { ...data };
+      issueData.assignee = data.assignee ? data.assignee.id : null;
+      addIssue(issueData);
 
       history.push(`/projects/${currentProjectId}`);
     } catch (err) {
@@ -126,7 +114,7 @@ const CreateIssue = ({
             onChange={handleProjectChange}
             placeholder="Select project"
           >
-            {projects.map(({ id, name }) => (
+            {Object.values(projects).map(({ id, name }) => (
               <MenuItem key={id} value={id}>
                 {name}
               </MenuItem>
@@ -139,9 +127,7 @@ const CreateIssue = ({
             label="Sprint"
             className={classes.halfWidth}
             component={Select}
-            options={sprintOptions(
-              getCurrentProject(projects, currentProjectId),
-            )}
+            options={sprintOptions(sprints)}
           />
           )}
 
@@ -172,10 +158,7 @@ const CreateIssue = ({
             label="Assignee"
             className={classes.halfWidth}
             component={Select}
-            options={teamMembersOptions(
-              getCurrentProject(projects, currentProjectId),
-              user,
-            )}
+            options={teamMembersOptions(teamMembers, user.id)}
           />
           <FormField
             name="storyPointsEstimate"
@@ -193,6 +176,7 @@ const CreateIssue = ({
 
 CreateIssue.defaultProps = {
   currentProjectId: 0,
+  sprints: [],
 };
 
 CreateIssue.propTypes = {
@@ -204,18 +188,21 @@ CreateIssue.propTypes = {
   setCurrentProject: PropTypes.func.isRequired,
   projects: PropTypes.arrayOf(propTypes.project).isRequired,
   addIssue: PropTypes.func.isRequired,
+  teamMembers: PropTypes.arrayOf(propTypes.teamMember).isRequired,
+  sprints: PropTypes.arrayOf(propTypes.sprint),
 };
 
-const mapStateToProps = ({
-  user,
-  projects,
-  ui: { currentProject, loading },
-}) => ({
-  user,
-  projects,
-  currentProjectId: currentProject,
-  loading,
-});
+const mapStateToProps = (state) => {
+  const currentProjectId = getCurrentProjectId(state);
+  return {
+    user: state.user,
+    projects: state.projects,
+    sprints: getSprintsByProjectId(currentProjectId, state),
+    teamMembers: getTeamMembers(currentProjectId, state),
+    currentProjectId,
+    loading: getLoading(state),
+  };
+};
 
 const mapDispatchToProps = {
   setCurrentProject: creators.setCurrentProject,

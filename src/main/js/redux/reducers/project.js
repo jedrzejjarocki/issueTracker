@@ -1,83 +1,48 @@
-import * as actionType from '../actions/types';
+import {addProject, addSprint, deleteSprint, setProjects,} from '../actions/types';
 
 const initialState = [];
 
-const getProjectIdxById = (id, state) => state.findIndex((project) => project.id === id);
+const editSprints = (state, projectId, cb) => {
+  const stateCopy = { ...state };
+  const project = stateCopy[projectId];
+  project.sprints = cb(project.sprints);
+
+  stateCopy[project.id] = project;
+  return stateCopy;
+};
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case actionType.setProjects:
+    case setProjects:
       return payload;
 
-    case actionType.setProjectDetails: {
-      const idx = getProjectIdxById(payload.id, state);
-      const projects = [...state];
-      projects.splice(idx, 1, payload);
-      return projects;
+    case addProject: {
+      const stateCopy = { ...state };
+      const {
+        name, id, projectKey, team, backlog,
+      } = payload;
+
+      const project = {
+        name,
+        id,
+        projectKey,
+        sprints: [],
+        team: [team[0].id],
+        backlog: backlog.id,
+      };
+
+      stateCopy[id] = project;
+      return stateCopy;
     }
 
-    case actionType.addProject: {
-      return [payload, ...state];
-    }
+    case addSprint:
+      return editSprints(state, payload.projectId, (sprints) => [payload.sprint.id, ...sprints]);
 
-    case actionType.addIssue: {
-      const idx = getProjectIdxById(payload.projectId, state);
-      const projects = [...state];
-      const project = { ...projects[idx] };
-      if (project.backlog.id === payload.issue.listId) {
-        project.backlog.issues = [payload.issue, ...project.backlog.issues];
-      } else {
-        const sprintIdx = project.sprints.findIndex(
-          (sprint) => sprint.id === payload.issue.listId,
-        );
-        const sprint = { ...project.sprints[sprintIdx] };
-        sprint.issues = [payload.issue, ...sprint.issues];
-        project.sprints.splice(sprintIdx, 1, sprint);
-      }
-      projects.splice(idx, 1, project);
-      return projects;
-    }
-
-    case actionType.setIssue: {
-      const idx = getProjectIdxById(payload.projectId, state);
-      const projects = [...state];
-      const project = { ...projects[idx] };
-      if (project.backlog.id === payload.issue.listId) {
-        const issueIdx = project.backlog.issues.findIndex(
-          (issue) => issue.id === payload.issue.id,
-        );
-        project.backlog.issues.splice(issueIdx, 1, payload.issue);
-      } else {
-        const sprintIdx = project.sprints.findIndex(
-          (sprint) => sprint.id === payload.issue.listId,
-        );
-        const sprint = { ...project.sprints[sprintIdx] };
-        const issueIdx = project.backlog.issues.findIndex(
-          (issue) => issue.id === payload.issue.id,
-        );
-        sprint.issues.splice(issueIdx, 1, payload.issue);
-        project.sprints.splice(sprintIdx, 1, sprint);
-      }
-      return projects;
-    }
-
-    case actionType.addSprint: {
-      const projectIdx = getProjectIdxById(payload.projectId, state);
-      const projects = [...state];
-      const project = { ...projects[projectIdx] };
-      project.sprints = [payload.sprint, ...project.sprints];
-      projects.splice(projectIdx, 1, project);
-      return projects;
-    }
-
-    case actionType.setSprint: {
-      const projectIdx = getProjectIdxById(payload.projectId, state);
-      const projects = [...state];
-      const project = { ...projects[projectIdx] };
-      const sprintIdx = project.sprints.findIndex((sprint) => sprint.id === payload.sprint.id);
-      project.sprints.splice(sprintIdx, 1, payload.sprint);
-      projects.splice(projectIdx, 1, project);
-      return projects;
+    case deleteSprint: {
+      return editSprints(state, payload.projectId, ((sprints) => {
+        const idx = sprints.findIndex(({ id }) => id === payload.sprint.id);
+        sprints.splice(idx, 1);
+      }));
     }
 
     default:

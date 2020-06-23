@@ -16,11 +16,11 @@ const UserAvatar = ({
     },
   }))();
 
-  const styles = classes ? [...classes] : [];
+  const styles = classes || [];
   if (isCurrentUser) styles.push(currentUserColors);
 
   return (
-    <Avatar className={clsx(...styles)} {...rest}>
+    <Avatar className={clsx(styles)} {...rest}>
       {name[0].toUpperCase()}
     </Avatar>
   );

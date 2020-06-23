@@ -1,10 +1,8 @@
-import * as actionType from '../actions/types';
+import {setUser} from '../actions/types';
 
-const initialState = null;
-
-export default (state = initialState, { type, payload }) => {
+export default (state = null, { type, payload }) => {
   switch (type) {
-    case actionType.setUser:
+    case setUser:
       return payload;
 
     default:

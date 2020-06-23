@@ -49,7 +49,7 @@ const TopBar = ({
   };
 
   const isAllProjectsUrl = match.url === '/projects' && match.isExact;
-  const hasProjects = projects && projects.length;
+  const hasProjects = projects && Object.keys(projects).length;
 
   return (
     <AppBar position="fixed" className={classes.appBar} variant="outlined">
@@ -78,7 +78,7 @@ const TopBar = ({
                 </Button>
               )}
             >
-              {projects.map((project) => (
+              {Object.values(projects).map((project) => (
                 <RouterLink key={project.id} to={`/projects/${project.id}`}>
                   <MenuItem>{project.name}</MenuItem>
                 </RouterLink>

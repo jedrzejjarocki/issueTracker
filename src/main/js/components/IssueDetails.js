@@ -17,6 +17,8 @@ import RouterLink from './commons/RouterLink';
 import issueTypeOptions from './forms/issueTypeOptions';
 import SubmitButton from './forms/SubmitButton';
 import {BASE_URL} from '../api/commons';
+import issueStatusOptions from './forms/issueStatusOptions';
+import {getTeamMembers} from '../redux/selectors';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -52,7 +54,7 @@ const schema = yup.object().shape({
 });
 
 const IssueDetails = ({
-  project, issue, user, setIssue, setMessage,
+  project, issue, userId, updateIssue, setMessage, history, teamMembers,
 }) => {
   const classes = useStyles();
 
@@ -74,11 +76,15 @@ const IssueDetails = ({
       if (values.listId !== 0) url += sprintIdQuery;
 
       const { data } = await axios.put(url, requestBody);
-      setIssue({
-        projectId: project.id,
-        issue: data,
-      });
+      const issueData = { ...data };
+      issueData.assignee = data.assignee ? data.assignee.id : null;
+      console.log(issueData);
+      updateIssue(issueData);
+
+      // force rerender
+      history.push(`/projects/${project.id}/issues/${values.id}`);
     } catch (err) {
+      console.log(err);
       setMessage({
         content: err.response.data.message,
         severity: 'error',
@@ -105,9 +111,10 @@ const IssueDetails = ({
                 version: issue.version,
                 type: issue.type,
                 summary: issue.summary,
+                status: issue.status,
                 listId: issue.listId,
                 description: issue.description,
-                assigneeId: issue.assignee === null ? 0 : issue.assignee.id,
+                assigneeId: issue.assignee || 0,
                 storyPointsEstimate: issue.storyPointsEstimate,
               }}
               validationSchema={schema}
@@ -121,6 +128,15 @@ const IssueDetails = ({
                     component={Select}
                     className={classes.halfWidth}
                     options={issueTypeOptions}
+                  />
+                  <FormField
+                    required
+                    name="status"
+                    component={Select}
+                    error={errors.status}
+                    touched={touched.status}
+                    options={issueStatusOptions}
+                    className={classes.halfWidth}
                   />
                   <FormField
                     required
@@ -140,7 +156,7 @@ const IssueDetails = ({
                     label="Assignee"
                     className={classes.halfWidth}
                     component={Select}
-                    options={teamMembersOptions(project, user)}
+                    options={teamMembersOptions(teamMembers, userId)}
                   />
                   <FormField
                     name="storyPointsEstimate"
@@ -164,34 +180,26 @@ const IssueDetails = ({
 IssueDetails.propTypes = {
   project: propTypes.project.isRequired,
   issue: propTypes.issue.isRequired,
-  user: propTypes.user.isRequired,
-  setIssue: PropTypes.func.isRequired,
+  userId: PropTypes.number.isRequired,
+  updateIssue: PropTypes.func.isRequired,
   setMessage: PropTypes.func.isRequired,
-};
-
-const getProjectById = (id, state) => state.projects.find((p) => p.id === id);
-
-const getIssueById = (id, projectId, state) => {
-  const project = getProjectById(projectId, state);
-  let issue;
-  project.sprints.map((sprint) => {
-    issue = sprint.issues.find((i) => i.id === id);
-  });
-  if (issue) return issue;
-  issue = project.backlog.issues.find((i) => i.id === id);
-  return issue;
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  teamMembers: PropTypes.arrayOf(propTypes.teamMember).isRequired,
 };
 
 const mapStateToProps = (state, { match }) => {
-  const { projectId, issueId } = match.params;
+  const { issueId, projectId } = match.params;
   return {
-    issue: getIssueById(+issueId, +projectId, state),
-    user: state.user,
+    issue: state.issues[issueId],
+    userId: state.user.id,
+    teamMembers: getTeamMembers(projectId, state),
   };
 };
 
 const mapDispatchToProps = {
-  setIssue: creators.setIssue,
+  updateIssue: creators.updateIssue,
   setMessage: creators.setMessage,
 };
 

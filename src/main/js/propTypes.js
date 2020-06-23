@@ -31,6 +31,7 @@ export const project = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   projectKey: PropTypes.string.isRequired,
+  team: PropTypes.array.isRequired,
   backlog,
   sprints: PropTypes.arrayOf(sprint).isRequired,
 });
@@ -38,4 +39,13 @@ export const project = PropTypes.shape({
 export const message = PropTypes.shape({
   content: PropTypes.string.isRequired,
   severity: PropTypes.string.isRequired,
+});
+
+export const role = PropTypes.oneOf(['LEADER', 'DEVELOPER']);
+
+export const teamMember = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired,
+  username: PropTypes.string.isRequired,
+  role,
 });

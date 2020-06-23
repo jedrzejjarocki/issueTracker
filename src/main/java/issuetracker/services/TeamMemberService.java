@@ -51,9 +51,11 @@ public class TeamMemberService {
         Project project = projectRepository.getOne(projectId);
         TeamMember member = getById(teamMemberId);
 
-        ensureEnoughLeadersInProject(project);
-        project.getTeam().remove(member);
+        if (member.getRole().equals(TeamMember.ProjectRole.LEADER)) {
+            ensureEnoughLeadersInProject(project);
+        }
 
+        project.getTeam().remove(member);
         projectRepository.save(project);
     }
 

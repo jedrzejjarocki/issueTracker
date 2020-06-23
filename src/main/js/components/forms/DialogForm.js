@@ -1,8 +1,22 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles,} from '@material-ui/core';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, Tooltip,} from '@material-ui/core';
 import {Form, Formik} from 'formik';
+import {children} from '../../propTypes';
 import SubmitButton from './SubmitButton';
+
+const WithTooltip = ({ children, tooltipText }) => (
+  <>
+    {
+      tooltipText
+        ? (
+          <Tooltip title={tooltipText}>
+            <span>{children}</span>
+          </Tooltip>
+        ) : children
+    }
+  </>
+);
 
 const DialogForm = ({
   validationSchema,
@@ -14,6 +28,8 @@ const DialogForm = ({
   submitButtonText,
   renderFields,
   renderAdditionalActions,
+  toggleButtonTooltipText,
+  disabled = false,
   closeOnSubmit = true,
 }) => {
   const [open, setOpen] = useState(false);
@@ -37,9 +53,11 @@ const DialogForm = ({
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={toggleOpen}>
-        {toggleButtonText}
-      </Button>
+      <WithTooltip tooltipText={toggleButtonTooltipText}>
+        <Button variant="outlined" color="primary" onClick={toggleOpen} disabled={disabled}>
+          {toggleButtonText}
+        </Button>
+      </WithTooltip>
       <Dialog
         open={open}
         onClose={toggleOpen}
@@ -74,10 +92,21 @@ const DialogForm = ({
   );
 };
 
+WithTooltip.defaultProps = {
+  tooltipText: null,
+};
+
+WithTooltip.propTypes = {
+  children: children.isRequired,
+  tooltipText: PropTypes.string,
+};
+
 DialogForm.defaultProps = {
   enableReinitialize: true,
   closeOnSubmit: true,
   renderAdditionalActions: null,
+  disabled: false,
+  toggleButtonTooltipText: null,
 };
 
 DialogForm.propTypes = {
@@ -93,6 +122,8 @@ DialogForm.propTypes = {
   renderFields: PropTypes.func.isRequired,
   renderAdditionalActions: PropTypes.func,
   closeOnSubmit: PropTypes.bool,
+  disabled: PropTypes.bool,
+  toggleButtonTooltipText: PropTypes.string,
 };
 
 export default DialogForm;

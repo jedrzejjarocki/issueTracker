@@ -8,7 +8,7 @@ const Backlog = ({ project }) => (
   <Wrapper>
     <BacklogHeader projectKey={project.projectKey} projectId={project.id} />
     <IssuesList
-      issues={project.backlog.issues}
+      listId={project.backlog}
       project={project}
     />
   </Wrapper>

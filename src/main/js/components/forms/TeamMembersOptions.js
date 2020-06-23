@@ -2,7 +2,7 @@ import {ListItemIcon, Typography} from '@material-ui/core';
 import React from 'react';
 import UserAvatar from '../commons/UserAvatar';
 
-export default (currentProject, user) => {
+export default (teamMembers, currentUserId) => {
   const members = [
     {
       value: 0,
@@ -14,9 +14,9 @@ export default (currentProject, user) => {
     },
   ];
 
-  if (currentProject && currentProject.team) {
-    currentProject.team.map(({ username, id, userId }) => {
-      const isCurrentUser = userId === user.id;
+  if (teamMembers) {
+    teamMembers.map(({ username, id, userId }) => {
+      const isCurrentUser = userId === currentUserId;
       members.push({
         value: id,
         label: (
@@ -35,5 +35,6 @@ export default (currentProject, user) => {
       });
     });
   }
+
   return members;
 };

@@ -19,7 +19,7 @@ const Sprint = ({ sprint, project }) => {
       />
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <IssuesList
-          issues={sprint.issues}
+          listId={sprint.id}
           project={project}
         />
       </Collapse>
