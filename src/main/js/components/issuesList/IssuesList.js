@@ -16,10 +16,17 @@ const useStyles = makeStyles((theme) => ({
   empty: {
     padding: theme.spacing(2),
   },
+  avatar: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
 }));
 
-const IssuesList = ({ issues, projectId, projectKey }) => {
+const getMemberName = (id, project) => project.team.find((member) => member.id === id);
+
+const IssuesList = ({ issues, project }) => {
   const classes = useStyles();
+  console.log(project);
   return (
     <>
       {
@@ -27,23 +34,29 @@ const IssuesList = ({ issues, projectId, projectKey }) => {
           ? (
             <List dense>
               {issues.map(({
-                id, type, summary, storyPointsEstimate, status,
+                id, type, summary, storyPointsEstimate, status, assignee,
               }) => (
                 <>
-                  <RouterLink to={`/projects/${projectId}/issues/${id}`}>
+                  <RouterLink to={`/projects/${project.id}/issues/${id}`}>
                     <ListItem button key={id}>
                       <ListItemIcon>{issueTypes[type]}</ListItemIcon>
                       <ListItemText primary={summary} />
                       <div className={classes.itemDetails}>
+                        {/* {!!assignee && ( */}
+                        {/* <UserAvatar */}
+                        {/*  name={assignee.username || getMemberName(assignee.id, project)} */}
+                        {/*  classes={classes.avatar} */}
+                        {/* /> */}
+                        {/* )} */}
                         {!!storyPointsEstimate && (
                         <Chip size="small" label={storyPointsEstimate} />
                         )}
                         <Chip
                           size="small"
-                          label={status}
-                          color={issueStatus[status]}
+                          label={issueStatus[status].text}
+                          color={issueStatus[status].color}
                         />
-                        <ListItemText primary={`${projectKey}-${id}`} />
+                        <ListItemText primary={`${project.projectKey}-${id}`} />
                       </div>
                     </ListItem>
                   </RouterLink>
@@ -62,8 +75,7 @@ const IssuesList = ({ issues, projectId, projectKey }) => {
 
 IssuesList.propTypes = {
   issues: PropTypes.arrayOf(propTypes.issue).isRequired,
-  projectId: PropTypes.number.isRequired,
-  projectKey: PropTypes.string.isRequired,
+  project: propTypes.project.isRequired,
 };
 
 export default IssuesList;

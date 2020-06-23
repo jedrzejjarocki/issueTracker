@@ -70,6 +70,16 @@ export default (state = initialState, { type, payload }) => {
       return projects;
     }
 
+    case actionType.setSprint: {
+      const projectIdx = getProjectIdxById(payload.projectId, state);
+      const projects = [...state];
+      const project = { ...projects[projectIdx] };
+      const sprintIdx = project.sprints.findIndex((sprint) => sprint.id === payload.sprint.id);
+      project.sprints.splice(sprintIdx, 1, payload.sprint);
+      projects.splice(projectIdx, 1, project);
+      return projects;
+    }
+
     default:
       return state;
   }

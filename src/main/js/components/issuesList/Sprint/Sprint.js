@@ -1,19 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Collapse} from '@material-ui/core';
 import * as propTypes from '../../../propTypes';
 import Wrapper from '../Wrapper';
 import SprintHeader from './SprintHeader';
 import IssuesList from '../IssuesList';
 
-const Sprint = ({ sprint: { issues, name }, project: { id, projectKey } }) => (
-  <Wrapper>
-    <SprintHeader name={name} />
-    <IssuesList
-      issues={issues}
-      projectId={id}
-      projectKey={projectKey}
-    />
-  </Wrapper>
-);
+const Sprint = ({ sprint, project }) => {
+  const [expanded, setExpanded] = useState(true);
+  const handleExpand = () => setExpanded(!expanded);
+
+  return (
+    <Wrapper>
+      <SprintHeader
+        project={project}
+        sprint={sprint}
+        handleExpand={handleExpand}
+        expanded={expanded}
+      />
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <IssuesList
+          issues={sprint.issues}
+          project={project}
+        />
+      </Collapse>
+    </Wrapper>
+  );
+};
 
 Sprint.propTypes = {
   sprint: propTypes.sprint.isRequired,

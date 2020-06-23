@@ -4,13 +4,12 @@ import IssuesList from '../IssuesList';
 import BacklogHeader from './BacklogHeader';
 import Wrapper from '../Wrapper';
 
-const Backlog = ({ project: { id, projectKey, backlog } }) => (
+const Backlog = ({ project }) => (
   <Wrapper>
-    <BacklogHeader projectKey={projectKey} projectId={id} />
+    <BacklogHeader projectKey={project.projectKey} projectId={project.id} />
     <IssuesList
-      issues={backlog.issues}
-      projectId={id}
-      projectKey={projectKey}
+      issues={project.backlog.issues}
+      project={project}
     />
   </Wrapper>
 );
