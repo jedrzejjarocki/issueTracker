@@ -14,6 +14,6 @@ public interface IssueRepository extends JpaRepository<Issue, Integer>, Revision
     void replaceList(IssueContainer from, IssueContainer to);
 
     @Modifying
-    @Query("UPDATE Issue i SET i.assignee = :actualAssignee WHERE i.assignee = :currentAssignee")
-    void replaceAssignee(TeamMember currentAssignee, TeamMember actualAssignee);
+    @Query("UPDATE Issue i SET i.assignee = :updatedAssignee WHERE i.assignee = :currentAssignee")
+    void replaceAssignee(TeamMember currentAssignee, TeamMember updatedAssignee);
 }
