@@ -4,7 +4,7 @@ import issuetracker.exceptions.ResourceNotFoundException;
 import issuetracker.exceptions.TokenExpiredException;
 import issuetracker.exceptions.UsernameExistsException;
 import issuetracker.models.PasswordResetToken;
-import issuetracker.models.user.User;
+import issuetracker.models.User;
 import issuetracker.repositories.PasswordTokenRepository;
 import issuetracker.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +29,6 @@ public class UserService {
         return repository.findByEmail(email).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public User getById(int id) {
-        return repository.findById(id).orElseThrow(ResourceNotFoundException::new);
-    }
 
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));

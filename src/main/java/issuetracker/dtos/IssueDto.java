@@ -1,10 +1,7 @@
-package issuetracker.dtos.issue;
+package issuetracker.dtos;
 
 import issuetracker.dtos.common.Dto;
-import issuetracker.dtos.teamMember.TeamMemberDto;
-import issuetracker.models.issue.Issue;
-import issuetracker.models.issue.IssueStatus;
-import issuetracker.models.issue.IssueType;
+import issuetracker.models.Issue;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,8 +13,8 @@ public class IssueDto implements Dto<Issue> {
     private String summary;
     private String description;
     private Integer version;
-    private IssueType type;
-    private IssueStatus status;
+    private Issue.IssueType type;
+    private Issue.IssueStatus status;
     private TeamMemberDto assignee;
     private int storyPointsEstimate;
     private String createdBy; //username

@@ -1,7 +1,6 @@
 package issuetracker.models;
 
 import issuetracker.models.common.BaseEntity;
-import issuetracker.models.user.User;
 import lombok.Getter;
 import lombok.Setter;
 

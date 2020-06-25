@@ -1,4 +1,4 @@
-package issuetracker.dtos.user;
+package issuetracker.dtos;
 
 import lombok.Getter;
 

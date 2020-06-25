@@ -1,6 +1,6 @@
 package issuetracker.auth;
 
-import issuetracker.models.user.User;
+import issuetracker.models.User;
 import issuetracker.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

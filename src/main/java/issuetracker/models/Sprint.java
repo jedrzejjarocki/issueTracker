@@ -1,6 +1,6 @@
-package issuetracker.models.issueContainer;
+package issuetracker.models;
 
-import issuetracker.models.project.Project;
+import issuetracker.models.common.IssueContainer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

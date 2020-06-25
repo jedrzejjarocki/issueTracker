@@ -1,10 +1,7 @@
-package issuetracker.dtos.project;
+package issuetracker.dtos;
 
-import issuetracker.dtos.IssueContainer.IssueContainerDto;
-import issuetracker.dtos.IssueContainer.SprintDto;
 import issuetracker.dtos.common.Dto;
-import issuetracker.dtos.teamMember.TeamMemberDto;
-import issuetracker.models.project.Project;
+import issuetracker.models.Project;
 import lombok.Data;
 
 import java.util.Set;

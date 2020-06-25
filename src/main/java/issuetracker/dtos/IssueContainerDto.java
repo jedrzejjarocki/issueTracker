@@ -1,8 +1,7 @@
-package issuetracker.dtos.IssueContainer;
+package issuetracker.dtos;
 
 import issuetracker.dtos.common.Dto;
-import issuetracker.dtos.issue.IssueDto;
-import issuetracker.models.issueContainer.IssueContainer;
+import issuetracker.models.common.IssueContainer;
 import lombok.Data;
 
 import java.util.Set;

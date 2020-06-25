@@ -1,13 +1,11 @@
-package issuetracker.models.project;
+package issuetracker.models;
 
 import com.sun.istack.NotNull;
 import issuetracker.models.common.BaseEntity;
-import issuetracker.models.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +15,7 @@ import javax.persistence.ManyToOne;
 @Setter
 @ToString(exclude = "project")
 public class TeamMember extends BaseEntity {
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn
     @NotNull
     private Project project;
@@ -25,7 +23,7 @@ public class TeamMember extends BaseEntity {
     @NotNull
     private ProjectRole role;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn
     @NotNull
     private User user;

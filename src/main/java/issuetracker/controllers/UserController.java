@@ -1,16 +1,12 @@
 package issuetracker.controllers;
 
+import issuetracker.dtos.*;
 import issuetracker.dtos.common.DtoMapper;
-import issuetracker.dtos.project.ProjectDto;
-import issuetracker.dtos.user.ChangePasswordDto;
-import issuetracker.dtos.user.PasswordRecoveryDto;
-import issuetracker.dtos.user.UserCreationDto;
-import issuetracker.dtos.user.UserDto;
 import issuetracker.exceptions.ResourceNotFoundException;
 import issuetracker.exceptions.UnauthorizedException;
 import issuetracker.exceptions.UsernameExistsException;
-import issuetracker.models.project.Project;
-import issuetracker.models.user.User;
+import issuetracker.models.Project;
+import issuetracker.models.User;
 import issuetracker.services.MailSenderService;
 import issuetracker.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +33,7 @@ public class UserController {
 
     @GetMapping("/current")
     public UserDto current(Principal principal) throws UnauthorizedException {
-        String username = Optional.ofNullable(principal).map(Principal::getName).orElseThrow(() -> new UnauthorizedException());
+        String username = Optional.ofNullable(principal).map(Principal::getName).orElseThrow(UnauthorizedException::new);
         User user = service.getByUsername(username);
 
         UserDto dto = new UserDto();
@@ -55,7 +51,7 @@ public class UserController {
         return mapper.toDto(service.create(user), new UserDto());
     }
 
-    // @Todo allowed only by user itself
+    // @Todo allowed only by user himself
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) throws ResourceNotFoundException {
         service.delete(id);

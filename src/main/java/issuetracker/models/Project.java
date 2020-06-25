@@ -1,9 +1,7 @@
-package issuetracker.models.project;
+package issuetracker.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import issuetracker.models.common.BaseEntity;
-import issuetracker.models.issueContainer.Backlog;
-import issuetracker.models.issueContainer.Sprint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,7 +41,7 @@ public class Project extends BaseEntity {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Sprint> sprints;
 
-    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)
     private Backlog backlog = initBacklog();
 
     public void addCreatorMember(TeamMember creator) {

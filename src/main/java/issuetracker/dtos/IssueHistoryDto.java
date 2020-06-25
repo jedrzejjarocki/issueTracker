@@ -1,4 +1,4 @@
-package issuetracker.dtos.issue;
+package issuetracker.dtos;
 
 import lombok.Data;
 

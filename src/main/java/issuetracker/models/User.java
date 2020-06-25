@@ -1,8 +1,6 @@
-package issuetracker.models.user;
+package issuetracker.models;
 
 import issuetracker.models.common.BaseEntity;
-import issuetracker.models.project.Project;
-import issuetracker.models.project.TeamMember;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

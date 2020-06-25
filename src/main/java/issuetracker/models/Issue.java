@@ -1,8 +1,7 @@
-package issuetracker.models.issue;
+package issuetracker.models;
 
 import issuetracker.models.common.Auditable;
-import issuetracker.models.issueContainer.IssueContainer;
-import issuetracker.models.project.TeamMember;
+import issuetracker.models.common.IssueContainer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -49,4 +48,17 @@ public class Issue extends Auditable<String> {
     private TeamMember assignee;
 
     private int storyPointsEstimate;
+
+    public enum IssueStatus {
+        TO_DO,
+        IN_PROGRESS,
+        DONE
+    }
+
+    public enum IssueType {
+        TASK,
+        IMPROVEMENT,
+        NEW_FEATURE,
+        BUG
+    }
 }

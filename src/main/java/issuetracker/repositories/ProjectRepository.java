@@ -1,6 +1,6 @@
 package issuetracker.repositories;
 
-import issuetracker.models.project.Project;
+import issuetracker.models.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

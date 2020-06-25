@@ -1,6 +1,5 @@
 package issuetracker.jpa;
 
-import issuetracker.models.SecurityAuditorAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;

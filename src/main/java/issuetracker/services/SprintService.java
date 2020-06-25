@@ -1,8 +1,8 @@
 package issuetracker.services;
 
 import issuetracker.exceptions.ResourceNotFoundException;
-import issuetracker.models.issueContainer.Sprint;
-import issuetracker.models.project.Project;
+import issuetracker.models.Project;
+import issuetracker.models.Sprint;
 import issuetracker.repositories.IssueRepository;
 import issuetracker.repositories.SprintRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +25,7 @@ public class SprintService {
         return repository.existsById(id);
     }
 
-    public Sprint addSprint(int projectId, Sprint sprint) {
-        Project project = projectService.getById(projectId);
-        sprint.setProject(project);
-
+    public Sprint addSprint(Sprint sprint) {
         return repository.save(sprint);
     }
 

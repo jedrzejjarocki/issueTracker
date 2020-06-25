@@ -1,9 +1,9 @@
 package issuetracker.controllers;
 
+import issuetracker.dtos.ProjectDto;
 import issuetracker.dtos.common.DtoMapper;
-import issuetracker.dtos.project.ProjectDto;
 import issuetracker.exceptions.ResourceNotFoundException;
-import issuetracker.models.project.Project;
+import issuetracker.models.Project;
 import issuetracker.services.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class ProjectController {
 
     @PostMapping
     public ProjectDto create(@RequestBody Project project, Principal principal) throws ResourceNotFoundException {
-        return mapper.toDto(service.createProject(project.getName(), project.getProjectKey(), principal.getName()), new ProjectDto());
+        return mapper.toDto(service.createProject(project, principal.getName()), new ProjectDto());
     }
 
     @DeleteMapping("/{id}")

@@ -1,8 +1,7 @@
-package issuetracker.dtos.user;
+package issuetracker.dtos;
 
 import issuetracker.dtos.common.Dto;
-import issuetracker.dtos.project.ProjectDto;
-import issuetracker.models.user.User;
+import issuetracker.models.User;
 import lombok.Data;
 
 import java.util.Set;

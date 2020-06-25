@@ -1,4 +1,4 @@
-package issuetracker.models;
+package issuetracker.jpa;
 
 import issuetracker.auth.UserDetailsImpl;
 import org.springframework.data.domain.AuditorAware;
@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Optional;
 
 public class SecurityAuditorAware implements AuditorAware<String> {
-
     @Override
     public Optional<String> getCurrentAuditor() {
         return Optional.ofNullable(SecurityContextHolder.getContext())

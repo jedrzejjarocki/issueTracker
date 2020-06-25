@@ -1,9 +1,9 @@
 package issuetracker.services;
 
 import issuetracker.exceptions.ResourceNotFoundException;
-import issuetracker.models.project.Project;
-import issuetracker.models.project.TeamMember;
-import issuetracker.models.user.User;
+import issuetracker.models.Project;
+import issuetracker.models.TeamMember;
+import issuetracker.models.User;
 import issuetracker.repositories.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,16 +26,13 @@ public class ProjectService {
         return user.getTeamMemberships().stream().map(TeamMember::getProject).collect(Collectors.toSet());
     }
 
-    public Project createProject(String name, String key, String creatorName) {
+    public Project createProject(Project project, String creatorName) {
         User creator = userService.getByUsername(creatorName);
         TeamMember member = new TeamMember();
         member.setUser(creator);
         member.setRole(TeamMember.ProjectRole.LEADER);
 
-        Project project = new Project();
         project.addCreatorMember(member);
-        project.setName(name);
-        project.setProjectKey(key);
 
         return repository.save(project);
     }

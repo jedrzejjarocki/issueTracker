@@ -1,19 +1,15 @@
 package issuetracker.services;
 
-import issuetracker.dtos.issue.IssueHistoryDto;
+import issuetracker.dtos.IssueHistoryDto;
 import issuetracker.exceptions.InvalidVersionException;
 import issuetracker.exceptions.ResourceNotFoundException;
-import issuetracker.models.issue.Issue;
-import issuetracker.models.issueContainer.IssueContainer;
-import issuetracker.models.project.Project;
-import issuetracker.repositories.IssueContainerRepository;
+import issuetracker.models.Issue;
 import issuetracker.repositories.IssueRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.RevisionType;
 import org.hibernate.envers.query.AuditEntity;
-import org.modelmapper.ModelMapper;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +21,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class IssueService {
     private final IssueRepository repository;
-    private final IssueContainerRepository issueContainerRepository;
-    private final ProjectService projectService;
-    private final SprintService sprintService;
     private final EntityManager entityManager;
 
     //@Todo implement reasonably
@@ -74,17 +67,11 @@ public class IssueService {
         repository.deleteById(id);
     }
 
-    public Issue addIssue(Issue issue, int projectId, Integer sprintId) {
-        Project project = projectService.getById(projectId);
-
-        IssueContainer list = sprintId == null ? project.getBacklog() : sprintService.getById(sprintId);
-        issue.setList(list);
-        System.out.println(issue.getAssignee());
-
+    public Issue addIssue(Issue issue) {
         return repository.save(issue);
     }
 
-    public Issue updateIssue(Issue updated, Integer assigneeId, Integer listId) {
+    public Issue updateIssue(Issue updated) {
         try {
             Issue issue = getById(updated.getId());
 
@@ -92,19 +79,7 @@ public class IssueService {
                 throw new ObjectOptimisticLockingFailureException(issue.toString(), issue.getId());
             }
 
-            ModelMapper mapper = new ModelMapper();
-            mapper.getConfiguration().setSkipNullEnabled(true);
-            mapper.map(updated, issue);
-
-//            if (assigneeId != null) {
-//                issue.setAssignee(teamMemberService.getById(assigneeId));
-//            }
-
-            if (listId != null) {
-                issue.setList(issueContainerRepository.findById(listId).get());
-            }
-
-            return repository.save(issue);
+            return repository.save(updated);
 
         } catch (ObjectOptimisticLockingFailureException exception) {
             throw new InvalidVersionException();
