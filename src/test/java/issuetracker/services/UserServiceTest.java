@@ -98,6 +98,7 @@ public class UserServiceTest {
 
     @Test
     public void savesUserWhenValid() {
+    public void saves_user_when_valid() {
         User user = new User();
 
         when(userRepository.save(user)).thenReturn(user);
