@@ -32,7 +32,7 @@ public class User extends BaseEntity {
     @Email
     private String email;
 
-    @Size(min = 8, max = 64)
+    @Size(min = 8, max = 128)
     private String password;
 
     public Set<Project> getProjects() {

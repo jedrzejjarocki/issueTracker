@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class JSONUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
@@ -23,7 +23,7 @@ public class JSONUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
             }
-            LoginCredentials authRequest = objectMapper.readValue(sb.toString(), LoginCredentials.class);
+            LoginCredentials authRequest = mapper.readValue(sb.toString(), LoginCredentials.class);
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
             setDetails(request, token);
             response.getWriter().write(authRequest.getUsername());

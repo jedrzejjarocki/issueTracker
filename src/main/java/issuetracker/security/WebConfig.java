@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+//@Todo refactor deprecated
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 

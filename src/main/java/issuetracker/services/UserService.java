@@ -8,6 +8,7 @@ import issuetracker.models.User;
 import issuetracker.repositories.PasswordTokenRepository;
 import issuetracker.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,14 +35,14 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             return repository.save(user);
-        } catch (Exception exception) {
+        } catch (DataIntegrityViolationException exception) {
             throw new UsernameExistsException();
         }
     }
 
-    public void delete(int id) {
+    public void delete(String username) {
         try {
-            repository.deleteById(id);
+            repository.deleteByUsername(username);
         } catch (EmptyResultDataAccessException exception) {
             throw new ResourceNotFoundException();
         }
@@ -49,12 +50,10 @@ public class UserService {
 
     public void changePassword(String token, String password) {
         PasswordResetToken tokenEntity = passwordTokenRepository.getByToken(token).orElseThrow(ResourceNotFoundException::new);
-        System.out.println(tokenEntity);
         ensureTokenNotExpired(tokenEntity);
 
         User user = tokenEntity.getUser();
         user.setPassword(passwordEncoder.encode(password));
-        System.out.println(user);
 
         repository.save(user);
         passwordTokenRepository.delete(tokenEntity);

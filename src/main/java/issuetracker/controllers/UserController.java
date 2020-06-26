@@ -10,8 +10,6 @@ import issuetracker.models.User;
 import issuetracker.services.MailSenderService;
 import issuetracker.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +27,6 @@ public class UserController {
     private final DtoMapper<User, UserDto> mapper;
     private final DtoMapper<Project, ProjectDto> projectMapper;
     private final MailSenderService mailSenderService;
-    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/current")
     public UserDto current(Principal principal) throws UnauthorizedException {
@@ -46,24 +43,22 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto create(@Valid @RequestBody UserCreationDto userCreationDto) throws UsernameExistsException {
-        logger.info(userCreationDto.getEmail());
         User user = mapper.toEntity(userCreationDto, new User());
         return mapper.toDto(service.create(user), new UserDto());
     }
 
-    // @Todo allowed only by user himself
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) throws ResourceNotFoundException {
-        service.delete(id);
+    @DeleteMapping
+    public void delete(Principal principal) throws ResourceNotFoundException {
+        service.delete(principal.getName());
     }
 
     @PostMapping("/reset-password")
-    public void resetPassword(@RequestBody PasswordRecoveryDto dto) throws IOException {
+    public void resetPassword(@Valid @RequestBody PasswordRecoveryDto dto) throws IOException {
         mailSenderService.resetPassword(dto.getEmail());
     }
 
     @PutMapping("/reset-password")
-    public void changePassword(@RequestBody ChangePasswordDto dto) {
+    public void changePassword(@Valid @RequestBody ChangePasswordDto dto) {
         service.changePassword(dto.getToken(), dto.getPassword());
     }
 }
