@@ -1,6 +1,5 @@
 package issuetracker.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +11,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserDetailsDao userDetailsDao;
 
-    @Autowired
     public UserDetailsServiceImpl(@Qualifier("db") UserDetailsDao userDetailsDao) {
         this.userDetailsDao = userDetailsDao;
     }
