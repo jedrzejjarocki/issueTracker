@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import {Link as RouterLink} from 'react-router-dom';
 import {Divider, Link, List, ListItem, ListItemText, makeStyles, Paper, Typography,} from '@material-ui/core';
 import PropTypes from 'prop-types';
-import * as propTypes from '../propTypes';
-import CreateProject from './CreateProject';
-import Loading from './Loading';
+import * as propTypes from '../../propTypes';
+import CreateProject from '../issuesList/CreateProject';
+import Loading from '../Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +40,7 @@ const ProjectsList = ({ projects, loading }) => {
             <List dense className={classes.list}>
               {Object.values(projects).map(({ name, id }, idx, arr) => (
                 <>
-                  <Link component={RouterLink} to={`/projects/${id}`}>
+                  <Link component={RouterLink} to={`/app/projects/${id}`}>
                     <ListItem button key={id}>
                       <ListItemText primary={name} />
                     </ListItem>

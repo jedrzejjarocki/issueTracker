@@ -10,7 +10,7 @@ import RouterLink from '../commons/RouterLink';
 import {BASE_URL} from '../../api/commons';
 import FormField from './FormField';
 
-const LoginForm = ({ setUser, setMessage, setProjects }) => {
+const LoginForm = ({ setUser, setMessage }) => {
   const schema = yup.object().shape({
     username: yup.string().required('Required'),
     password: yup.string().required('Must not be empty'),
@@ -28,7 +28,7 @@ const LoginForm = ({ setUser, setMessage, setProjects }) => {
       setUser({ id, username });
     } catch (error) {
       setMessage({
-        content: 'Wrong email or password',
+        content: 'Incorrect username or password',
         severity: 'error',
       });
     }
@@ -72,13 +72,11 @@ const LoginForm = ({ setUser, setMessage, setProjects }) => {
 LoginForm.propTypes = {
   setUser: PropTypes.func.isRequired,
   setMessage: PropTypes.func.isRequired,
-  setProjects: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   setUser: creators.setUser,
   setMessage: creators.setMessage,
-  setProjects: creators.setProjects,
 };
 
 export default connect(null, mapDispatchToProps)(LoginForm);

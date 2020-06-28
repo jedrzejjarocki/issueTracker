@@ -1,4 +1,4 @@
-import {addProject, addSprint, deleteSprint, setProjects,} from '../actions/types';
+import {addProject, addSprint, addTeamMember, deleteSprint, deleteTeamMember, setProjects,} from '../actions/types';
 
 const initialState = [];
 
@@ -6,6 +6,15 @@ const editSprints = (state, projectId, cb) => {
   const stateCopy = { ...state };
   const project = stateCopy[projectId];
   project.sprints = cb(project.sprints);
+
+  stateCopy[project.id] = project;
+  return stateCopy;
+};
+
+const editTeam = (state, projectId, cb) => {
+  const stateCopy = { ...state };
+  const project = stateCopy[projectId];
+  project.team = cb(project.team);
 
   stateCopy[project.id] = project;
   return stateCopy;
@@ -40,9 +49,24 @@ export default (state = initialState, { type, payload }) => {
 
     case deleteSprint: {
       return editSprints(state, payload.projectId, ((sprints) => {
-        const idx = sprints.findIndex(({ id }) => id === payload.sprint.id);
-        sprints.splice(idx, 1);
+        const idx = sprints.findIndex((sprintId) => sprintId === payload.sprint.id);
+        const sprintsCopy = [...sprints];
+        sprintsCopy.splice(idx, 1);
+        return sprintsCopy;
       }));
+    }
+
+    case addTeamMember: {
+      return editTeam(state, payload.projectId, (team) => [payload.id, ...team]);
+    }
+
+    case deleteTeamMember: {
+      return editTeam(state, payload.projectId, (team) => {
+        const idx = team.findIndex((memberId) => memberId === payload.memberId);
+        const teamCopy = [...team];
+        teamCopy.splice(idx, 1);
+        return teamCopy;
+      });
     }
 
     default:

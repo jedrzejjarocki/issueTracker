@@ -31,8 +31,6 @@ const setData = (data, dispatch) => {
     setTeamMembers(teamMembers),
   ];
 
-  console.log(normalize(data));
-
   actions.map((action) => dispatch(action));
 };
 

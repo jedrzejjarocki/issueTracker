@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {TextField} from 'material-ui-formik-components';
-import creators from '../redux/actions/creators';
-import {BASE_URL} from '../api/commons';
-import DialogForm from './forms/DialogForm';
-import FormField from './forms/FormField';
+import creators from '../../redux/actions/creators';
+import {BASE_URL} from '../../api/commons';
+import DialogForm from '../forms/DialogForm';
+import FormField from '../forms/FormField';
 
 const CreateProject = ({ first, addProject, setMessage }) => {
   const initialValues = {

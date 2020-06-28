@@ -7,15 +7,21 @@ import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import {withRouter} from 'react-router-dom';
 import {makeStyles, MenuItem, TextField as BaseTextField} from '@material-ui/core';
-import * as propTypes from '../propTypes';
-import FormField from './forms/FormField';
-import creators from '../redux/actions/creators';
-import teamMembersOptions from './forms/TeamMembersOptions';
-import sprintOptions from './forms/SprintsOptions';
-import issueTypeOptions from './forms/issueTypeOptions';
-import DialogForm from './forms/DialogForm';
-import {BASE_URL} from '../api/commons';
-import {getCurrentProjectId, getLoading, getSprintsByProjectId, getTeamMembers,} from '../redux/selectors';
+import * as propTypes from '../../propTypes';
+import FormField from '../forms/FormField';
+import creators from '../../redux/actions/creators';
+import teamMembersOptions from '../forms/TeamMembersOptions';
+import issuesListsOptions from '../forms/IssuesListsOptions';
+import issueTypeOptions from '../forms/issueTypeOptions';
+import DialogForm from '../forms/DialogForm';
+import {BASE_URL} from '../../api/commons';
+import {
+  getCurrentProjectId,
+  getIssuesListsByProjectId,
+  getLoading,
+  getSprintsByProjectId,
+  getTeamMembers,
+} from '../../redux/selectors';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -43,7 +49,7 @@ const CreateIssue = ({
   addIssue,
   history,
   teamMembers,
-  sprints,
+  issuesLists,
 }) => {
   const classes = useStyles();
 
@@ -55,7 +61,7 @@ const CreateIssue = ({
     status: 'TO_DO',
     reporterId: user.id,
     assigneeId: 0,
-    listId: 0,
+    listId: issuesLists[0] ? issuesLists[0].id : 0,
     storyPointsEstimate: 0,
   };
 
@@ -75,17 +81,17 @@ const CreateIssue = ({
         }
         : null;
 
-      const sprintIdQuery = `?sprintId=${values.listId}`;
-      let url = `${BASE_URL}/projects/${currentProjectId}/issues`;
+      requestBody.list = {
+        id: values.listId,
+        '@type': issuesLists.find((list) => list.id === values.listId).type,
+      };
 
-      if (values.listId !== 0) url += sprintIdQuery;
-
-      const { data } = await axios.post(url, requestBody);
+      const { data } = await axios.post(`${BASE_URL}/issues`, requestBody);
       const issueData = { ...data };
       issueData.assignee = data.assignee ? data.assignee.id : null;
       addIssue(issueData);
 
-      history.push(`/projects/${currentProjectId}`);
+      history.push(`/app/projects/${currentProjectId}/board`);
     } catch (err) {
       console.log(err);
     }
@@ -127,7 +133,7 @@ const CreateIssue = ({
             label="Sprint"
             className={classes.halfWidth}
             component={Select}
-            options={sprintOptions(sprints)}
+            options={issuesListsOptions(issuesLists)}
           />
           )}
 
@@ -176,7 +182,7 @@ const CreateIssue = ({
 
 CreateIssue.defaultProps = {
   currentProjectId: 0,
-  sprints: [],
+  teamMembers: [],
 };
 
 CreateIssue.propTypes = {
@@ -186,18 +192,19 @@ CreateIssue.propTypes = {
   }).isRequired,
   currentProjectId: PropTypes.number,
   setCurrentProject: PropTypes.func.isRequired,
-  projects: PropTypes.arrayOf(propTypes.project).isRequired,
+  projects: PropTypes.objectOf(propTypes.project).isRequired,
   addIssue: PropTypes.func.isRequired,
-  teamMembers: PropTypes.arrayOf(propTypes.teamMember).isRequired,
-  sprints: PropTypes.arrayOf(propTypes.sprint),
+  teamMembers: PropTypes.arrayOf(propTypes.teamMember),
+  issuesLists: PropTypes.arrayOf(propTypes.sprint).isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const currentProjectId = getCurrentProjectId(state);
+  const currentProjectId = +getCurrentProjectId(state);
   return {
     user: state.user,
     projects: state.projects,
     sprints: getSprintsByProjectId(currentProjectId, state),
+    issuesLists: getIssuesListsByProjectId(currentProjectId, state),
     teamMembers: getTeamMembers(currentProjectId, state),
     currentProjectId,
     loading: getLoading(state),

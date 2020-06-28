@@ -3,11 +3,13 @@ import {useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import creators from '../redux/actions/creators';
 
-export default () => {
+export default (userRole) => {
   const dispatch = useDispatch();
   const { projectId } = useParams();
   useEffect(() => {
-    console.log(projectId);
-    dispatch(creators.setCurrentProject(projectId));
-  }, [projectId]);
+    dispatch(creators.setCurrentProject({
+      id: +projectId,
+      userRole,
+    }));
+  }, [projectId, userRole]);
 };

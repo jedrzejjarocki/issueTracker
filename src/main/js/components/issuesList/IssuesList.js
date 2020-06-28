@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Chip, List, ListItem, ListItemIcon, ListItemText, makeStyles, Typography,} from '@material-ui/core';
@@ -25,9 +25,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const getMemberName = (id, teamMembers) => teamMembers[id].username;
+const getMember = (id, teamMembers) => teamMembers[id];
 
-const IssuesList = ({ issues, project, teamMembers }) => {
+const IssuesList = ({
+  issues, project, teamMembers, currentUserId,
+}) => {
   const classes = useStyles();
   return (
     <>
@@ -38,16 +40,18 @@ const IssuesList = ({ issues, project, teamMembers }) => {
               {issues.map(({
                 id, type, summary, storyPointsEstimate, status, assignee,
               }) => (
-                <>
-                  <RouterLink to={`/projects/${project.id}/issues/${id}`}>
-                    <ListItem button key={id}>
+                <Fragment key={id}>
+                  <RouterLink to={`/app/projects/${project.id}/board/issues/${id}`}>
+                    <ListItem button>
                       <ListItemIcon>{issueTypes[type]}</ListItemIcon>
                       <ListItemText primary={summary} />
                       <div className={classes.itemDetails}>
                         {!!assignee && (
                         <UserAvatar
-                          name={getMemberName(assignee, teamMembers)}
+                          isCurrentUser={getMember(assignee, teamMembers).userId === currentUserId}
+                          name={getMember(assignee, teamMembers).username}
                           classes={classes.avatar}
+                          size="small"
                         />
                         )}
                         {!!storyPointsEstimate && (
@@ -62,7 +66,7 @@ const IssuesList = ({ issues, project, teamMembers }) => {
                       </div>
                     </ListItem>
                   </RouterLink>
-                </>
+                </Fragment>
               ))}
             </List>
           ) : (
@@ -78,12 +82,14 @@ const IssuesList = ({ issues, project, teamMembers }) => {
 IssuesList.propTypes = {
   issues: PropTypes.arrayOf(propTypes.issue).isRequired,
   project: propTypes.project.isRequired,
-  teamMembers: PropTypes.arrayOf(propTypes.teamMember).isRequired,
+  teamMembers: PropTypes.objectOf(propTypes.teamMember).isRequired,
+  currentUserId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
   issues: getIssuesByListId(props.listId, state),
   teamMembers: state.teamMembers,
+  currentUserId: state.user.id,
 });
 
 export default connect(mapStateToProps)(IssuesList);

@@ -9,13 +9,12 @@ import {TextField} from 'material-ui-formik-components/TextField';
 import {Select} from 'material-ui-formik-components/Select';
 import * as yup from 'yup';
 import {makeStyles, Typography} from '@material-ui/core';
-import * as propTypes from '../propTypes';
-import FormField from './forms/FormField';
-import creators from '../redux/actions/creators';
-import DialogForm from './forms/DialogForm';
-import {BASE_URL} from '../api/commons';
-import {getSprintsByProjectId} from '../redux/selectors';
-import withAuth from './withAuth';
+import * as propTypes from '../../../propTypes';
+import FormField from '../../forms/FormField';
+import creators from '../../../redux/actions/creators';
+import DialogForm from '../../forms/DialogForm';
+import {BASE_URL} from '../../../api/commons';
+import {getSprintsByProjectId} from '../../../redux/selectors';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -59,19 +58,23 @@ const StartSprint = ({
     duration: 2,
   };
 
-  const onSubmit = async ({ name, goal, duration }) => {
+  const onSubmit = async ({
+    name, goal, duration, id,
+  }) => {
     const requestBody = {
       project: {
         id: projectId,
       },
+      id,
       name,
       goal,
       startDate: addMinutes(startDate, 15).getTime(),
       endDate: addWeeks(startDate, duration).getTime(),
+      '@type': 'Sprint',
     };
 
     try {
-      const { data } = await axios.put(`${BASE_URL}/projects/${projectId}/sprints/${sprint.id}`, requestBody);
+      const { data } = await axios.put(`${BASE_URL}/sprints`, requestBody);
       updateSprint({
         projectId,
         sprint: data,
@@ -158,10 +161,11 @@ StartSprint.propTypes = {
 
 const mapStateToProps = (state, { projectId }) => ({
   sprints: getSprintsByProjectId(projectId, state),
+  userRole: state.ui.currentProjectUserRole,
 });
 
 const mapDispatchToProps = {
   updateSprint: creators.updateSprint,
 };
 
-export default withAuth(connect(mapStateToProps, mapDispatchToProps)(StartSprint));
+export default connect(mapStateToProps, mapDispatchToProps)(StartSprint);

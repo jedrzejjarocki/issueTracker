@@ -26,6 +26,7 @@ const DialogForm = ({
   title,
   toggleButtonText,
   submitButtonText,
+  renderToggleComponent,
   renderFields,
   renderAdditionalActions,
   toggleButtonTooltipText,
@@ -53,11 +54,15 @@ const DialogForm = ({
 
   return (
     <>
-      <WithTooltip tooltipText={toggleButtonTooltipText}>
-        <Button variant="outlined" color="primary" onClick={toggleOpen} disabled={disabled}>
-          {toggleButtonText}
-        </Button>
-      </WithTooltip>
+      {
+        renderToggleComponent ? renderToggleComponent(toggleOpen) : (
+          <WithTooltip tooltipText={toggleButtonTooltipText}>
+            <Button variant="outlined" color="primary" onClick={toggleOpen} disabled={disabled}>
+              {toggleButtonText}
+            </Button>
+          </WithTooltip>
+        )
+      }
       <Dialog
         open={open}
         onClose={toggleOpen}
@@ -105,6 +110,7 @@ DialogForm.defaultProps = {
   enableReinitialize: true,
   closeOnSubmit: true,
   renderAdditionalActions: null,
+  renderToggleComponent: null,
   disabled: false,
   toggleButtonTooltipText: null,
 };
@@ -121,6 +127,7 @@ DialogForm.propTypes = {
   toggleButtonText: PropTypes.string.isRequired,
   renderFields: PropTypes.func.isRequired,
   renderAdditionalActions: PropTypes.func,
+  renderToggleComponent: PropTypes.func,
   closeOnSubmit: PropTypes.bool,
   disabled: PropTypes.bool,
   toggleButtonTooltipText: PropTypes.string,

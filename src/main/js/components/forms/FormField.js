@@ -20,12 +20,12 @@ const FormField = ({
 
 FormField.defaultProps = {
   touched: false,
+  error: '',
 };
 
 FormField.propTypes = {
   name: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  error: PropTypes.object.isRequired,
+  error: PropTypes.string,
   touched: PropTypes.bool,
 };
 

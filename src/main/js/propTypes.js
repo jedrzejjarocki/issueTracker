@@ -31,9 +31,9 @@ export const project = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   projectKey: PropTypes.string.isRequired,
-  team: PropTypes.array.isRequired,
-  backlog,
-  sprints: PropTypes.arrayOf(sprint).isRequired,
+  team: PropTypes.arrayOf(PropTypes.number).isRequired,
+  backlog: PropTypes.number.isRequired,
+  sprints: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
 });
 
 export const message = PropTypes.shape({

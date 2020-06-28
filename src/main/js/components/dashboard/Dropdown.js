@@ -7,11 +7,9 @@ const Dropdown = ({ children, render }) => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const handleProjectToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
+  const toggleOpen = () => setOpen(!open);
 
-  const handleProjectsClose = (event) => {
+  const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -27,27 +25,20 @@ const Dropdown = ({ children, render }) => {
   };
 
   return (
-    <div>
-      {render(anchorRef, true, handleProjectToggle)}
+    <span style={{ zIndex: 100000 }}>
+      {render(anchorRef, true, toggleOpen)}
       <Popper
         open={open}
         anchorEl={anchorRef.current}
         role={undefined}
         transition
-        disablePortal
       >
         {({ TransitionProps }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin: 'center bottom',
-            }}
-          >
+          <Grow {...TransitionProps}>
             <Paper>
-              <ClickAwayListener onClickAway={handleProjectsClose}>
+              <ClickAwayListener onClickAway={handleClose}>
                 <MenuList
                   autoFocusItem={open}
-                  id="menu-list-grow"
                   onKeyDown={handleListKeyDown}
                 >
                   {children}
@@ -57,7 +48,7 @@ const Dropdown = ({ children, render }) => {
           </Grow>
         )}
       </Popper>
-    </div>
+    </span>
   );
 };
 

@@ -20,14 +20,15 @@ const App = ({ user, loading, message }) => {
         <Loading />
       ) : (
         <>
-          <ProtectedRoute path="/projects" user={user}>
+
+          <ProtectedRoute path="/app" user={user}>
             <Dashboard />
           </ProtectedRoute>
           <Route path="/reset-password">
             <PasswordRecovery />
           </Route>
           <Route exact path="/">
-            {user && <Redirect to="/projects" />}
+            {user && <Redirect to="/app/projects" />}
             <Index />
           </Route>
           {message && <InfoSnackbar message={message} />}

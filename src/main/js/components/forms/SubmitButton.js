@@ -19,10 +19,11 @@ const SubmitButton = ({ errors = {}, text = 'Submit', ...rest }) => {
 
 SubmitButton.defaultProps = {
   text: 'Submit',
+  errors: {},
 };
 
 SubmitButton.propTypes = {
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
+  errors: PropTypes.objectOf(PropTypes.string),
   text: PropTypes.string,
 };
 

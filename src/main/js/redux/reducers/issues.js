@@ -1,4 +1,4 @@
-import {addIssue, setIssues, updateIssue} from '../actions/types';
+import {addIssue, deleteIssue, deleteSprint, deleteTeamMember, setIssues, updateIssue,} from '../actions/types';
 
 const setIssue = (state, issue) => {
   const stateCopy = { ...state };
@@ -15,8 +15,33 @@ export default (state = null, { type, payload }) => {
       return setIssue(state, payload);
 
     case updateIssue:
-      console.log(payload);
       return setIssue(state, payload);
+
+    case deleteIssue: {
+      const updatedState = { ...state };
+      delete updatedState[payload.issueId];
+      return updatedState;
+    }
+
+    case deleteSprint: {
+      const updatedState = { ...state };
+      Object.values(updatedState).map((issue) => {
+        if (issue.listId === payload.sprint.id) {
+          issue.listId = payload.backlogId;
+        }
+      });
+      return updatedState;
+    }
+
+    case deleteTeamMember: {
+      const updatedState = { ...state };
+      Object.values(updatedState).map((issue) => {
+        if (issue.assignee === payload.memberId) {
+          issue.assignee = null;
+        }
+      });
+      return updatedState;
+    }
 
     default:
       return state;

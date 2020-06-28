@@ -2,23 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {Card, Grid, makeStyles, Typography,} from '@material-ui/core';
+import {Card, Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
 import {Select} from 'material-ui-formik-components/Select';
 import {TextField} from 'material-ui-formik-components/TextField';
 import {Form, Formik} from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
 import * as yup from 'yup';
 import axios from 'axios';
-import creators from '../redux/actions/creators';
-import * as propTypes from '../propTypes';
-import FormField from './forms/FormField';
-import teamMembersOptions from './forms/TeamMembersOptions';
-import RouterLink from './commons/RouterLink';
-import issueTypeOptions from './forms/issueTypeOptions';
-import SubmitButton from './forms/SubmitButton';
-import {BASE_URL} from '../api/commons';
-import issueStatusOptions from './forms/issueStatusOptions';
-import {getTeamMembers} from '../redux/selectors';
+import creators from '../../redux/actions/creators';
+import * as propTypes from '../../propTypes';
+import FormField from '../forms/FormField';
+import teamMembersOptions from '../forms/TeamMembersOptions';
+import RouterLink from '../commons/RouterLink';
+import issueTypeOptions from '../forms/issueTypeOptions';
+import SubmitButton from '../forms/SubmitButton';
+import {BASE_URL} from '../../api/commons';
+import issueStatusOptions from '../forms/issueStatusOptions';
+import {getTeamMembers} from '../../redux/selectors';
+import DeleteIssue from './DeleteIssue';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -26,19 +27,22 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      margin: theme.spacing(3),
+      margin: theme.spacing(2),
     },
   },
   flexRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: theme.spacing(3),
+    margin: theme.spacing(0, 2),
   },
   halfWidth: {
     width: '50%',
     [theme.breakpoints.down('md')]: {
       width: '100%',
     },
+  },
+  issueKey: {
+    padding: theme.spacing(2),
   },
 }));
 
@@ -70,19 +74,18 @@ const IssueDetails = ({
         }
         : null;
 
-      const sprintIdQuery = `?listId=${values.listId}`;
-      let url = `${BASE_URL}/projects/${project.id}/issues/${values.id}`;
+      requestBody.list = {
+        id: values.listId,
+        '@type': project.backlog === values.listId ? 'Backlog' : 'Sprint',
+      };
 
-      if (values.listId !== 0) url += sprintIdQuery;
-
-      const { data } = await axios.put(url, requestBody);
+      const { data } = await axios.put(`${BASE_URL}/issues`, requestBody);
       const issueData = { ...data };
       issueData.assignee = data.assignee ? data.assignee.id : null;
-      console.log(issueData);
       updateIssue(issueData);
 
       // force rerender
-      history.push(`/projects/${project.id}/issues/${values.id}`);
+      history.push(`/app/projects/${project.id}/board/issues/${values.id}`);
     } catch (err) {
       console.log(err);
       setMessage({
@@ -98,10 +101,15 @@ const IssueDetails = ({
         <Grid item xs={4} lg={5}>
           <Card variant="outlined" className={classes.flexContainer}>
             <div className={classes.flexRow}>
-              <Typography variant="button">{`${project.projectKey}-${issue.id}`}</Typography>
-              <RouterLink to={`/projects/${project.id}`}>
-                <CloseIcon />
-              </RouterLink>
+              <Typography className={classes.issueKey} variant="button">{`${project.projectKey}-${issue.id}`}</Typography>
+              <div>
+                <DeleteIssue issue={issue} projectId={project.id} history={history} />
+                <RouterLink to={`/projects/${project.id}/backlog`}>
+                  <IconButton>
+                    <CloseIcon />
+                  </IconButton>
+                </RouterLink>
+              </div>
             </div>
             <Formik
               enableReinitialize

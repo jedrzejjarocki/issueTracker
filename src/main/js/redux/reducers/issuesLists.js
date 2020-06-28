@@ -1,4 +1,12 @@
-import {addIssue, addProject, addSprint, deleteSprint, setIssuesLists, updateSprint,} from '../actions/types';
+import {
+  addIssue,
+  addProject,
+  addSprint,
+  deleteIssue,
+  deleteSprint,
+  setIssuesLists,
+  updateSprint,
+} from '../actions/types';
 
 const setSprint = (state, payload) => {
   const stateCopy = { ...state };
@@ -20,13 +28,21 @@ export default (state = null, { type, payload }) => {
     case deleteSprint: {
       const stateCopy = { ...state };
       delete stateCopy[payload.sprint.id];
-      // @Todo move issues to backlog
       return stateCopy;
     }
 
     case addIssue: {
       const list = state[payload.listId];
       list.issues = [payload.id, ...list.issues];
+      return state;
+    }
+
+    case deleteIssue: {
+      const list = state[payload.listId];
+      const issues = [...list.issues];
+      const issueIdx = issues.findIndex((i) => i === payload.issueId);
+      issues.splice(issueIdx, 1);
+      list.issues = issues;
       return state;
     }
 

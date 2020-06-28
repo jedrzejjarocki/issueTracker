@@ -4,6 +4,7 @@ const initialState = {
   message: null,
   loading: true,
   currentProject: null,
+  currentProjectUserRole: '',
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -23,7 +24,8 @@ export default (state = initialState, { type, payload }) => {
     case actionType.setCurrentProject:
       return {
         ...state,
-        currentProject: payload,
+        currentProject: payload.id,
+        currentProjectUserRole: payload.userRole,
       };
 
     default:

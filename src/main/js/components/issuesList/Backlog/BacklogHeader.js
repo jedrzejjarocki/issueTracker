@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Typography} from '@material-ui/core';
-import CreateSprint from '../../CreateSprint';
+import {Grid, Typography} from '@material-ui/core';
+import CreateSprint from './CreateSprint';
 
 const BacklogHeader = ({ projectId, projectKey }) => (
-  <header>
-    <Typography variant="subtitle2">Backlog</Typography>
-    <CreateSprint projectId={projectId} projectKey={projectKey}>create sprint</CreateSprint>
-  </header>
+  <Grid component="header" container justify="space-between">
+    <Grid item><Typography variant="subtitle2">Backlog</Typography></Grid>
+    <Grid item style={{ margin: '4px 0px' }}>
+      <CreateSprint projectId={projectId} projectKey={projectKey}>create sprint</CreateSprint>
+    </Grid>
+  </Grid>
 );
 
 BacklogHeader.propTypes = {

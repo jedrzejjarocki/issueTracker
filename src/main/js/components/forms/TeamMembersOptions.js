@@ -1,4 +1,4 @@
-import {ListItemIcon, Typography} from '@material-ui/core';
+import {ListItem, ListItemAvatar, ListItemText, Typography,} from '@material-ui/core';
 import React from 'react';
 import UserAvatar from '../commons/UserAvatar';
 
@@ -20,17 +20,22 @@ export default (teamMembers, currentUserId) => {
       members.push({
         value: id,
         label: (
-          <Typography>
-            <ListItemIcon>
-              <UserAvatar name={username} isCurrentUser={isCurrentUser} />
-            </ListItemIcon>
-            {username}
-            {isCurrentUser && (
-              <Typography color="textSecondary" component="i">
-                {' (yourself)'}
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <UserAvatar name={username} isCurrentUser={isCurrentUser} size="small" />
+            </ListItemAvatar>
+            <ListItemText primary={(
+              <Typography style={{ display: 'inline' }}>
+                {username}
+                {isCurrentUser && (
+                  <Typography color="textSecondary" component="i">
+                    {' (yourself)'}
+                  </Typography>
+                )}
               </Typography>
             )}
-          </Typography>
+            />
+          </ListItem>
         ),
       });
     });

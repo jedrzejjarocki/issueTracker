@@ -5,13 +5,14 @@ import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 import {AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography,} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import * as propTypes from '../../propTypes';
 import creators from '../../redux/actions/creators';
 import Dropdown from './Dropdown';
 import RouterLink from '../commons/RouterLink';
 import UserAvatar from '../commons/UserAvatar';
 import {BASE_URL} from '../../api/commons';
-import CreateIssue from '../CreateIssue';
+import CreateIssue from './CreateIssue';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -22,9 +23,13 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarLeft: {
     flexGrow: 1,
+    padding: 0,
+    '& button': {
+      margin: theme.spacing(0, 1),
+    },
   },
   title: {
-    marginRight: theme.spacing(3),
+    marginRight: theme.spacing(2),
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -73,22 +78,28 @@ const TopBar = ({
                   ref={ref}
                   aria-haspopup={ariaHaspopup}
                   onClick={onClick}
+                  endIcon={<ExpandMoreOutlinedIcon />}
                 >
                   Projects
                 </Button>
               )}
             >
               {Object.values(projects).map((project) => (
-                <RouterLink key={project.id} to={`/projects/${project.id}`}>
+                <RouterLink key={project.id} to={`/app/projects/${project.id}/board`}>
                   <MenuItem>{project.name}</MenuItem>
                 </RouterLink>
               ))}
               <Divider />
-              <RouterLink to="/projects">
+              <RouterLink to="/app/projects">
                 <MenuItem>view all</MenuItem>
               </RouterLink>
             </Dropdown>
           )}
+          <RouterLink to="/app/people">
+            <Button>
+              People
+            </Button>
+          </RouterLink>
           <CreateIssue />
         </Toolbar>
         <div>
@@ -99,7 +110,7 @@ const TopBar = ({
                 aria-haspopup={ariaHaspopup}
                 onClick={onClick}
               >
-                <UserAvatar name={user.username} isCurrentUser />
+                <UserAvatar name={user.username} isCurrentUser size="small" />
               </IconButton>
             )}
           >
@@ -114,7 +125,7 @@ const TopBar = ({
 TopBar.propTypes = {
   setUser: PropTypes.func.isRequired,
   user: propTypes.user.isRequired,
-  projects: PropTypes.arrayOf(propTypes.project).isRequired,
+  projects: PropTypes.objectOf(propTypes.project).isRequired,
   handleDrawerToggle: PropTypes.func.isRequired,
   match: PropTypes.shape({
     url: PropTypes.string.isRequired,
