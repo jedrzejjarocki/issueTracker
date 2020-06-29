@@ -98,7 +98,6 @@ public class UserServiceTest {
 
     @Test
     public void savesUserWhenValid() {
-    public void saves_user_when_valid() {
         User user = new User();
 
         when(userRepository.save(user)).thenReturn(user);
@@ -140,7 +139,7 @@ public class UserServiceTest {
         passwordResetToken.setExpiryDate(LocalDate.now().minusDays(1));
         passwordResetToken.setToken("token");
 
-        when(passwordTokenRepository.getByToken("token")).thenReturn(Optional.of(passwordResetToken));
+        when(passwordTokenRepository.findByToken("token")).thenReturn(Optional.of(passwordResetToken));
         assertThrows(TokenExpiredException.class, () -> service.changePassword("token", "password"));
     }
 
@@ -158,7 +157,7 @@ public class UserServiceTest {
         passwordResetToken.setToken("token");
         passwordResetToken.setUser(user);
 
-        when(passwordTokenRepository.getByToken("token")).thenReturn(Optional.of(passwordResetToken));
+        when(passwordTokenRepository.findByToken("token")).thenReturn(Optional.of(passwordResetToken));
         when(passwordEncoder.encode("changed")).thenReturn("changed-encoded");
 
         service.changePassword("token", "changed");

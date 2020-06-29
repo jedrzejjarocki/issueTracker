@@ -54,7 +54,9 @@ const CreateIssue = ({
   };
 
   const handleProjectChange = (e) => {
-    setCurrentProject(e.target.value);
+    setCurrentProject({
+      id: +e.target.value,
+    });
   };
 
   const onSubmit = async (values) => {

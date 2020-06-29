@@ -4,10 +4,7 @@ import issuetracker.models.Issue;
 import issuetracker.models.Project;
 import issuetracker.models.TeamMember;
 import issuetracker.models.User;
-import issuetracker.repositories.IssueRepository;
-import issuetracker.repositories.ProjectRepository;
-import issuetracker.repositories.TeamMemberRepository;
-import issuetracker.repositories.UserRepository;
+import issuetracker.repositories.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +21,8 @@ public class TeamMemberServiceTest {
     @Autowired private UserRepository userRepository;
     @Autowired private TeamMemberRepository repository;
     @Autowired private ProjectRepository projectRepository;
+    @Autowired private MailSenderService mailSenderService;
+    @Autowired private TeamMemberInvitationRepository invitationRepository;
     private TeamMemberService service;
 
     @Test
@@ -35,7 +34,7 @@ public class TeamMemberServiceTest {
 
     @Before
     public void init() {
-        service = new TeamMemberService(repository, projectRepository, issueRepository);
+        service = new TeamMemberService(repository, projectRepository, issueRepository, userRepository, invitationRepository, mailSenderService);
     }
 
     @Test

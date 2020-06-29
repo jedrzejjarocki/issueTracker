@@ -69,7 +69,7 @@ public class UserControllerTest {
 
         when(service.create(user)).thenReturn(user);
 
-        controller.create(dto);
+        controller.create(dto, null);
         verify(service).create(user);
     }
 
@@ -89,11 +89,11 @@ public class UserControllerTest {
     public void callsMailSenderService() throws IOException {
         String reqBody = "{\"email\": \"email@email.com\"}";
 
-        doNothing().when(mailSenderService).resetPassword("email@email.com");
+        doNothing().when(mailSenderService).resetPassword("email@email.com", "");
         PasswordRecoveryDto dto = objectMapper.readValue(reqBody, PasswordRecoveryDto.class);
 
         controller.resetPassword(dto);
-        verify(mailSenderService).resetPassword("email@email.com");
+        verify(mailSenderService).resetPassword("email@email.com", "");
     }
 
     @Test
