@@ -5,8 +5,8 @@ import {withRouter} from 'react-router-dom';
 import {Card, Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
 import {Form, Formik} from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
-import * as yup from 'yup';
 import axios from 'axios';
+import schema from '../forms/validation/schemas/updateIssue';
 import actions from '../../redux/actions/actions';
 import * as propTypes from '../../propTypes';
 import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
@@ -45,17 +45,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
 }));
-
-const schema = yup.object().shape({
-  type: yup.string().required('Required'),
-  summary: yup.string().required('Must not be empty'),
-  description: yup.string(),
-  assigneeId: yup.number(),
-  listId: yup.number(),
-  storyPointsEstimate: yup
-    .number()
-    .moreThan(-1, 'Must not be negative integer'),
-});
 
 const IssueDetails = ({
   project, issue, userId, updateIssue, setMessage, history, teamMembers,

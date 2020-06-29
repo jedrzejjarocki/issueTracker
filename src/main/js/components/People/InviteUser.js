@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as yup from 'yup';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {TextField} from 'material-ui-formik-components/TextField';
+import schema from '../forms/validation/schemas/inviteUserForm';
 import * as propTypes from '../../propTypes';
 import actions from '../../redux/actions/actions';
 import DialogForm from '../forms/DialogForm';
@@ -11,10 +11,6 @@ import memberRoleOptions from '../forms/selectOptions/memberRoleOptions';
 import {BASE_URL} from '../../api/commons';
 import BasicTextField from '../forms/fields/BasicTextField';
 import SelectField from '../forms/fields/SelectField';
-
-const schema = yup.object().shape({
-  email: yup.string().email('Must be valid email'),
-});
 
 const isCurrentUserLeaderInProject = (project, currentUserId, teamMembers) => (
   Object.values(teamMembers).some(({ userId, role, projectId }) => (

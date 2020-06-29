@@ -2,9 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import * as yup from 'yup';
 import {withRouter} from 'react-router-dom';
 import {makeStyles, MenuItem, TextField as BaseTextField} from '@material-ui/core';
+import schema from '../forms/validation/schemas/createIssue';
 import * as propTypes from '../../propTypes';
 import actions from '../../redux/actions/actions';
 import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
@@ -28,18 +28,6 @@ const useStyles = makeStyles(() => ({
     width: '50%',
   },
 }));
-
-const schema = yup.object().shape({
-  projectId: yup.number().required('Required'),
-  type: yup.string().required('Required'),
-  summary: yup.string().required('Must not be empty'),
-  description: yup.string(),
-  assigneeId: yup.number(),
-  listId: yup.number(),
-  storyPointsEstimate: yup
-    .number()
-    .moreThan(-1, 'Must not be negative integer'),
-});
 
 const CreateIssue = ({
   user,

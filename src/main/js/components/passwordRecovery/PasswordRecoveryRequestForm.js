@@ -6,7 +6,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Button, Card, CardActions, CardContent, Typography,} from '@material-ui/core';
 import {Form, Formik} from 'formik';
 import axios from 'axios';
-import * as yup from 'yup';
+import schema from '../forms/validation/schemas/passwordRecoveryForm';
 import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
 import SubmitButton from '../forms/SubmitButton';
@@ -27,10 +27,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2, 2),
   },
 }));
-
-const schema = yup.object().shape({
-  email: yup.string().email('Must be valid email').required('Required'),
-});
 
 const PasswordRecoveryRequestForm = ({ setMessage }) => {
   const classes = useStyles();

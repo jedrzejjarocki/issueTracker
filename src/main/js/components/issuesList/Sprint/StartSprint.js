@@ -5,8 +5,8 @@ import axios from 'axios';
 import DateFnsUtils from '@date-io/date-fns';
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import {connect} from 'react-redux';
-import * as yup from 'yup';
-import {makeStyles, Typography} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core';
+import durationOptions from '../../forms/selectOptions/sprintDurationOptions';
 import * as propTypes from '../../../propTypes';
 import actions from '../../../redux/actions/actions';
 import DialogForm from '../../forms/DialogForm';
@@ -15,23 +15,13 @@ import {getSprintsByProjectId} from '../../../redux/selectors';
 import BasicTextField from '../../forms/fields/BasicTextField';
 import SelectField from '../../forms/fields/SelectField';
 import TextAreaField from '../../forms/fields/TextAreaField';
+import schema from '../../forms/validation/schemas/startSprint';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
     width: '50%',
   },
 }));
-
-const durationOptions = [1, 2, 3, 4].map((duration) => ({
-  value: duration,
-  label: <Typography>{`${duration} week${duration === 1 ? '' : 's'}`}</Typography>,
-}));
-
-const schema = yup.object().shape({
-  name: yup.string().required('Must not be empty'),
-  goal: yup.string(),
-  duration: yup.number().required(),
-});
 
 const isStarted = (sprint) => !!sprint.startDate;
 

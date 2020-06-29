@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import {Form, Formik} from 'formik';
 import axios from 'axios';
-import * as yup from 'yup';
+import schema from '../forms/validation/schemas/changePasswordForm';
 import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
 import SubmitButton from '../forms/SubmitButton';
@@ -26,13 +26,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2, 2),
   },
 }));
-
-const schema = yup.object().shape({
-  password: yup.string().required('Must be 8 characters or more'),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match'),
-});
 
 const ChangePasswordForm = ({ token, setMessage }) => {
   const classes = useStyles();
