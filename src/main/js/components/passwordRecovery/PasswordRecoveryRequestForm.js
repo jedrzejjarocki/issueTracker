@@ -7,11 +7,10 @@ import {Button, Card, CardActions, CardContent, Typography,} from '@material-ui/
 import {Form, Formik} from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
-import {TextField} from 'material-ui-formik-components/TextField';
 import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
 import SubmitButton from '../forms/SubmitButton';
-import FormField from '../forms/FormField';
+import BasicTextField from '../forms/fields/BasicTextField';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -64,26 +63,24 @@ const PasswordRecoveryRequestForm = ({ setMessage }) => {
         onSubmit={onSubmit}
         validationSchema={schema}
       >
-        {({ errors, touched }) => (
+        {(formikProps) => (
           <Form>
             <CardContent>
               <Typography variant="h6" component="h2">
                 Reset email
               </Typography>
-              <FormField
+              <BasicTextField
+                formikProps={formikProps}
                 required
                 autoFocus
-                error={errors.email}
-                touched={touched.email}
                 name="email"
-                component={TextField}
               />
             </CardContent>
             <CardActions className={classes.justifyRight}>
               <RouterLink to="/">
                 <Button color="primary">Cancel</Button>
               </RouterLink>
-              <SubmitButton errors={errors} text="Send email" />
+              <SubmitButton errors={formikProps.errors} text="Send email" />
             </CardActions>
           </Form>
         )}

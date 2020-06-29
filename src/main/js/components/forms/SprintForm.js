@@ -1,10 +1,9 @@
-import {TextField} from 'material-ui-formik-components';
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import {children} from '../../propTypes';
-import FormField from './FormField';
 import DialogForm from './DialogForm';
+import BasicTextField from './fields/BasicTextField';
 
 const schema = yup.object().shape({
   name: yup.string().required('Must not be empty'),
@@ -20,21 +19,17 @@ const SprintForm = ({
     onSubmit={onSubmit}
     initialValues={initialValues}
     validationSchema={schema}
-    renderFields={({ errors, touched }) => (
+    renderFields={(formikProps) => (
       <>
-        <FormField
+        <BasicTextField
           autoFocus
           required
-          error={errors.name}
-          touched={touched.name}
+          formikProps={formikProps}
           name="name"
-          component={TextField}
         />
-        <FormField
-          error={errors.goal}
-          touched={touched.goal}
+        <BasicTextField
+          formikProps={formikProps}
           name="goal"
-          component={TextField}
         />
       </>
     )}

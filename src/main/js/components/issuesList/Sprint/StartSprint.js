@@ -5,16 +5,16 @@ import axios from 'axios';
 import DateFnsUtils from '@date-io/date-fns';
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import {connect} from 'react-redux';
-import {TextField} from 'material-ui-formik-components/TextField';
-import {Select} from 'material-ui-formik-components/Select';
 import * as yup from 'yup';
 import {makeStyles, Typography} from '@material-ui/core';
 import * as propTypes from '../../../propTypes';
-import FormField from '../../forms/FormField';
 import actions from '../../../redux/actions/actions';
 import DialogForm from '../../forms/DialogForm';
 import {BASE_URL} from '../../../api/commons';
 import {getSprintsByProjectId} from '../../../redux/selectors';
+import BasicTextField from '../../forms/fields/BasicTextField';
+import SelectField from '../../forms/fields/SelectField';
+import TextAreaField from '../../forms/fields/TextAreaField';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -102,14 +102,14 @@ const StartSprint = ({
               ? 'Can be planned but not started until the completion of above active sprint'
               : ''}
           initialValues={initialValues}
-          renderFields={({ errors, touched }) => (
+          renderFields={(formikProps) => (
             <>
-              <FormField
+              <BasicTextField
+                formikProps={formikProps}
                 autoFocus
                 required
                 name="name"
                 className={classes.halfWidth}
-                component={TextField}
               />
               <KeyboardDatePicker
                 disableToolbar
@@ -126,22 +126,13 @@ const StartSprint = ({
                   'aria-label': 'start date',
                 }}
               />
-              <FormField
+              <SelectField
                 required
                 name="duration"
-                error={errors.duration}
-                touched={touched.duration}
-                component={Select}
                 options={durationOptions}
                 className={classes.halfWidth}
               />
-              <FormField
-                autoFocus
-                name="goal"
-                multiline
-                rows={6}
-                component={TextField}
-              />
+              <TextAreaField name="goal" />
             </>
           )}
         />

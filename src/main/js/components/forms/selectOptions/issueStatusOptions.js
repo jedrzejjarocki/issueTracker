@@ -1,6 +1,6 @@
 import {Chip} from '@material-ui/core';
 import React from 'react';
-import issueStatus from '../../constants/issuStatuses';
+import issueStatus from '../../../constants/issueStatuses';
 
 export default Object.entries(issueStatus).map(([value, props]) => ({
   value,

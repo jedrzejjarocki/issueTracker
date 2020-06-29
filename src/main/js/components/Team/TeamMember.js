@@ -43,6 +43,7 @@ TeamMember.propTypes = {
     role: PropTypes.oneOf(['LEADER', 'DEVELOPER']).isRequired,
   }).isRequired,
   userRole: PropTypes.oneOf(['LEADER', 'DEVELOPER']).isRequired,
+  currentUserId: PropTypes.number.isRequired,
 };
 
 export default TeamMember;

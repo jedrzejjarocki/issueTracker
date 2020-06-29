@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {Select} from 'material-ui-formik-components/Select';
 import {TextField} from 'material-ui-formik-components/TextField';
 import * as propTypes from '../../propTypes';
 import actions from '../../redux/actions/actions';
 import DialogForm from '../forms/DialogForm';
-import FormField from '../forms/FormField';
-import memberRoleOptions from '../forms/memberRoleOptions';
+import memberRoleOptions from '../forms/selectOptions/memberRoleOptions';
 import {BASE_URL} from '../../api/commons';
+import BasicTextField from '../forms/fields/BasicTextField';
+import SelectField from '../forms/fields/SelectField';
 
 const schema = yup.object().shape({
   email: yup.string().email('Must be valid email'),
@@ -79,25 +79,23 @@ const InviteUser = ({
         submitButtonText="Invite"
         validationSchema={schema}
         initialValues={initialValues}
-        renderFields={({ errors, touched }) => (
+        renderFields={(formikProps) => (
           <>
-            <FormField
+            <SelectField
               name="projectId"
               label="Project"
-              component={Select}
               options={projectsOptions}
             />
-            <FormField
+            <BasicTextField
+              formikProps={formikProps}
+              autoFocus
               required
               name="email"
-              error={errors.email}
-              touched={touched.email}
               component={TextField}
             />
-            <FormField
+            <SelectField
               name="role"
               label="Role"
-              component={Select}
               options={memberRoleOptions}
             />
           </>

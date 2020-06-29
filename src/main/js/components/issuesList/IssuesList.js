@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {Chip, List, ListItem, ListItemIcon, ListItemText, makeStyles, Typography,} from '@material-ui/core';
 import * as propTypes from '../../propTypes';
 import issueTypes from '../../constants/issueTypes';
-import issueStatus from '../../constants/issuStatuses';
+import issueStatus from '../../constants/issueStatuses';
 import RouterLink from '../commons/RouterLink';
 import UserAvatar from '../commons/UserAvatar';
 import {getIssuesByListId} from '../../redux/selectors';

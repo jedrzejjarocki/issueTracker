@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import * as yup from 'yup';
-import {TextField} from 'material-ui-formik-components';
 import {useLocation} from 'react-router-dom';
 import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
 import DialogForm from './DialogForm';
-import FormField from './FormField';
+import BasicTextField from './fields/BasicTextField';
 
 const schema = yup.object().shape({
   username: yup.string().required('Must not be empty'),
   email: yup.string().email('Must be valid email'),
-  password: yup.string().required('Must be 8 characters or more'),
+  password: yup.string().min(8, 'Must be at least 8 characters long')
+    .max(128, 'Must be at most 128 characters long')
+    .required('Must be 8 characters or more'),
   confirmPassword: yup.string()
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
@@ -63,39 +64,32 @@ const RegisterForm = ({ setMessage, isOpen }) => {
         submitButtonText="Sign up"
         closeOnSubmit={false}
         isOpen={isOpen}
-        renderFields={({ errors, touched }) => (
+        renderFields={(formikProps) => (
           <>
-            <FormField
-              autoFocus
+            <BasicTextField
+              autofocus
               required
+              formikProps={formikProps}
               name="username"
-              error={errors.username || responseError}
-              touched={touched.username}
-              component={TextField}
+              error={responseError}
             />
-            <FormField
+            <BasicTextField
               required
+              formikProps={formikProps}
               name="email"
-              error={errors.email}
-              touched={touched.email}
-              component={TextField}
             />
-            <FormField
+            <BasicTextField
               required
+              formikProps={formikProps}
               name="password"
               type="password"
-              error={errors.password}
-              touched={touched.password}
-              component={TextField}
             />
-            <FormField
+            <BasicTextField
               required
+              formikProps={formikProps}
               name="confirmPassword"
               type="password"
               label="Confirm password"
-              error={errors.confirmPassword}
-              touched={touched.confirmPassword}
-              component={TextField}
             />
           </>
         )}
@@ -106,6 +100,7 @@ const RegisterForm = ({ setMessage, isOpen }) => {
 
 RegisterForm.propTypes = {
   setMessage: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = {

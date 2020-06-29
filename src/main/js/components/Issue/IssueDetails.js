@@ -3,23 +3,23 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {Card, Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
-import {Select} from 'material-ui-formik-components/Select';
-import {TextField} from 'material-ui-formik-components/TextField';
 import {Form, Formik} from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
 import * as yup from 'yup';
 import axios from 'axios';
 import actions from '../../redux/actions/actions';
 import * as propTypes from '../../propTypes';
-import FormField from '../forms/FormField';
-import teamMembersOptions from '../forms/TeamMembersOptions';
+import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
 import RouterLink from '../commons/RouterLink';
-import issueTypeOptions from '../forms/issueTypeOptions';
+import issueTypeOptions from '../forms/selectOptions/issueTypeOptions';
 import SubmitButton from '../forms/SubmitButton';
 import {BASE_URL} from '../../api/commons';
-import issueStatusOptions from '../forms/issueStatusOptions';
+import issueStatusOptions from '../forms/selectOptions/issueStatusOptions';
 import {getTeamMembers} from '../../redux/selectors';
 import DeleteIssue from './DeleteIssue';
+import SelectField from '../forms/fields/SelectField';
+import BasicTextField from '../forms/fields/BasicTextField';
+import TextAreaField from '../forms/fields/TextAreaField';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -127,54 +127,40 @@ const IssueDetails = ({
               }}
               validationSchema={schema}
             >
-              {({ errors, touched, dirty }) => (
+              {(formikProps) => (
                 <Form>
-                  <FormField
-                    required
+                  <SelectField
                     name="type"
                     label="Issue type"
-                    component={Select}
                     className={classes.halfWidth}
                     options={issueTypeOptions}
                   />
-                  <FormField
-                    required
+                  <SelectField
                     name="status"
-                    component={Select}
-                    error={errors.status}
-                    touched={touched.status}
                     options={issueStatusOptions}
                     className={classes.halfWidth}
                   />
-                  <FormField
+                  <BasicTextField
+                    formikProps={formikProps}
                     required
                     name="summary"
-                    component={TextField}
-                    error={errors.summary}
-                    touched={touched.summary}
                   />
-                  <FormField
-                    multiline
-                    rows={8}
-                    name="description"
-                    component={TextField}
-                  />
-                  <FormField
+                  <TextAreaField name="description" />
+                  <SelectField
                     name="assigneeId"
                     label="Assignee"
                     className={classes.halfWidth}
-                    component={Select}
                     options={teamMembersOptions(teamMembers, userId)}
                   />
-                  <FormField
+                  <BasicTextField
+                    formikProps={formikProps}
                     name="storyPointsEstimate"
                     label="Story points estimate"
                     type="number"
                     inputProps={{ min: '0', step: '1' }}
-                    component={TextField}
                     className={classes.halfWidth}
                   />
-                  {dirty && <SubmitButton />}
+                  {formikProps.dirty && <SubmitButton />}
                 </Form>
               )}
             </Formik>

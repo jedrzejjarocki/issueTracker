@@ -1,18 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {TextField} from 'material-ui-formik-components/TextField';
-import {Select} from 'material-ui-formik-components/Select';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import {withRouter} from 'react-router-dom';
 import {makeStyles, MenuItem, TextField as BaseTextField} from '@material-ui/core';
 import * as propTypes from '../../propTypes';
-import FormField from '../forms/FormField';
 import actions from '../../redux/actions/actions';
-import teamMembersOptions from '../forms/TeamMembersOptions';
-import issuesListsOptions from '../forms/IssuesListsOptions';
-import issueTypeOptions from '../forms/issueTypeOptions';
+import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
+import issuesListsOptions from '../forms/selectOptions/IssuesListsOptions';
+import issueTypeOptions from '../forms/selectOptions/issueTypeOptions';
 import DialogForm from '../forms/DialogForm';
 import {BASE_URL} from '../../api/commons';
 import {
@@ -22,6 +19,9 @@ import {
   getSprintsByProjectId,
   getTeamMembers,
 } from '../../redux/selectors';
+import SelectField from '../forms/fields/SelectField';
+import BasicTextField from '../forms/fields/BasicTextField';
+import TextAreaField from '../forms/fields/TextAreaField';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -106,7 +106,7 @@ const CreateIssue = ({
       submitButtonText="Create"
       toggleButtonText="Create"
       initialValues={initialValues}
-      renderFields={({ errors, touched }) => (
+      renderFields={(formikProps) => (
         <>
           <BaseTextField
             required
@@ -128,51 +128,41 @@ const CreateIssue = ({
           </BaseTextField>
 
           {currentProjectId !== null && (
-          <FormField
-            name="listId"
-            label="Sprint"
-            className={classes.halfWidth}
-            component={Select}
-            options={issuesListsOptions(issuesLists)}
-          />
+            <SelectField
+              name="listId"
+              label="Sprint"
+              options={issuesListsOptions(issuesLists)}
+              className={classes.halfWidth}
+            />
           )}
 
-          <FormField
-            required
+          <SelectField
+            formikProps={formikProps}
             name="type"
             label="Issue type"
-            component={Select}
             className={classes.halfWidth}
             options={issueTypeOptions}
           />
-          <FormField
+          <BasicTextField
             autoFocus
             required
+            formikProps={formikProps}
             name="summary"
-            error={errors.summary}
-            touched={touched.summary}
-            component={TextField}
           />
-          <FormField
-            multiline
-            rows={8}
-            name="description"
-            component={TextField}
-          />
-          <FormField
+          <TextAreaField name="description" />
+          <SelectField
             name="assigneeId"
             label="Assignee"
             className={classes.halfWidth}
-            component={Select}
             options={teamMembersOptions(teamMembers, user.id)}
           />
-          <FormField
+          <BasicTextField
             name="storyPointsEstimate"
             label="Story points estimate"
             type="number"
             inputProps={{ min: '0', step: '1' }}
-            component={TextField}
             className={classes.halfWidth}
+            formikProps={formikProps}
           />
         </>
       )}

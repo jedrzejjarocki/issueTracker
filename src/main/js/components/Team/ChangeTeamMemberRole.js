@@ -10,7 +10,7 @@ import SubmitButton from '../forms/SubmitButton';
 import {BASE_URL} from '../../api/commons';
 
 const ChangeRole = ({
-  member, updateMemberRole, setMessage, history,
+  member, updateMemberRole, setMessage,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
@@ -68,9 +68,7 @@ const ChangeRole = ({
 ChangeRole.propTypes = {
   member: teamMember.isRequired,
   updateMemberRole: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  setMessage: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {

@@ -6,7 +6,7 @@ import {TextField} from 'material-ui-formik-components';
 import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
 import DialogForm from '../forms/DialogForm';
-import FormField from '../forms/FormField';
+import FormField from '../forms/fields/FormField';
 
 const CreateProject = ({ first, addProject, setMessage }) => {
   const initialValues = {

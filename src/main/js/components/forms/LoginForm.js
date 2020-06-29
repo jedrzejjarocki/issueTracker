@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import * as yup from 'yup';
-import {TextField} from 'material-ui-formik-components/TextField';
 import DialogForm from './DialogForm';
 import actions from '../../redux/actions/actions';
 import RouterLink from '../commons/RouterLink';
 import {BASE_URL} from '../../api/commons';
-import FormField from './FormField';
+import BasicTextField from './fields/BasicTextField';
 
 const LoginForm = ({ setUser, setMessage, isOpen }) => {
   const schema = yup.object().shape({
@@ -44,21 +43,17 @@ const LoginForm = ({ setUser, setMessage, isOpen }) => {
         title="Sign in"
         submitButtonText="Sign in"
         isOpen={isOpen}
-        renderFields={({ errors, touched }) => (
+        renderFields={(formikProps) => (
           <>
-            <FormField
+            <BasicTextField
               autoFocus
-              error={errors.username}
-              touched={touched.username}
               name="username"
-              component={TextField}
+              formikProps={formikProps}
             />
-            <FormField
+            <BasicTextField
               name="password"
               type="password"
-              touched={touched.path}
-              error={errors.password}
-              component={TextField}
+              formikProps={formikProps}
             />
           </>
         )}

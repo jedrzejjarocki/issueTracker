@@ -1,6 +1,6 @@
 import {ListItem, ListItemAvatar, ListItemText, Typography,} from '@material-ui/core';
 import React from 'react';
-import UserAvatar from '../commons/UserAvatar';
+import UserAvatar from '../../commons/UserAvatar';
 
 export default (teamMembers, currentUserId) => {
   const members = [

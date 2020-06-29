@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, Tooltip,} from '@material-ui/core';
 import {Form, Formik} from 'formik';
-import {children} from '../../propTypes';
+import * as propTypes from '../../propTypes';
 import SubmitButton from './SubmitButton';
 
 const WithTooltip = ({ children, tooltipText }) => (
@@ -103,7 +103,7 @@ WithTooltip.defaultProps = {
 };
 
 WithTooltip.propTypes = {
-  children: children.isRequired,
+  children: propTypes.children.isRequired,
   tooltipText: PropTypes.string,
 };
 

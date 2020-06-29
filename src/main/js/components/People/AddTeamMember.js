@@ -4,12 +4,11 @@ import {useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import {IconButton} from '@material-ui/core';
-import {Select} from 'material-ui-formik-components/Select';
-import FormField from '../forms/FormField';
 import DialogForm from '../forms/DialogForm';
 import {BASE_URL} from '../../api/commons';
 import actions from '../../redux/actions/actions';
-import memberRoleOptions from '../forms/memberRoleOptions';
+import memberRoleOptions from '../forms/selectOptions/memberRoleOptions';
+import SelectField from '../forms/fields/SelectField';
 
 const isCurrentUserLeaderInProject = (project, currentUserId, teamMembers) => (
   Object.values(teamMembers).some(({ userId, role, projectId }) => (
@@ -77,16 +76,14 @@ const AddTeamMember = ({
     <DialogForm
       renderFields={() => (
         <>
-          <FormField
+          <SelectField
             name="projectId"
             label="Project"
-            component={Select}
             options={projectsOptions}
           />
-          <FormField
+          <SelectField
             name="role"
             label="Role"
-            component={Select}
             options={memberRoleOptions}
           />
         </>

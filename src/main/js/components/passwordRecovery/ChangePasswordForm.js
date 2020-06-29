@@ -5,12 +5,11 @@ import PropTypes from 'prop-types';
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import {Form, Formik} from 'formik';
 import axios from 'axios';
-import {TextField} from 'material-ui-formik-components/TextField';
 import * as yup from 'yup';
 import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
-import FormField from '../forms/FormField';
 import SubmitButton from '../forms/SubmitButton';
+import BasicTextField from '../forms/fields/BasicTextField';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -68,34 +67,31 @@ const ChangePasswordForm = ({ token, setMessage }) => {
         onSubmit={onSubmit}
         validationSchema={schema}
       >
-        {({ errors, touched }) => (
+        {(formikProps) => (
           <Form>
             <CardContent>
               <Typography variant="h6" component="h2">
                 Change password
               </Typography>
-              <FormField
+              <BasicTextField
+                formikProps={formikProps}
                 required
-                error={errors.password}
-                touched={touched.password}
                 type="password"
                 name="password"
-                component={TextField}
               />
-              <FormField
+              <BasicTextField
                 required
                 name="confirmPassword"
-                type="password"
                 label="Confirm password"
-                error={errors.confirmPassword}
-                component={TextField}
+                type="password"
+                formikProps={formikProps}
               />
             </CardContent>
             <CardActions className={classes.justifyRight}>
               <RouterLink to="/">
                 <Button color="primary">Cancel</Button>
               </RouterLink>
-              <SubmitButton errors={errors} text="Change" />
+              <SubmitButton errors={formikProps.errors} text="Change" />
             </CardActions>
           </Form>
         )}
