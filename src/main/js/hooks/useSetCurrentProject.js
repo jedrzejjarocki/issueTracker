@@ -1,15 +1,12 @@
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import creators from '../redux/actions/actions';
+import {setCurrentProject} from '../redux/actions/ui';
 
 export default (userRole) => {
   const dispatch = useDispatch();
   const { projectId } = useParams();
   useEffect(() => {
-    dispatch(creators.setCurrentProject({
-      id: +projectId,
-      userRole,
-    }));
+    dispatch(setCurrentProject(+projectId, userRole));
   }, [projectId, userRole]);
 };

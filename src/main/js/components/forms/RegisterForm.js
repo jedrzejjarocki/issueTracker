@@ -1,25 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import axios from 'axios';
-import * as yup from 'yup';
 import {useLocation} from 'react-router-dom';
-import actions from '../../redux/actions/actions';
-import {BASE_URL} from '../../api/commons';
+import schema from './validation/schemas/registerForm';
 import DialogForm from './DialogForm';
 import BasicTextField from './fields/BasicTextField';
+import {register} from '../../redux/actions/user';
 
-const schema = yup.object().shape({
-  username: yup.string().required('Must not be empty'),
-  email: yup.string().email('Must be valid email'),
-  password: yup.string().min(8, 'Must be at least 8 characters long')
-    .max(128, 'Must be at most 128 characters long')
-    .required('Must be 8 characters or more'),
-  confirmPassword: yup.string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match'),
-});
-
-const RegisterForm = ({ setMessage, isOpen }) => {
+const RegisterForm = ({ register, isOpen }) => {
   const [responseError, setResponseError] = useState(null);
 
   const initialValues = {
@@ -31,26 +19,9 @@ const RegisterForm = ({ setMessage, isOpen }) => {
 
   const token = useLocation().search.split('=')[1];
 
-  const onSubmit = async ({ username, password, email }, _, toggle) => {
-    try {
-      let url = `${BASE_URL}/users`;
-      if (token) url += `?token=${token}`;
-      const { status } = await axios.post(url, {
-        username,
-        password,
-        email,
-      });
-
-      if (status === 201) {
-        setMessage({
-          content: 'Account created!',
-          severity: 'success',
-        });
-        toggle();
-      }
-    } catch (err) {
-      setResponseError(err.response.data.message);
-    }
+  const onSubmit = ({ username, password, email }, _, toggle) => {
+    const user = { username, password, email };
+    register(user, token, toggle);
   };
 
   return (
@@ -67,7 +38,7 @@ const RegisterForm = ({ setMessage, isOpen }) => {
         renderFields={(formikProps) => (
           <>
             <BasicTextField
-              autofocus
+              autoFocus
               required
               formikProps={formikProps}
               name="username"
@@ -99,12 +70,8 @@ const RegisterForm = ({ setMessage, isOpen }) => {
 };
 
 RegisterForm.propTypes = {
-  setMessage: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = {
-  setMessage: actions.setMessage,
-};
-
-export default connect(null, mapDispatchToProps)(RegisterForm);
+export default connect(null, { register })(RegisterForm);

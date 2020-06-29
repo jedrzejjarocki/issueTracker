@@ -2,16 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {MenuItem} from '@material-ui/core';
-import axios from 'axios';
 import {sprint as sprintType} from '../../../propTypes';
-import actions from '../../../redux/actions/actions';
 import SprintForm from '../../forms/SprintForm';
-import {BASE_URL} from '../../../api/commons';
+import {fetchUpdateSprint} from '../../../redux/actions/issuesLists';
 
 const toggleComponent = (handleToggle) => <MenuItem onClick={handleToggle}>edit sprint</MenuItem>;
 
 const EditSprint = ({
-  sprint, projectId, updateSprint, setMessage,
+  sprint, projectId, fetchUpdateSprint,
 }) => {
   const onSubmit = async ({ id, name, goal }) => {
     const requestBody = {
@@ -23,21 +21,7 @@ const EditSprint = ({
     requestBody.project = {
       id: projectId,
     };
-
-    try {
-      const { data } = await axios.put(`${BASE_URL}/sprints`, requestBody);
-      updateSprint({
-        projectId,
-        sprint: data,
-      });
-    } catch (err) {
-      if (err.response.status <= 400) {
-        setMessage({
-          content: 'Something went wrong, try again',
-          severity: 'error',
-        });
-      }
-    }
+    fetchUpdateSprint(requestBody, projectId);
   };
 
   return (
@@ -53,14 +37,8 @@ const EditSprint = ({
 
 EditSprint.propTypes = {
   sprint: sprintType.isRequired,
-  updateSprint: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
+  fetchUpdateSprint: PropTypes.func.isRequired,
   projectId: PropTypes.number.isRequired,
 };
 
-const mapDispatchToProps = {
-  updateSprint: actions.updateSprint,
-  setMessage: actions.setMessage,
-};
-
-export default connect(null, mapDispatchToProps)(EditSprint);
+export default connect(null, { fetchUpdateSprint })(EditSprint);

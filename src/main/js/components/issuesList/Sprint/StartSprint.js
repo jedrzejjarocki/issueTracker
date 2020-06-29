@@ -1,21 +1,19 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {addMinutes, addWeeks} from 'date-fns';
-import axios from 'axios';
 import DateFnsUtils from '@date-io/date-fns';
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import {connect} from 'react-redux';
 import {makeStyles} from '@material-ui/core';
 import durationOptions from '../../forms/selectOptions/sprintDurationOptions';
-import * as propTypes from '../../../propTypes';
-import actions from '../../../redux/actions/actions';
+import {role, sprint as sprintType} from '../../../propTypes';
 import DialogForm from '../../forms/DialogForm';
-import {BASE_URL} from '../../../api/commons';
 import {getSprintsByProjectId} from '../../../redux/selectors';
 import BasicTextField from '../../forms/fields/BasicTextField';
 import SelectField from '../../forms/fields/SelectField';
 import TextAreaField from '../../forms/fields/TextAreaField';
 import schema from '../../forms/validation/schemas/startSprint';
+import {fetchUpdateSprint} from '../../../redux/actions/issuesLists';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -37,7 +35,7 @@ const canBeStarted = (sprint, project) => {
 };
 
 const StartSprint = ({
-  sprint, projectId, updateSprint, sprints, userRole,
+  sprint, projectId, fetchUpdateSprint, sprints, userRole,
 }) => {
   const classes = useStyles();
 
@@ -63,15 +61,7 @@ const StartSprint = ({
       '@type': 'Sprint',
     };
 
-    try {
-      const { data } = await axios.put(`${BASE_URL}/sprints`, requestBody);
-      updateSprint({
-        projectId,
-        sprint: data,
-      });
-    } catch (error) {
-      console.log(error.response);
-    }
+    fetchUpdateSprint(requestBody, projectId);
   };
 
   return (
@@ -133,11 +123,11 @@ const StartSprint = ({
 };
 
 StartSprint.propTypes = {
-  sprint: propTypes.sprint.isRequired,
+  sprint: sprintType.isRequired,
   projectId: PropTypes.number.isRequired,
-  updateSprint: PropTypes.func.isRequired,
-  sprints: PropTypes.arrayOf(propTypes.sprint).isRequired,
-  userRole: propTypes.role.isRequired,
+  fetchUpdateSprint: PropTypes.func.isRequired,
+  sprints: PropTypes.arrayOf(sprintType).isRequired,
+  userRole: role.isRequired,
 };
 
 const mapStateToProps = (state, { projectId }) => ({
@@ -145,8 +135,4 @@ const mapStateToProps = (state, { projectId }) => ({
   userRole: state.ui.currentProjectUserRole,
 });
 
-const mapDispatchToProps = {
-  updateSprint: actions.updateSprint,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(StartSprint);
+export default connect(mapStateToProps, { fetchUpdateSprint })(StartSprint);

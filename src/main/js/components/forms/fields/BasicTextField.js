@@ -26,7 +26,7 @@ BasicTextField.propTypes = {
   type: PropTypes.string,
   error: PropTypes.string,
   formikProps: PropTypes.shape({
-    touched: PropTypes.objectOf(PropTypes.string),
+    touched: PropTypes.objectOf(PropTypes.bool),
     errors: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
 };

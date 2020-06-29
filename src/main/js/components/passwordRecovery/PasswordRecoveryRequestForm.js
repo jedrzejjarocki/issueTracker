@@ -5,12 +5,10 @@ import {Link as RouterLink, useHistory} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Card, CardActions, CardContent, Typography,} from '@material-ui/core';
 import {Form, Formik} from 'formik';
-import axios from 'axios';
 import schema from '../forms/validation/schemas/passwordRecoveryForm';
-import actions from '../../redux/actions/actions';
-import {BASE_URL} from '../../api/commons';
 import SubmitButton from '../forms/SubmitButton';
 import BasicTextField from '../forms/fields/BasicTextField';
+import {requestPasswordRecovery} from '../../redux/actions/user';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -28,27 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PasswordRecoveryRequestForm = ({ setMessage }) => {
+const PasswordRecoveryRequestForm = ({ requestPasswordRecovery }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const onSubmit = async (credentials) => {
-    try {
-      await axios.post(`${BASE_URL}/users/reset-password`, credentials);
-      setMessage({
-        content: 'Check your email for password recovery link',
-        severity: 'success',
-      });
-      history.push('/');
-    } catch (err) {
-      if (err.response.status === 401) {
-        setMessage({
-          content: "User with a given email does't exists",
-          severity: 'error',
-        });
-      }
-    }
-  };
+  const onSubmit = (credentials) => requestPasswordRecovery(credentials, history);
 
   return (
     <Card variant="outlined">
@@ -86,11 +68,7 @@ const PasswordRecoveryRequestForm = ({ setMessage }) => {
 };
 
 PasswordRecoveryRequestForm.propTypes = {
-  setMessage: PropTypes.func.isRequired,
+  requestPasswordRecovery: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  setMessage: actions.setMessage,
-};
-
-export default connect(null, mapDispatchToProps)(PasswordRecoveryRequestForm);
+export default connect(null, { requestPasswordRecovery })(PasswordRecoveryRequestForm);

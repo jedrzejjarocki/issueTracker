@@ -1,14 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
 import {useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
-import axios from 'axios';
 import {IconButton} from '@material-ui/core';
+import {project, teamMember, user} from '../../propTypes';
 import DialogForm from '../forms/DialogForm';
-import {BASE_URL} from '../../api/commons';
-import actions from '../../redux/actions/actions';
 import memberRoleOptions from '../forms/selectOptions/memberRoleOptions';
 import SelectField from '../forms/fields/SelectField';
+import {fetchAddTeamMember} from '../../redux/actions/teamMember';
 
 const isCurrentUserLeaderInProject = (project, currentUserId, teamMembers) => (
   Object.values(teamMembers).some(({ userId, role, projectId }) => (
@@ -32,11 +32,11 @@ const getAvailableProjects = (user, projects, teamMembers, currentUserId) => {
 };
 
 const AddTeamMember = ({
-  projects, user, teamMembers, currentUserId, addTeamMember, setMessage,
+  projects, user, teamMembers, currentUserId, fetchAddTeamMember,
 }) => {
   const history = useHistory();
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = (values) => {
     const requestBody = {
       user: {
         id: user.id,
@@ -46,19 +46,8 @@ const AddTeamMember = ({
         id: values.projectId,
       },
     };
-    try {
-      const { data } = await axios.post(`${BASE_URL}/members`, requestBody);
-      const payload = { ...data };
-      payload.username = user.username;
-      addTeamMember(payload);
-      setMessage({
-        content: 'Team member successfully added',
-        severity: 'success',
-      });
-      history.push('/app/people');
-    } catch (err) {
-      console.log(err);
-    }
+
+    fetchAddTeamMember(requestBody, user.username, history);
   };
 
   const projectsOptions = getAvailableProjects(user, projects, teamMembers, currentUserId)
@@ -101,10 +90,12 @@ const AddTeamMember = ({
   );
 };
 
-AddTeamMember.propTypes = {};
-
-const mapDispatchToProps = {
-  addTeamMember: actions.addTeamMember,
-  setMessage: actions.setMessage,
+AddTeamMember.propTypes = {
+  projects: PropTypes.arrayOf(project).isRequired,
+  user: user.isRequired,
+  teamMembers: PropTypes.arrayOf(teamMember).isRequired,
+  currentUserId: PropTypes.number.isRequired,
+  fetchAddTeamMember: PropTypes.func.isRequired,
 };
-export default connect(null, mapDispatchToProps)(AddTeamMember);
+
+export default connect(null, { fetchAddTeamMember })(AddTeamMember);

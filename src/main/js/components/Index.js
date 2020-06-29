@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 const Index = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
-  console.log(pathname);
   return (
     <>
       {pathname === '/reset-password'

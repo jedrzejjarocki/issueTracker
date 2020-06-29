@@ -5,15 +5,13 @@ import {withRouter} from 'react-router-dom';
 import {Card, Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
 import {Form, Formik} from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
-import axios from 'axios';
 import schema from '../forms/validation/schemas/updateIssue';
-import actions from '../../redux/actions/actions';
 import * as propTypes from '../../propTypes';
 import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
 import RouterLink from '../commons/RouterLink';
 import issueTypeOptions from '../forms/selectOptions/issueTypeOptions';
 import SubmitButton from '../forms/SubmitButton';
-import {BASE_URL} from '../../api/commons';
+import {fetchUpdateIssue} from '../../redux/actions/issue';
 import issueStatusOptions from '../forms/selectOptions/issueStatusOptions';
 import {getTeamMembers} from '../../redux/selectors';
 import DeleteIssue from './DeleteIssue';
@@ -47,41 +45,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const IssueDetails = ({
-  project, issue, userId, updateIssue, setMessage, history, teamMembers,
+  project, issue, userId, fetchUpdateIssue, history, teamMembers,
 }) => {
   const classes = useStyles();
 
-  const onSubmit = async (values) => {
-    try {
-      const requestBody = { ...values };
-      delete requestBody.assigneeId;
-      delete requestBody.listId;
+  const onSubmit = (values) => {
+    const request = { ...values };
+    delete request.assigneeId;
+    delete request.listId;
 
-      requestBody.assignee = values.assigneeId
-        ? {
-          id: values.assigneeId,
-        }
-        : null;
+    request.assignee = values.assigneeId
+      ? {
+        id: values.assigneeId,
+      }
+      : null;
 
-      requestBody.list = {
-        id: values.listId,
-        '@type': project.backlog === values.listId ? 'Backlog' : 'Sprint',
-      };
-
-      const { data } = await axios.put(`${BASE_URL}/issues`, requestBody);
-      const issueData = { ...data };
-      issueData.assignee = data.assignee ? data.assignee.id : null;
-      updateIssue(issueData);
-
-      // force rerender
-      history.push(`/app/projects/${project.id}/board/issues/${values.id}`);
-    } catch (err) {
-      console.log(err);
-      setMessage({
-        content: err.response.data.message,
-        severity: 'error',
-      });
-    }
+    request.list = {
+      id: values.listId,
+      '@type': project.backlog === values.listId ? 'Backlog' : 'Sprint',
+    };
+    fetchUpdateIssue(request, project.id, history);
   };
 
   return (
@@ -164,8 +147,7 @@ IssueDetails.propTypes = {
   project: propTypes.project.isRequired,
   issue: propTypes.issue.isRequired,
   userId: PropTypes.number.isRequired,
-  updateIssue: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
+  fetchUpdateIssue: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -181,11 +163,6 @@ const mapStateToProps = (state, { match }) => {
   };
 };
 
-const mapDispatchToProps = {
-  updateIssue: actions.updateIssue,
-  setMessage: actions.setMessage,
-};
-
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(IssueDetails),
+  connect(mapStateToProps, { fetchUpdateIssue })(IssueDetails),
 );

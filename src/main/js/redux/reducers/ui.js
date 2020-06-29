@@ -1,4 +1,4 @@
-import * as actionType from '../actions/types';
+import {SET_CURRENT_PROJECT, SET_LOADING, SET_MESSAGE} from '../actions/ui';
 
 const initialState = {
   message: null,
@@ -9,19 +9,19 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case actionType.setLoading:
+    case SET_LOADING:
       return {
         ...state,
         loading: payload,
       };
 
-    case actionType.setMessage:
+    case SET_MESSAGE:
       return {
         ...state,
         message: payload,
       };
 
-    case actionType.setCurrentProject:
+    case SET_CURRENT_PROJECT:
       return {
         ...state,
         currentProject: payload.id,

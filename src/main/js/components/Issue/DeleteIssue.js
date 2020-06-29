@@ -1,35 +1,19 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import {issue as issueType} from '../../propTypes';
-import actions from '../../redux/actions/actions';
+import {fetchDeleteIssue} from '../../redux/actions/issue';
 import SubmitButton from '../forms/SubmitButton';
-import {BASE_URL} from '../../api/commons';
 
 const DeleteIssue = ({
-  issue, deleteIssue, history, projectId,
+  issue, fetchDeleteIssue, history, projectId,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
 
-  const handleDelete = async () => {
-    try {
-      const { status } = await axios.delete(`${BASE_URL}/issues/${issue.id}`);
-      if (status === 200) {
-        deleteIssue({
-          listId: issue.listId,
-          issueId: issue.id,
-        });
-        history.push(`/app/projects/${projectId}/board`);
-        toggleOpen();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const handleDelete = () => fetchDeleteIssue(issue.id, issue.listId, projectId, history);
 
   return (
     <>
@@ -61,14 +45,10 @@ const DeleteIssue = ({
 DeleteIssue.propTypes = {
   issue: issueType.isRequired,
   projectId: PropTypes.number.isRequired,
-  deleteIssue: PropTypes.func.isRequired,
+  fetchDeleteIssue: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-const mapDispatchToProps = {
-  deleteIssue: actions.deleteIssue,
-};
-
-export default connect(null, mapDispatchToProps)(DeleteIssue);
+export default connect(null, { fetchDeleteIssue })(DeleteIssue);

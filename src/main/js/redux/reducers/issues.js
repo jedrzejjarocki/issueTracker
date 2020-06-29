@@ -1,4 +1,7 @@
-import {addIssue, deleteIssue, deleteSprint, deleteTeamMember, setIssues, updateIssue,} from '../actions/types';
+import {ADD_ISSUE, DELETE_ISSUE, SET_ISSUES, UPDATE_ISSUE,} from '../actions/issue';
+import {DELETE_MEMBER} from '../actions/teamMember';
+
+import {DELETE_SPRINT} from '../actions/issuesLists';
 
 const setIssue = (state, issue) => {
   const stateCopy = { ...state };
@@ -8,22 +11,22 @@ const setIssue = (state, issue) => {
 
 export default (state = null, { type, payload }) => {
   switch (type) {
-    case setIssues:
+    case SET_ISSUES:
       return payload || {};
 
-    case addIssue:
+    case ADD_ISSUE:
       return setIssue(state, payload);
 
-    case updateIssue:
+    case UPDATE_ISSUE:
       return setIssue(state, payload);
 
-    case deleteIssue: {
+    case DELETE_ISSUE: {
       const updatedState = { ...state };
       delete updatedState[payload.issueId];
       return updatedState;
     }
 
-    case deleteSprint: {
+    case DELETE_SPRINT: {
       const updatedState = { ...state };
       Object.values(updatedState).map((issue) => {
         if (issue.listId === payload.sprint.id) {
@@ -33,7 +36,7 @@ export default (state = null, { type, payload }) => {
       return updatedState;
     }
 
-    case deleteTeamMember: {
+    case DELETE_MEMBER: {
       const updatedState = { ...state };
       Object.values(updatedState).map((issue) => {
         if (issue.assignee === payload.memberId) {

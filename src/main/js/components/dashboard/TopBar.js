@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 import {AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography,} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
+import {logout} from '../../redux/actions/user';
 import * as propTypes from '../../propTypes';
-import actions from '../../redux/actions/actions';
 import Dropdown from './Dropdown';
 import RouterLink from '../commons/RouterLink';
 import UserAvatar from '../commons/UserAvatar';
-import {BASE_URL} from '../../api/commons';
 import CreateIssue from './CreateIssue';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,18 +38,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TopBar = ({
-  user, projects, handleDrawerToggle, setUser, match,
+  user, projects, handleDrawerToggle, logout, match,
 }) => {
   const classes = useStyles();
-
-  const handleLogout = async () => {
-    try {
-      const { status } = await axios.post(`${BASE_URL}/logout`);
-      if (status === 200) setUser(null);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const isAllProjectsUrl = match.url === '/projects' && match.isExact;
   const hasProjects = projects && Object.keys(projects).length;
@@ -114,7 +103,7 @@ const TopBar = ({
               </IconButton>
             )}
           >
-            <Button onClick={handleLogout}>Log out</Button>
+            <Button onClick={logout}>Log out</Button>
           </Dropdown>
         </div>
       </Toolbar>
@@ -123,7 +112,7 @@ const TopBar = ({
 };
 
 TopBar.propTypes = {
-  setUser: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   user: propTypes.user.isRequired,
   projects: PropTypes.objectOf(propTypes.project).isRequired,
   handleDrawerToggle: PropTypes.func.isRequired,
@@ -138,8 +127,4 @@ const mapStateToProps = ({ user, projects }) => ({
   projects,
 });
 
-const mapDispatchToProps = {
-  setUser: actions.setUser,
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopBar));
+export default withRouter(connect(mapStateToProps, { logout })(TopBar));

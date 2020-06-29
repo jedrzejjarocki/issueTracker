@@ -1,12 +1,6 @@
-import {
-  addIssue,
-  addProject,
-  addSprint,
-  deleteIssue,
-  deleteSprint,
-  setIssuesLists,
-  updateSprint,
-} from '../actions/types';
+import {ADD_ISSUE, DELETE_ISSUE} from '../actions/issue';
+import {ADD_PROJECT} from '../actions/project';
+import {ADD_SPRINT, DELETE_SPRINT, SET_ISSUES_LISTS, UPDATE_SPRINT,} from '../actions/issuesLists';
 
 const setSprint = (state, payload) => {
   const stateCopy = { ...state };
@@ -16,28 +10,26 @@ const setSprint = (state, payload) => {
 
 export default (state = null, { type, payload }) => {
   switch (type) {
-    case setIssuesLists:
+    case SET_ISSUES_LISTS:
       return payload;
 
-    case addSprint:
+    case ADD_SPRINT:
+    case UPDATE_SPRINT:
       return setSprint(state, payload);
 
-    case updateSprint:
-      return setSprint(state, payload);
-
-    case deleteSprint: {
+    case DELETE_SPRINT: {
       const stateCopy = { ...state };
       delete stateCopy[payload.sprint.id];
       return stateCopy;
     }
 
-    case addIssue: {
+    case ADD_ISSUE: {
       const list = state[payload.listId];
       list.issues = [payload.id, ...list.issues];
       return state;
     }
 
-    case deleteIssue: {
+    case DELETE_ISSUE: {
       const list = state[payload.listId];
       const issues = [...list.issues];
       const issueIdx = issues.findIndex((i) => i === payload.issueId);
@@ -46,7 +38,7 @@ export default (state = null, { type, payload }) => {
       return state;
     }
 
-    case addProject: {
+    case ADD_PROJECT: {
       const stateCopy = { ...state };
       stateCopy[payload.backlog.id] = payload.backlog;
       return stateCopy;

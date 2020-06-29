@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import ProjectsList from '../Board/ProjectsList';
@@ -32,6 +33,12 @@ const MainContainer = ({ match }) => {
       </Switch>
     </main>
   );
+};
+
+MainContainer.propTypes = {
+  match: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default withRouter(MainContainer);

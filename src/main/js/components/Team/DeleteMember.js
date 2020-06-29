@@ -4,39 +4,18 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import axios from 'axios';
-import actions from '../../redux/actions/actions';
 import SubmitButton from '../forms/SubmitButton';
 import {teamMember} from '../../propTypes';
-import {BASE_URL} from '../../api/commons';
+import {fetchDeleteMember} from '../../redux/actions/teamMember';
 
 const DeleteMember = ({
-  member, currentProjectId, deleteTeamMember, setMessage,
+  member, currentProjectId, fetchDeleteMember,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
   const history = useHistory();
 
-  const handleDelete = async () => {
-    try {
-      const { status } = await axios.delete(`${BASE_URL}/members/${member.id}`);
-      if (status === 200) {
-        deleteTeamMember({
-          projectId: currentProjectId,
-          memberId: member.id,
-        });
-        history.push(`/app/projects/${currentProjectId}/team`);
-      }
-    } catch (err) {
-      if (err.response.status === 409) {
-        setMessage({
-          content: err.response.data.message,
-          severity: 'error',
-        });
-      }
-    }
-    toggleOpen();
-  };
+  const handleDelete = () => fetchDeleteMember(currentProjectId, member.id, history, toggleOpen);
 
   return (
     <>
@@ -67,18 +46,12 @@ const DeleteMember = ({
 
 DeleteMember.propTypes = {
   member: teamMember.isRequired,
-  deleteTeamMember: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
+  fetchDeleteMember: PropTypes.func.isRequired,
   currentProjectId: PropTypes.number.isRequired,
-};
-
-const mapDispatchToProps = {
-  deleteTeamMember: actions.deleteTeamMember,
-  setMessage: actions.setMessage,
 };
 
 const mapStateToProps = (state) => ({
   currentProjectId: state.ui.currentProject,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteMember);
+export default connect(mapStateToProps, { fetchDeleteMember })(DeleteMember);

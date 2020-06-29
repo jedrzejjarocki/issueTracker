@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import {teamMember} from '../../propTypes';
-import actions from '../../redux/actions/actions';
 import SubmitButton from '../forms/SubmitButton';
-import {BASE_URL} from '../../api/commons';
+import {changeRole} from '../../redux/actions/teamMember';
 
 const ChangeRole = ({
-  member, updateMemberRole, setMessage,
+  member, changeRole,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
@@ -27,21 +25,12 @@ const ChangeRole = ({
       role: member.role === 'DEVELOPER' ? 'LEADER' : 'DEVELOPER',
     };
 
-    try {
-      const { data } = await axios.put(`${BASE_URL}/members`, requestBody);
-      updateMemberRole(data);
-    } catch (err) {
-      setMessage({
-        content: err.response.data.message,
-        severity: 'error',
-      });
-    }
-    toggleOpen();
+    changeRole(requestBody, toggleOpen);
   };
 
   return (
     <>
-      <IconButton aria-label="delete" onClick={toggleOpen}>
+      <IconButton aria-label="edit" onClick={toggleOpen}>
         <EditOutlinedIcon fontSize="small" />
       </IconButton>
       <Dialog
@@ -51,7 +40,7 @@ const ChangeRole = ({
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle>Delete issue</DialogTitle>
+        <DialogTitle>Chenge role</DialogTitle>
         <DialogContent>
           <Typography>
             {`Are you sure you want to change role to ${member.role === 'DEVELOPER' ? 'LEADER' : 'DEVELOPER'}?`}
@@ -67,13 +56,7 @@ const ChangeRole = ({
 
 ChangeRole.propTypes = {
   member: teamMember.isRequired,
-  updateMemberRole: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
+  changeRole: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  updateMemberRole: actions.updateMemberRole,
-  setMessage: actions.setMessage,
-};
-
-export default connect(null, mapDispatchToProps)(ChangeRole);
+export default connect(null, { changeRole })(ChangeRole);

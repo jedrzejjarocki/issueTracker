@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {TextField} from 'material-ui-formik-components';
-import actions from '../../redux/actions/actions';
-import {BASE_URL} from '../../api/commons';
 import DialogForm from '../forms/DialogForm';
 import FormField from '../forms/fields/FormField';
+import {createProject} from '../../redux/actions/project';
 
-const CreateProject = ({ first, addProject, setMessage }) => {
+const CreateProject = ({ first, createProject }) => {
   const initialValues = {
     name: '',
     key: null,
@@ -16,21 +14,8 @@ const CreateProject = ({ first, addProject, setMessage }) => {
 
   const generateKey = (name) => name.split(' ')[0].slice(0, 8).toUpperCase();
 
-  const onSubmit = async ({ name, key }, { resetForm }) => {
-    try {
-      const { data } = await axios.post(`${BASE_URL}/projects`, {
-        name,
-        projectKey: key ? key.toUpperCase() : generateKey(name),
-      });
-      addProject(data);
-    } catch (err) {
-      if (err.response.status <= 400) {
-        setMessage({
-          content: 'Something went wrong, try again',
-          severity: 'error',
-        });
-      }
-    }
+  const onSubmit = ({ name, key }, { resetForm }) => {
+    createProject(name, key ? key.toUpperCase() : generateKey(name));
     resetForm();
   };
 
@@ -78,13 +63,9 @@ CreateProject.defaultProps = {
 
 CreateProject.propTypes = {
   first: PropTypes.bool,
-  addProject: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
+  createProject: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  addProject: actions.addProject,
-  setMessage: actions.setMessage,
-};
-
-export default connect(null, mapDispatchToProps)(CreateProject);
+export default connect(null, {
+  createProject,
+})(CreateProject);

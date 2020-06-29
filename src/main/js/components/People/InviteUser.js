@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {TextField} from 'material-ui-formik-components/TextField';
 import schema from '../forms/validation/schemas/inviteUserForm';
 import * as propTypes from '../../propTypes';
-import actions from '../../redux/actions/actions';
 import DialogForm from '../forms/DialogForm';
 import memberRoleOptions from '../forms/selectOptions/memberRoleOptions';
-import {BASE_URL} from '../../api/commons';
 import BasicTextField from '../forms/fields/BasicTextField';
 import SelectField from '../forms/fields/SelectField';
+import {inviteUser} from '../../redux/actions/teamMember';
 
 const isCurrentUserLeaderInProject = (project, currentUserId, teamMembers) => (
   Object.values(teamMembers).some(({ userId, role, projectId }) => (
@@ -28,7 +26,7 @@ const getAvailableProjects = (projects, currentUserId, teamMembers) => {
 };
 
 const InviteUser = ({
-  projects, currentUserId, teamMembers, setMessage,
+  projects, currentUserId, teamMembers, inviteUser,
 }) => {
   const handleSubmit = async ({ role, email, projectId }) => {
     const requestBody = {
@@ -39,18 +37,7 @@ const InviteUser = ({
       role,
     };
 
-    try {
-      await axios.post(`${BASE_URL}/members/invitations`, requestBody);
-      setMessage({
-        content: 'User has been invited',
-        severity: 'success',
-      });
-    } catch (err) {
-      setMessage({
-        content: 'Something went wrong, try again',
-        severity: 'error',
-      });
-    }
+    inviteUser(requestBody);
   };
 
   const projectsOptions = getAvailableProjects(projects, currentUserId, teamMembers)
@@ -103,14 +90,10 @@ const InviteUser = ({
 };
 
 InviteUser.propTypes = {
-  setMessage: PropTypes.func.isRequired,
+  inviteUser: PropTypes.func.isRequired,
   projects: PropTypes.arrayOf(propTypes.project).isRequired,
   teamMembers: PropTypes.arrayOf(propTypes.teamMember).isRequired,
   currentUserId: PropTypes.number.isRequired,
 };
 
-const mapDispatchToProps = {
-  setMessage: actions.setMessage,
-};
-
-export default connect(null, mapDispatchToProps)(InviteUser);
+export default connect(null, { inviteUser })(InviteUser);

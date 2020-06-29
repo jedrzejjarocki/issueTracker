@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
@@ -11,7 +10,7 @@ import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
 import issuesListsOptions from '../forms/selectOptions/IssuesListsOptions';
 import issueTypeOptions from '../forms/selectOptions/issueTypeOptions';
 import DialogForm from '../forms/DialogForm';
-import {BASE_URL} from '../../api/commons';
+import {createIssue} from '../../redux/actions/issue';
 import {
   getCurrentProjectId,
   getIssuesListsByProjectId,
@@ -34,7 +33,7 @@ const CreateIssue = ({
   projects,
   currentProjectId,
   setCurrentProject,
-  addIssue,
+  createIssue,
   history,
   teamMembers,
   issuesLists,
@@ -53,38 +52,34 @@ const CreateIssue = ({
     storyPointsEstimate: 0,
   };
 
+  const onSubmit = (values) => {
+    const request = {
+      ...values,
+      assignee: {
+        id: values.assigneeId,
+      },
+    };
+    delete request.assigneeId;
+    delete request.listId;
+
+    request.assignee = values.assigneeId
+      ? {
+        id: values.assigneeId,
+      }
+      : null;
+
+    request.list = {
+      id: values.listId,
+      '@type': issuesLists.find((list) => list.id === values.listId).type,
+    };
+    createIssue(request);
+    history.push(`/app/projects/${currentProjectId}/board`);
+  };
+
   const handleProjectChange = (e) => {
     setCurrentProject({
       id: +e.target.value,
     });
-  };
-
-  const onSubmit = async (values) => {
-    try {
-      const requestBody = { ...values };
-      delete requestBody.assigneeId;
-      delete requestBody.listId;
-
-      requestBody.assignee = values.assigneeId
-        ? {
-          id: values.assigneeId,
-        }
-        : null;
-
-      requestBody.list = {
-        id: values.listId,
-        '@type': issuesLists.find((list) => list.id === values.listId).type,
-      };
-
-      const { data } = await axios.post(`${BASE_URL}/issues`, requestBody);
-      const issueData = { ...data };
-      issueData.assignee = data.assignee ? data.assignee.id : null;
-      addIssue(issueData);
-
-      history.push(`/app/projects/${currentProjectId}/board`);
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   return (
@@ -173,7 +168,7 @@ CreateIssue.propTypes = {
   currentProjectId: PropTypes.number,
   setCurrentProject: PropTypes.func.isRequired,
   projects: PropTypes.objectOf(propTypes.project).isRequired,
-  addIssue: PropTypes.func.isRequired,
+  createIssue: PropTypes.func.isRequired,
   teamMembers: PropTypes.arrayOf(propTypes.teamMember),
   issuesLists: PropTypes.arrayOf(propTypes.sprint).isRequired,
 };
@@ -193,7 +188,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setCurrentProject: actions.setCurrentProject,
-  addIssue: actions.addIssue,
+  createIssue,
 };
 
 export default withRouter(

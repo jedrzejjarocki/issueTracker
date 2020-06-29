@@ -1,4 +1,6 @@
-import {addProject, addSprint, addTeamMember, deleteSprint, deleteTeamMember, setProjects,} from '../actions/types';
+import {ADD_MEMBER, DELETE_MEMBER} from '../actions/teamMember';
+import {ADD_PROJECT, SET_PROJECTS} from '../actions/project';
+import {ADD_SPRINT, DELETE_SPRINT} from '../actions/issuesLists';
 
 const initialState = [];
 
@@ -22,10 +24,10 @@ const editTeam = (state, projectId, cb) => {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case setProjects:
+    case SET_PROJECTS:
       return payload;
 
-    case addProject: {
+    case ADD_PROJECT: {
       const stateCopy = { ...state };
       const {
         name, id, projectKey, team, backlog,
@@ -44,10 +46,10 @@ export default (state = initialState, { type, payload }) => {
       return stateCopy;
     }
 
-    case addSprint:
+    case ADD_SPRINT:
       return editSprints(state, payload.projectId, (sprints) => [payload.sprint.id, ...sprints]);
 
-    case deleteSprint: {
+    case DELETE_SPRINT: {
       return editSprints(state, payload.projectId, ((sprints) => {
         const idx = sprints.findIndex((sprintId) => sprintId === payload.sprint.id);
         const sprintsCopy = [...sprints];
@@ -56,11 +58,11 @@ export default (state = initialState, { type, payload }) => {
       }));
     }
 
-    case addTeamMember: {
+    case ADD_MEMBER: {
       return editTeam(state, payload.projectId, (team) => [payload.id, ...team]);
     }
 
-    case deleteTeamMember: {
+    case DELETE_MEMBER: {
       return editTeam(state, payload.projectId, (team) => {
         const idx = team.findIndex((memberId) => memberId === payload.memberId);
         const teamCopy = [...team];

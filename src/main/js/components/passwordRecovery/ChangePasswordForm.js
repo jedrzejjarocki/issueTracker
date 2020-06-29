@@ -4,12 +4,10 @@ import {Button, Card, CardActions, CardContent, makeStyles, Typography,} from '@
 import PropTypes from 'prop-types';
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import {Form, Formik} from 'formik';
-import axios from 'axios';
 import schema from '../forms/validation/schemas/changePasswordForm';
-import actions from '../../redux/actions/actions';
-import {BASE_URL} from '../../api/commons';
 import SubmitButton from '../forms/SubmitButton';
 import BasicTextField from '../forms/fields/BasicTextField';
+import {changePassword} from '../../redux/actions/user';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -27,28 +25,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChangePasswordForm = ({ token, setMessage }) => {
+const ChangePasswordForm = ({ token, changePassword }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const onSubmit = async ({ password }) => {
-    try {
-      await axios.put(`${BASE_URL}/users/reset-password`, {
-        token,
-        password,
-      });
-      setMessage({
-        content: 'Password changed successfully',
-        severity: 'success',
-      });
-      history.push('/signin');
-    } catch (err) {
-      setMessage({
-        content: err.response.data,
-        severity: 'error',
-      });
-    }
-  };
+  const onSubmit = ({ password }) => changePassword(password, token, history);
 
   return (
     <Card variant="outlined">
@@ -95,11 +76,7 @@ const ChangePasswordForm = ({ token, setMessage }) => {
 
 ChangePasswordForm.propTypes = {
   token: PropTypes.string.isRequired,
-  setMessage: PropTypes.func.isRequired,
+  changePassword: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  setMessage: actions.setMessage,
-};
-
-export default connect(null, mapDispatchToProps)(ChangePasswordForm);
+export default connect(null, { changePassword })(ChangePasswordForm);

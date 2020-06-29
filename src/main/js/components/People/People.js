@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Card, CardActions, CardContent, Collapse, Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {project, teamMember} from '../../propTypes';
 
 import {getUsersWithMemberships} from '../../redux/selectors';
 import UserAvatar from '../commons/UserAvatar';
@@ -49,7 +50,12 @@ const User = ({
           </Grid>
         </CardContent>
         <CardActions disableSpacing>
-          <AddTeamMember user={user} projects={projects} currentUserId={currentUserId} teamMembers={teamMembers} />
+          <AddTeamMember
+            user={user}
+            projects={projects}
+            currentUserId={currentUserId}
+            teamMembers={teamMembers}
+          />
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -109,6 +115,8 @@ User.propTypes = {
     })),
   })).isRequired,
   currentUserId: PropTypes.number.isRequired,
+  projects: PropTypes.arrayOf(project).isRequired,
+  teamMembers: PropTypes.arrayOf(teamMember).isRequired,
 };
 
 const mapStateToProps = (state) => ({

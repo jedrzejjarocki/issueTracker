@@ -1,43 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import {connect} from 'react-redux';
+import {createSprint} from '../../../redux/actions/issuesLists';
 import {role} from '../../../propTypes';
-import actions from '../../../redux/actions/actions';
-import {BASE_URL} from '../../../api/commons';
 import SprintForm from '../../forms/SprintForm';
 
 const CreateSprint = ({
-  addSprint, setMessage, projectId, userRole,
+  createSprint, projectId, userRole,
 }) => {
   const initialValues = {
     name: '',
     goal: '',
   };
 
-  const onSubmit = async (values, { resetForm }) => {
+  const onSubmit = async (values) => {
     const requestBody = { ...values };
     requestBody['@type'] = 'Sprint';
     requestBody.project = {
       id: projectId,
     };
 
-    try {
-      const { data } = await axios.post(`${BASE_URL}/sprints`, requestBody);
-      addSprint({
-        projectId,
-        sprint: data,
-      });
-    } catch (err) {
-      console.log(err);
-      if (err.response.status <= 400) {
-        setMessage({
-          content: 'Something went wrong, try again',
-          severity: 'error',
-        });
-      }
-    }
-    resetForm();
+    createSprint(requestBody, projectId);
   };
 
   return (
@@ -58,8 +41,7 @@ const CreateSprint = ({
 };
 
 CreateSprint.propTypes = {
-  addSprint: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
+  createSprint: PropTypes.func.isRequired,
   projectId: PropTypes.number.isRequired,
   userRole: role.isRequired,
 };
@@ -68,9 +50,4 @@ const mapStateToProps = (state) => ({
   userRole: state.ui.currentProjectUserRole,
 });
 
-const mapDispatchToProps = {
-  addSprint: actions.addSprint,
-  setMessage: actions.setMessage,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSprint);
+export default connect(mapStateToProps, { createSprint })(CreateSprint);

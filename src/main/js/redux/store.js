@@ -1,4 +1,6 @@
-import {createStore} from 'redux';
+import {applyMiddleware, createStore} from 'redux';
+import {createLogger} from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
 import rootReducer from './reducers/rootReducer';
 
 const initialState = {
@@ -14,5 +16,7 @@ const initialState = {
 export default createStore(
   rootReducer,
   initialState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({ trace: true }),
+  applyMiddleware(thunkMiddleware, createLogger()),
 );
+
+// window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({ trace: true })
