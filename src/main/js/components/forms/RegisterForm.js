@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import * as yup from 'yup';
 import {TextField} from 'material-ui-formik-components';
-import creators from '../../redux/actions/creators';
+import {useLocation} from 'react-router-dom';
+import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
 import DialogForm from './DialogForm';
 import FormField from './FormField';
@@ -13,12 +14,11 @@ const schema = yup.object().shape({
   username: yup.string().required('Must not be empty'),
   email: yup.string().email('Must be valid email'),
   password: yup.string().required('Must be 8 characters or more'),
-  confirmPassword: yup
-    .string()
+  confirmPassword: yup.string()
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
-const RegisterForm = ({ setMessage }) => {
+const RegisterForm = ({ setMessage, isOpen }) => {
   const [responseError, setResponseError] = useState(null);
 
   const initialValues = {
@@ -28,9 +28,13 @@ const RegisterForm = ({ setMessage }) => {
     confirmPassword: '',
   };
 
+  const token = useLocation().search.split('=')[1];
+
   const onSubmit = async ({ username, password, email }, _, toggle) => {
     try {
-      const { status } = await axios.post(`${BASE_URL}/users`, {
+      let url = `${BASE_URL}/users`;
+      if (token) url += `?token=${token}`;
+      const { status } = await axios.post(url, {
         username,
         password,
         email,
@@ -58,6 +62,7 @@ const RegisterForm = ({ setMessage }) => {
         title="Sign up"
         submitButtonText="Sign up"
         closeOnSubmit={false}
+        isOpen={isOpen}
         renderFields={({ errors, touched }) => (
           <>
             <FormField
@@ -104,7 +109,7 @@ RegisterForm.propTypes = {
 };
 
 const mapDispatchToProps = {
-  setMessage: creators.setMessage,
+  setMessage: actions.setMessage,
 };
 
 export default connect(null, mapDispatchToProps)(RegisterForm);

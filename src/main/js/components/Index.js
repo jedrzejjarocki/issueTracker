@@ -1,8 +1,9 @@
 import React from 'react';
 import {makeStyles, Typography} from '@material-ui/core';
 import {useLocation} from 'react-router-dom';
-import LogInForm from './forms/LoginForm';
+import LoginForm from './forms/LoginForm';
 import RegisterForm from './forms/RegisterForm';
+import PasswordRecovery from './passwordRecovery/PasswordRecovery';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,18 +44,25 @@ const useStyles = makeStyles((theme) => ({
 const Index = () => {
   const classes = useStyles();
   const { pathname } = useLocation();
+  console.log(pathname);
   return (
-    <div className={classes.root}>
-      <header className={classes.header}>
-        <Typography variant="h1" component="h1" color="primary">
-          ISSUE TRACKER
-        </Typography>
-      </header>
-      <div className={classes.actionButtonContainer}>
-        <LogInForm isOpen={pathname === '/login'} />
-        <RegisterForm isOpen={pathname === '/register'} />
-      </div>
-    </div>
+    <>
+      {pathname === '/reset-password'
+        ? <PasswordRecovery />
+        : (
+          <div className={classes.root}>
+            <header className={classes.header}>
+              <Typography variant="h1" component="h1" color="primary">
+                ISSUE TRACKER
+              </Typography>
+            </header>
+            <div className={classes.actionButtonContainer}>
+              <LoginForm isOpen={pathname === '/signin'} />
+              <RegisterForm isOpen={pathname === '/signup'} />
+            </div>
+          </div>
+        )}
+    </>
   );
 };
 

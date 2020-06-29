@@ -8,7 +8,7 @@ import {Form, Formik} from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import {TextField} from 'material-ui-formik-components/TextField';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
 import SubmitButton from '../forms/SubmitButton';
 import FormField from '../forms/FormField';
@@ -97,7 +97,7 @@ PasswordRecoveryRequestForm.propTypes = {
 };
 
 const mapDispatchToProps = {
-  setMessage: creators.setMessage,
+  setMessage: actions.setMessage,
 };
 
 export default connect(null, mapDispatchToProps)(PasswordRecoveryRequestForm);

@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import axios from 'axios';
 import normalize from '../redux/schema';
-import creators from '../redux/actions/creators';
+import creators from '../redux/actions/actions';
 import {BASE_URL} from '../api/commons';
 
 const {

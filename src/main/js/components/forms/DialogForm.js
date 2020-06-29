@@ -32,8 +32,9 @@ const DialogForm = ({
   toggleButtonTooltipText,
   disabled = false,
   closeOnSubmit = true,
+  isOpen = false,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(isOpen);
   const toggleOpen = () => setOpen(!open);
 
   const handleSubmit = (values, helpers) => {
@@ -113,6 +114,7 @@ DialogForm.defaultProps = {
   renderToggleComponent: null,
   disabled: false,
   toggleButtonTooltipText: null,
+  isOpen: false,
 };
 
 DialogForm.propTypes = {
@@ -131,6 +133,7 @@ DialogForm.propTypes = {
   closeOnSubmit: PropTypes.bool,
   disabled: PropTypes.bool,
   toggleButtonTooltipText: PropTypes.string,
+  isOpen: PropTypes.bool,
 };
 
 export default DialogForm;

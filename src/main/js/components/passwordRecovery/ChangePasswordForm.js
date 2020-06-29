@@ -7,7 +7,7 @@ import {Form, Formik} from 'formik';
 import axios from 'axios';
 import {TextField} from 'material-ui-formik-components/TextField';
 import * as yup from 'yup';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
 import FormField from '../forms/FormField';
 import SubmitButton from '../forms/SubmitButton';
@@ -35,12 +35,11 @@ const schema = yup.object().shape({
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
-const ChangePasswordForm = ({ token }) => {
+const ChangePasswordForm = ({ token, setMessage }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const onSubmit = async ({ password, setMessage }) => {
-    let redirectPath;
+  const onSubmit = async ({ password }) => {
     try {
       await axios.put(`${BASE_URL}/users/reset-password`, {
         token,
@@ -50,14 +49,13 @@ const ChangePasswordForm = ({ token }) => {
         content: 'Password changed successfully',
         severity: 'success',
       });
-      redirectPath = '/login';
+      history.push('/signin');
     } catch (err) {
       setMessage({
         content: err.response.data,
         severity: 'error',
       });
     }
-    if (redirectPath) history.push(redirectPath);
   };
 
   return (
@@ -84,7 +82,7 @@ const ChangePasswordForm = ({ token }) => {
                 name="password"
                 component={TextField}
               />
-              <TextField
+              <FormField
                 required
                 name="confirmPassword"
                 type="password"
@@ -108,10 +106,11 @@ const ChangePasswordForm = ({ token }) => {
 
 ChangePasswordForm.propTypes = {
   token: PropTypes.string.isRequired,
+  setMessage: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  setMessage: creators.setMessage,
+  setMessage: actions.setMessage,
 };
 
 export default connect(null, mapDispatchToProps)(ChangePasswordForm);

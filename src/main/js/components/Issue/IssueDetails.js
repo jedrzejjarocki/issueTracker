@@ -9,7 +9,7 @@ import {Form, Formik} from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
 import * as yup from 'yup';
 import axios from 'axios';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import * as propTypes from '../../propTypes';
 import FormField from '../forms/FormField';
 import teamMembersOptions from '../forms/TeamMembersOptions';
@@ -104,7 +104,7 @@ const IssueDetails = ({
               <Typography className={classes.issueKey} variant="button">{`${project.projectKey}-${issue.id}`}</Typography>
               <div>
                 <DeleteIssue issue={issue} projectId={project.id} history={history} />
-                <RouterLink to={`/projects/${project.id}/backlog`}>
+                <RouterLink to={`/app/projects/${project.id}/board`}>
                   <IconButton>
                     <CloseIcon />
                   </IconButton>
@@ -207,8 +207,8 @@ const mapStateToProps = (state, { match }) => {
 };
 
 const mapDispatchToProps = {
-  updateIssue: creators.updateIssue,
-  setMessage: creators.setMessage,
+  updateIssue: actions.updateIssue,
+  setMessage: actions.setMessage,
 };
 
 export default withRouter(

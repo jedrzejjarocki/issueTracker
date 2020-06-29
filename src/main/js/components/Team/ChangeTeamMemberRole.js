@@ -5,7 +5,7 @@ import axios from 'axios';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import {teamMember} from '../../propTypes';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import SubmitButton from '../forms/SubmitButton';
 import {BASE_URL} from '../../api/commons';
 
@@ -74,8 +74,8 @@ ChangeRole.propTypes = {
 };
 
 const mapDispatchToProps = {
-  updateMemberRole: creators.updateMemberRole,
-  setMessage: creators.setMessage,
+  updateMemberRole: actions.updateMemberRole,
+  setMessage: actions.setMessage,
 };
 
 export default connect(null, mapDispatchToProps)(ChangeRole);

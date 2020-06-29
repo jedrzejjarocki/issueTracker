@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {MenuItem} from '@material-ui/core';
 import axios from 'axios';
 import {sprint as sprintType} from '../../../propTypes';
-import creators from '../../../redux/actions/creators';
+import actions from '../../../redux/actions/actions';
 import SprintForm from '../../forms/SprintForm';
 import {BASE_URL} from '../../../api/commons';
 
@@ -59,8 +59,8 @@ EditSprint.propTypes = {
 };
 
 const mapDispatchToProps = {
-  updateSprint: creators.updateSprint,
-  setMessage: creators.setMessage,
+  updateSprint: actions.updateSprint,
+  setMessage: actions.setMessage,
 };
 
 export default connect(null, mapDispatchToProps)(EditSprint);

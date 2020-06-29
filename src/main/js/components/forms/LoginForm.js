@@ -5,12 +5,12 @@ import axios from 'axios';
 import * as yup from 'yup';
 import {TextField} from 'material-ui-formik-components/TextField';
 import DialogForm from './DialogForm';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import RouterLink from '../commons/RouterLink';
 import {BASE_URL} from '../../api/commons';
 import FormField from './FormField';
 
-const LoginForm = ({ setUser, setMessage }) => {
+const LoginForm = ({ setUser, setMessage, isOpen }) => {
   const schema = yup.object().shape({
     username: yup.string().required('Required'),
     password: yup.string().required('Must not be empty'),
@@ -43,6 +43,7 @@ const LoginForm = ({ setUser, setMessage }) => {
         validationSchema={schema}
         title="Sign in"
         submitButtonText="Sign in"
+        isOpen={isOpen}
         renderFields={({ errors, touched }) => (
           <>
             <FormField
@@ -72,11 +73,12 @@ const LoginForm = ({ setUser, setMessage }) => {
 LoginForm.propTypes = {
   setUser: PropTypes.func.isRequired,
   setMessage: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = {
-  setUser: creators.setUser,
-  setMessage: creators.setMessage,
+  setUser: actions.setUser,
+  setMessage: actions.setMessage,
 };
 
 export default connect(null, mapDispatchToProps)(LoginForm);

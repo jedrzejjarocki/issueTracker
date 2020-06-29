@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {getUsersWithMemberships} from '../../redux/selectors';
 import UserAvatar from '../commons/UserAvatar';
 import AddTeamMember from './AddTeamMember';
+import InviteUser from './InviteUser';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,11 +81,19 @@ const User = ({
 const People = ({
   users, currentUserId, projects, teamMembers,
 }) => (
-  <Grid container item spacing={3}>
-    {users.map((user) => (
-      <User user={user} currentUserId={currentUserId} projects={projects} teamMembers={teamMembers} />
-    ))}
-  </Grid>
+  <>
+    <Grid container item spacing={3}>
+      {users.map((user) => (
+        <User
+          user={user}
+          currentUserId={currentUserId}
+          projects={projects}
+          teamMembers={teamMembers}
+        />
+      ))}
+    </Grid>
+    <InviteUser teamMembers={teamMembers} projects={projects} currentUserId={currentUserId} />
+  </>
 );
 
 User.propTypes = {

@@ -8,16 +8,8 @@ import {Select} from 'material-ui-formik-components/Select';
 import FormField from '../forms/FormField';
 import DialogForm from '../forms/DialogForm';
 import {BASE_URL} from '../../api/commons';
-import creators from '../../redux/actions/creators';
-
-const roleOptions = [{
-  value: 'DEVELOPER',
-  label: 'DEVELOPER',
-},
-{
-  value: 'LEADER',
-  label: 'LEADER',
-}];
+import actions from '../../redux/actions/actions';
+import memberRoleOptions from '../forms/memberRoleOptions';
 
 const isCurrentUserLeaderInProject = (project, currentUserId, teamMembers) => (
   Object.values(teamMembers).some(({ userId, role, projectId }) => (
@@ -61,7 +53,7 @@ const AddTeamMember = ({
       payload.username = user.username;
       addTeamMember(payload);
       setMessage({
-        content: 'Team member succesfully added',
+        content: 'Team member successfully added',
         severity: 'success',
       });
       history.push('/app/people');
@@ -95,7 +87,7 @@ const AddTeamMember = ({
             name="role"
             label="Role"
             component={Select}
-            options={roleOptions}
+            options={memberRoleOptions}
           />
         </>
       )}
@@ -115,7 +107,7 @@ const AddTeamMember = ({
 AddTeamMember.propTypes = {};
 
 const mapDispatchToProps = {
-  addTeamMember: creators.addTeamMember,
-  setMessage: creators.setMessage,
+  addTeamMember: actions.addTeamMember,
+  setMessage: actions.setMessage,
 };
 export default connect(null, mapDispatchToProps)(AddTeamMember);

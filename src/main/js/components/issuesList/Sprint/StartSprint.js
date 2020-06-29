@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import {makeStyles, Typography} from '@material-ui/core';
 import * as propTypes from '../../../propTypes';
 import FormField from '../../forms/FormField';
-import creators from '../../../redux/actions/creators';
+import actions from '../../../redux/actions/actions';
 import DialogForm from '../../forms/DialogForm';
 import {BASE_URL} from '../../../api/commons';
 import {getSprintsByProjectId} from '../../../redux/selectors';
@@ -165,7 +165,7 @@ const mapStateToProps = (state, { projectId }) => ({
 });
 
 const mapDispatchToProps = {
-  updateSprint: creators.updateSprint,
+  updateSprint: actions.updateSprint,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartSprint);

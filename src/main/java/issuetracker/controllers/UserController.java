@@ -7,7 +7,7 @@ import issuetracker.exceptions.UnauthorizedException;
 import issuetracker.exceptions.UsernameExistsException;
 import issuetracker.models.Project;
 import issuetracker.models.User;
-import issuetracker.services.MailSenderService;
+import issuetracker.services.TeamMemberService;
 import issuetracker.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,9 +25,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService service;
+    private final TeamMemberService teamMemberService;
     private final DtoMapper<User, UserDto> mapper;
     private final DtoMapper<Project, ProjectDto> projectMapper;
-    private final MailSenderService mailSenderService;
+
+    @GetMapping
+    public List<UserDto> getAll() {
+        return service.getAll().stream().map(user -> mapper.toDto(user, new UserDto())).collect(Collectors.toList());
+    }
 
     @GetMapping("/current")
     public UserDto current(Principal principal) throws UnauthorizedException {
@@ -40,11 +46,16 @@ public class UserController {
         return dto;
     }
 
-    @PostMapping
+    @PostMapping(params = "token")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto create(@Valid @RequestBody UserCreationDto userCreationDto) throws UsernameExistsException {
-        User user = mapper.toEntity(userCreationDto, new User());
-        return mapper.toDto(service.create(user), new UserDto());
+    public UserDto create(@Valid @RequestBody UserCreationDto userCreationDto, @RequestParam(required = false) String token) throws UsernameExistsException {
+        User user = service.create(mapper.toEntity(userCreationDto, new User()));
+
+        if (!token.equals(null)) {
+            teamMemberService.addMember(user, token);
+        }
+
+        return mapper.toDto(user, new UserDto());
     }
 
     @DeleteMapping
@@ -54,7 +65,7 @@ public class UserController {
 
     @PostMapping("/reset-password")
     public void resetPassword(@Valid @RequestBody PasswordRecoveryDto dto) throws IOException {
-        mailSenderService.resetPassword(dto.getEmail());
+        service.createPasswordResetToken(dto.getEmail());
     }
 
     @PutMapping("/reset-password")

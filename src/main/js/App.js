@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Redirect, Route} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import * as propTypes from './propTypes';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import Index from './components/Index';
 import InfoSnackbar from './components/InfoSnackbars';
 import Loading from './components/Loading';
-import PasswordRecovery from './components/passwordRecovery/PasswordRecovery';
 import useFetchInitialData from './hooks/useFetchInitialData';
 
 const App = ({ user, loading, message }) => {
@@ -20,17 +19,15 @@ const App = ({ user, loading, message }) => {
         <Loading />
       ) : (
         <>
-
-          <ProtectedRoute path="/app" user={user}>
-            <Dashboard />
-          </ProtectedRoute>
-          <Route path="/reset-password">
-            <PasswordRecovery />
-          </Route>
-          <Route exact path="/">
-            {user && <Redirect to="/app/projects" />}
-            <Index />
-          </Route>
+          <Switch>
+            <ProtectedRoute path="/app" user={user}>
+              <Dashboard />
+            </ProtectedRoute>
+            <Route path="/">
+              {user && <Redirect to="/app/projects" />}
+              <Index />
+            </Route>
+          </Switch>
           {message && <InfoSnackbar message={message} />}
         </>
       )}

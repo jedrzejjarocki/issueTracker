@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {TextField} from 'material-ui-formik-components';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import {BASE_URL} from '../../api/commons';
 import DialogForm from '../forms/DialogForm';
 import FormField from '../forms/FormField';
@@ -83,8 +83,8 @@ CreateProject.propTypes = {
 };
 
 const mapDispatchToProps = {
-  addProject: creators.addProject,
-  setMessage: creators.setMessage,
+  addProject: actions.addProject,
+  setMessage: actions.setMessage,
 };
 
 export default connect(null, mapDispatchToProps)(CreateProject);

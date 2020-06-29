@@ -5,6 +5,7 @@ import issuetracker.dtos.common.DtoMapper;
 import issuetracker.exceptions.ResourceNotFoundException;
 import issuetracker.exceptions.UserIsAlreadyTeamMemberException;
 import issuetracker.models.TeamMember;
+import issuetracker.models.TeamMemberInvitationToken;
 import issuetracker.services.TeamMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,11 @@ public class TeamController {
     @PostMapping
     public TeamMemberDto addMember(@RequestBody TeamMember teamMember) throws UserIsAlreadyTeamMemberException, ResourceNotFoundException {
         return mapper.toDto(service.addMember(teamMember), new TeamMemberDto());
+    }
+
+    @PostMapping("invitations")
+    public void inviteMember(@RequestBody TeamMemberInvitationToken invitationTokenDto) {
+        service.inviteMember(invitationTokenDto);
     }
 
     @PutMapping

@@ -5,12 +5,14 @@ import {connect} from 'react-redux';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import axios from 'axios';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import SubmitButton from '../forms/SubmitButton';
 import {teamMember} from '../../propTypes';
 import {BASE_URL} from '../../api/commons';
 
-const DeleteMember = ({ member, currentProjectId, deleteTeamMember }) => {
+const DeleteMember = ({
+  member, currentProjectId, deleteTeamMember, setMessage,
+}) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
   const history = useHistory();
@@ -24,11 +26,16 @@ const DeleteMember = ({ member, currentProjectId, deleteTeamMember }) => {
           memberId: member.id,
         });
         history.push(`/app/projects/${currentProjectId}/team`);
-        toggleOpen();
       }
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 409) {
+        setMessage({
+          content: err.response.data.message,
+          severity: 'error',
+        });
+      }
     }
+    toggleOpen();
   };
 
   return (
@@ -61,11 +68,13 @@ const DeleteMember = ({ member, currentProjectId, deleteTeamMember }) => {
 DeleteMember.propTypes = {
   member: teamMember.isRequired,
   deleteTeamMember: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
   currentProjectId: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = {
-  deleteTeamMember: creators.deleteTeamMember,
+  deleteTeamMember: actions.deleteTeamMember,
+  setMessage: actions.setMessage,
 };
 
 const mapStateToProps = (state) => ({

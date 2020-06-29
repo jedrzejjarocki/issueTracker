@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {role} from '../../../propTypes';
-import creators from '../../../redux/actions/creators';
+import actions from '../../../redux/actions/actions';
 import {BASE_URL} from '../../../api/commons';
 import SprintForm from '../../forms/SprintForm';
 
@@ -69,8 +69,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  addSprint: creators.addSprint,
-  setMessage: creators.setMessage,
+  addSprint: actions.addSprint,
+  setMessage: actions.setMessage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateSprint);

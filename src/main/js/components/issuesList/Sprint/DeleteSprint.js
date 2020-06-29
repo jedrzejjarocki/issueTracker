@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import {Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Typography,} from '@material-ui/core';
 import {sprint as sprintType} from '../../../propTypes';
-import creators from '../../../redux/actions/creators';
+import actions from '../../../redux/actions/actions';
 import SubmitButton from '../../forms/SubmitButton';
 import {BASE_URL} from '../../../api/commons';
 
@@ -69,7 +69,7 @@ DeleteSprint.propTypes = {
 };
 
 const mapDispatchToProps = {
-  deleteSprint: creators.deleteSprint,
+  deleteSprint: actions.deleteSprint,
 };
 
 export default connect(null, mapDispatchToProps)(DeleteSprint);

@@ -7,7 +7,7 @@ import {AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typo
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import * as propTypes from '../../propTypes';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import Dropdown from './Dropdown';
 import RouterLink from '../commons/RouterLink';
 import UserAvatar from '../commons/UserAvatar';
@@ -139,7 +139,7 @@ const mapStateToProps = ({ user, projects }) => ({
 });
 
 const mapDispatchToProps = {
-  setUser: creators.setUser,
+  setUser: actions.setUser,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopBar));

@@ -5,10 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -22,13 +19,14 @@ import java.util.stream.Collectors;
 @Setter
 public class User extends BaseEntity {
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     Set<TeamMember> teamMemberships = new HashSet<>();
 
     @Column(unique = true)
     @NotBlank(message = "Username must not be empty")
     private String username;
 
+    @Column(unique = true)
     @Email
     private String email;
 

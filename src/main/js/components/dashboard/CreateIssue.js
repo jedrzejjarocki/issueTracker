@@ -9,7 +9,7 @@ import {withRouter} from 'react-router-dom';
 import {makeStyles, MenuItem, TextField as BaseTextField} from '@material-ui/core';
 import * as propTypes from '../../propTypes';
 import FormField from '../forms/FormField';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import teamMembersOptions from '../forms/TeamMembersOptions';
 import issuesListsOptions from '../forms/IssuesListsOptions';
 import issueTypeOptions from '../forms/issueTypeOptions';
@@ -212,8 +212,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  setCurrentProject: creators.setCurrentProject,
-  addIssue: creators.addIssue,
+  setCurrentProject: actions.setCurrentProject,
+  addIssue: actions.addIssue,
 };
 
 export default withRouter(

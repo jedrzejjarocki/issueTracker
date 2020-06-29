@@ -5,7 +5,7 @@ import axios from 'axios';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import {issue as issueType} from '../../propTypes';
-import creators from '../../redux/actions/creators';
+import actions from '../../redux/actions/actions';
 import SubmitButton from '../forms/SubmitButton';
 import {BASE_URL} from '../../api/commons';
 
@@ -68,7 +68,7 @@ DeleteIssue.propTypes = {
 };
 
 const mapDispatchToProps = {
-  deleteIssue: creators.deleteIssue,
+  deleteIssue: actions.deleteIssue,
 };
 
 export default connect(null, mapDispatchToProps)(DeleteIssue);
