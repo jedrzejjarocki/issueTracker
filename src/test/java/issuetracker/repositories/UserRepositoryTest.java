@@ -66,9 +66,7 @@ public class UserRepositoryTest {
         User u = getUser("username", "password");
         User u2 = getUser("username", "password");
         repository.save(u);
-        assertThrows(DataIntegrityViolationException.class,
-                () -> repository.save(u2)
-        );
+        assertThrows(DataIntegrityViolationException.class, () -> repository.save(u2));
     }
 
     @Test
