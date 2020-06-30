@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,11 +27,6 @@ public class UserController {
     private final TeamMemberService teamMemberService;
     private final DtoMapper<User, UserDto> mapper;
     private final DtoMapper<Project, ProjectDto> projectMapper;
-
-    @GetMapping
-    public List<UserDto> getAll() {
-        return service.getAll().stream().map(user -> mapper.toDto(user, new UserDto())).collect(Collectors.toList());
-    }
 
     @GetMapping("/current")
     public UserDto current(Principal principal) throws UnauthorizedException {

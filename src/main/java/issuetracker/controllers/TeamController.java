@@ -19,13 +19,13 @@ public class TeamController {
     private final DtoMapper<TeamMember, TeamMemberDto> mapper;
 
     @PostMapping
-    public TeamMemberDto addMember(@RequestBody TeamMember teamMember) throws UserIsAlreadyTeamMemberException, ResourceNotFoundException {
-        return mapper.toDto(service.addMember(teamMember), new TeamMemberDto());
+    public TeamMemberDto addMember(@RequestBody TeamMember member) throws UserIsAlreadyTeamMemberException, ResourceNotFoundException {
+        return mapper.toDto(service.addMember(member), new TeamMemberDto());
     }
 
-    @PostMapping("invitations")
-    public void inviteMember(@RequestBody TeamMemberInvitationToken invitationTokenDto) {
-        service.inviteMember(invitationTokenDto);
+    @PostMapping("/invitations")
+    public void inviteMember(@RequestBody TeamMemberInvitationToken invitationToken) {
+        service.inviteMember(invitationToken);
     }
 
     @PutMapping

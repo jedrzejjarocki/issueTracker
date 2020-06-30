@@ -19,13 +19,6 @@ public class DtoMapperImpl<T, K extends Dto<T>> implements DtoMapper<T, K>{
         return entity;
     }
 
-    public T toEntity(K dto, T entity, boolean skipNull) {
-        mapper.getConfiguration().setSkipNullEnabled(true);
-        T result = toEntity(dto, entity);
-        mapper.getConfiguration().setSkipNullEnabled(false);
-        return result;
-    }
-
     public K toDto(T entity, K dto) {
         mapper.map(entity, dto);
         return dto;

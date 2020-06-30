@@ -30,6 +30,8 @@ public class UserControllerTest {
     @InjectMocks
     private UserController controller;
 
+
+
     @Test
     public void callsServiceGetByUsernameWithPrincipalName() {
         String username = "username";

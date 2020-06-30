@@ -30,7 +30,9 @@ public class IssueController {
     }
 
     @PutMapping
-    public IssueDto update(@RequestBody Issue issue) throws InvalidVersionException { return mapper.toDto(service.updateIssue(issue), new IssueDto()); }
+    public IssueDto update(@RequestBody Issue issue) throws InvalidVersionException {
+        return mapper.toDto(service.updateIssue(issue), new IssueDto());
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
