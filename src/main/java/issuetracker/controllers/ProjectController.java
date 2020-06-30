@@ -35,6 +35,7 @@ public class ProjectController {
 
     @PostMapping
     public ProjectDto create(@RequestBody Project project, Principal principal) throws ResourceNotFoundException {
+        System.out.println(project.getProjectKey());
         return mapper.toDto(service.createProject(project, principal.getName()), new ProjectDto());
     }
 

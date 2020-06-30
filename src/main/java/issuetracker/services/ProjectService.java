@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class ProjectService {
 
     public Set<Project> getAllByUsername(String username) {
         User user = userService.getByUsername(username);
-        return user.getTeamMemberships().stream().map(TeamMember::getProject).collect(Collectors.toSet());
+        return user.getProjects();
     }
 
     public Project createProject(Project project, String creatorName) {
