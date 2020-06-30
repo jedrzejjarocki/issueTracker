@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class UserRepositoryTest {
         User empty = new User();
         User passwordToShort = getUser("abc", "p");
         User blankUsername = getUser("     ", "12345678");
-        User passwordToLong = getUser("username", "p".repeat(129));
+        User passwordToLong = getUser("username", String.join("", Collections.nCopies(129, "p")));
         User invalidEmail = getUser("user", "password", "email");
 
         return Arrays.asList(empty, passwordToShort, passwordToLong, blankUsername, invalidEmail);
