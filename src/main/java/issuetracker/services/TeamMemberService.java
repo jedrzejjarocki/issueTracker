@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -99,20 +100,20 @@ public class TeamMemberService {
                 .findById(invitation.getProject().getId())
                 .orElseThrow(ResourceNotFoundException::new);
 
-        userRepository.findByEmail(invitation.getEmail()).ifPresentOrElse(user -> {
+        Optional<User> user = userRepository.findByEmail(invitation.getEmail());
+        if (user.isPresent()) {
             TeamMember teamMember = new TeamMember();
             teamMember.setRole(invitation.getRole());
             teamMember.setProject(project);
-            teamMember.setUser(user);
+            teamMember.setUser(user.get());
             addMember(teamMember);
-        }, () -> {
+        } else {
             try {
                 invitationRepository.save(invitation);
                 mailSenderService.inviteNewUser(invitation);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
-
+        }
     }
 }
