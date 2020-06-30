@@ -15,13 +15,12 @@ import javax.transaction.Transactional;
 public class SprintService {
     private final SprintRepository repository;
     private final IssueRepository issueRepository;
-    private final ProjectService projectService;
 
     public Sprint getById(int sprintId) {
         return repository.findById(sprintId).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public boolean existsById(int id) {
+    private boolean existsById(int id) {
         return repository.existsById(id);
     }
 
