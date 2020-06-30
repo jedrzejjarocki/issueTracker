@@ -2,22 +2,18 @@ package issuetracker.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import issuetracker.dtos.*;
+import issuetracker.dtos.ChangePasswordDto;
+import issuetracker.dtos.PasswordRecoveryDto;
+import issuetracker.dtos.UserCreationDto;
+import issuetracker.dtos.UserDto;
 import issuetracker.dtos.common.DtoMapper;
-import issuetracker.models.Project;
 import issuetracker.models.User;
-import issuetracker.services.MailSenderService;
 import issuetracker.services.UserService;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -25,18 +21,11 @@ import java.security.Principal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@WithMockUser
-@ExtendWith(MockitoExtension.class)
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
-    @Autowired
-    ObjectMapper objectMapper;
-
+    ObjectMapper objectMapper = new ObjectMapper();
     @Mock UserService service;
     @Mock DtoMapper<User, UserDto> mapper;
-    @Mock DtoMapper<Project, ProjectDto> projectMapper;
-    @Mock MailSenderService mailSenderService;
     @Mock Principal principal;
     @InjectMocks
     private UserController controller;
@@ -65,8 +54,6 @@ public class UserControllerTest {
         user.setPassword(dto.getPassword());
 
         when(mapper.toEntity(any(UserCreationDto.class), any(User.class))).thenReturn(user);
-        when(mapper.toDto(any(User.class), any(UserDto.class))).thenReturn(new UserDto());
-
         when(service.create(user)).thenReturn(user);
 
         controller.create(dto, null);
@@ -79,21 +66,19 @@ public class UserControllerTest {
         when(principal.getName()).thenReturn(username);
         User user = new User();
         user.setUsername(username);
-        when(service.getByUsername(username)).thenReturn(user);
 
         controller.delete(principal);
         verify(service).delete(username);
     }
 
     @Test
-    public void callsMailSenderService() throws IOException {
+    public void callsServiceCreateResetPasswordToken() throws IOException {
         String reqBody = "{\"email\": \"email@email.com\"}";
-
-        doNothing().when(mailSenderService).resetPassword("email@email.com", "");
         PasswordRecoveryDto dto = objectMapper.readValue(reqBody, PasswordRecoveryDto.class);
+        doNothing().when(service).createPasswordResetToken(dto.getEmail());
 
         controller.resetPassword(dto);
-        verify(mailSenderService).resetPassword("email@email.com", "");
+        verify(service).createPasswordResetToken(dto.getEmail());
     }
 
     @Test

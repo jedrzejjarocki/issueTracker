@@ -51,7 +51,7 @@ public class UserRepositoryTest {
     public void savesValidUserEntity() {
         User user = getUser("username", "password");
         repository.save(user);
-        assertEquals(repository.getOne(1), user);
+        assertEquals(repository.findByUsername(user.getUsername()), Optional.of(user));
     }
 
     @ParameterizedTest

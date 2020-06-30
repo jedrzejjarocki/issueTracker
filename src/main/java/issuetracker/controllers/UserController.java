@@ -46,12 +46,12 @@ public class UserController {
         return dto;
     }
 
-    @PostMapping(params = "token")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto create(@Valid @RequestBody UserCreationDto userCreationDto, @RequestParam(required = false) String token) throws UsernameExistsException {
         User user = service.create(mapper.toEntity(userCreationDto, new User()));
 
-        if (!token.equals(null)) {
+        if (token != null) {
             teamMemberService.addMember(user, token);
         }
 
