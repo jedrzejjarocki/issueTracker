@@ -1,7 +1,5 @@
 package issuetracker.auth;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
@@ -11,8 +9,8 @@ import java.util.Collections;
 //@TestConfiguration
 public class TestConfig {
 
-    @Bean
-    @Primary
+//    @Bean
+//    @Primary
     public UserDetailsService userDetailsService() {
         UserDetailsImpl u1 = new UserDetailsImpl(
                 "first",
