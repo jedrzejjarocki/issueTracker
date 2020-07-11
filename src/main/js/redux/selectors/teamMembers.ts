@@ -1,21 +1,19 @@
 import {RootState} from "../reducers/rootReducer";
 import {getProjectById} from "./project";
+import {createSelector} from "reselect";
+import {getUser} from "./user";
 
 export const getTeamMembers = (state: RootState) => state.teamMembers;
 
 export const getTeamMembersAsArray = (state: RootState) => Object.values(getTeamMembers(state));
 
-export const getTeamMembersByProjectId = (state: RootState, projectId: number) => {
-  const project = getProjectById(state, projectId);
+export const getTeamMembersByProjectId = createSelector(getProjectById, getTeamMembers, (project, teamMembers) => {
+  return project === undefined ? [] : project.team.map(memberId => teamMembers[memberId])
+})
 
-  if (project === undefined) return []
-
-  return project.team.map((memberId: number) => getTeamMembers(state)[memberId])
-}
-
-export const getTeamMembersByUserId = (state: RootState, userId: number): any[] =>
+export const getTeamMembersByUserId = (state: RootState, userId: number) =>
   getTeamMembersAsArray(state).filter(member => member.userId === userId);
 
-export const getCurrentUserRoleByProjectId = (state: RootState, projectId: number) => {
-  return getTeamMembersByProjectId(state, projectId).find(member => member.userId === state.user.id).userId;
-}
+export const getCurrentUserRoleByProjectId = createSelector(getTeamMembersByProjectId, getUser, (teamMembers, user) => {
+  return teamMembers.find(({ userId}) => userId === user.id).role
+})

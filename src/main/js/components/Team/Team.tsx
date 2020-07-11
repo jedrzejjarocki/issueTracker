@@ -5,6 +5,8 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import TeamMember from './TeamMember';
 import {RootState} from "../../redux/reducers/rootReducer";
 import {getTeamMembersByProjectId} from "../../redux/selectors/teamMembers";
+import {getUser} from "../../redux/selectors/user";
+import {getCurrentProjectUserRole} from "../../redux/selectors/ui";
 
 const Team: React.FC<ReduxProps> = ({ team, userRole, currentUserId }) => (
   <Grid container item spacing={3}>
@@ -16,8 +18,8 @@ const Team: React.FC<ReduxProps> = ({ team, userRole, currentUserId }) => (
 
 const mapStateToProps = (state: RootState, { match }: RouteComponentProps<{ projectId: string }>) => ({
   team: getTeamMembersByProjectId(state, +match.params.projectId),
-  userRole: state.ui.currentProjectUserRole,
-  currentUserId: state.user.id,
+  userRole: getCurrentProjectUserRole(state),
+  currentUserId: getUser(state).id,
 });
 
 const connector = connect(mapStateToProps);

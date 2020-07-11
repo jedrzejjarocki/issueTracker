@@ -9,6 +9,8 @@ import {TeamMembersState} from "../../redux/reducers/teamMembers";
 import {Project} from "../../propTypes";
 import {RootState} from "../../redux/reducers/rootReducer";
 import {getIssuesByListId} from "../../redux/selectors/issues";
+import {getTeamMembers} from "../../redux/selectors/teamMembers";
+import {getUser} from "../../redux/selectors/user";
 
 const useStyles = makeStyles((theme) => ({
   itemDetails: {
@@ -34,6 +36,7 @@ interface Props extends ReduxProps {
 
 const IssuesList: React.FC<Props> = ({ issues, project, teamMembers, currentUserId }) => {
   const classes = useStyles();
+
   return (
     <>
       {
@@ -42,34 +45,36 @@ const IssuesList: React.FC<Props> = ({ issues, project, teamMembers, currentUser
             <List dense>
               {issues.map(({
                 id, type, summary, storyPointsEstimate, status, assignee,
-              }) => (
-                <Fragment key={id}>
-                  <RouterLink to={`/app/projects/${project.id}/board/issues/${id}`}>
-                    <ListItem button>
-                      <ListItemIcon>{IssueType[type].icon}</ListItemIcon>
-                      <ListItemText primary={summary} />
-                      <div className={classes.itemDetails}>
-                        {!!assignee && (
-                        <UserAvatar
-                          isCurrentUser={getMember(assignee, teamMembers).userId === currentUserId}
-                          name={getMember(assignee, teamMembers).username}
-                          size="small"
-                        />
-                        )}
-                        {!!storyPointsEstimate && (
-                        <Chip size="small" label={storyPointsEstimate} />
-                        )}
-                        <Chip
-                          size="small"
-                          label={IssueStatus[status].text}
-                          color={IssueStatus[status].color}
-                        />
-                        <ListItemText primary={`${project.projectKey}-${id}`} />
-                      </div>
-                    </ListItem>
-                  </RouterLink>
-                </Fragment>
-              ))}
+              }) =>
+                (
+                  <Fragment key={id}>
+                    <RouterLink to={`/app/projects/${project.id}/board/issues/${id}`}>
+                      <ListItem button>
+                        <ListItemIcon>{IssueType[type].icon}</ListItemIcon>
+                        <ListItemText primary={summary} />
+                        <div className={classes.itemDetails}>
+                          {!!assignee && (
+                            <UserAvatar
+                              isCurrentUser={getMember(assignee, teamMembers).userId === currentUserId}
+                              name={getMember(assignee, teamMembers).username}
+                              size="small"
+                            />
+                          )}
+                          {!!storyPointsEstimate && (
+                            <Chip size="small" label={storyPointsEstimate} />
+                          )}
+                          <Chip
+                            size="small"
+                            label={IssueStatus[status].text}
+                            color={IssueStatus[status].color}
+                          />
+                          <ListItemText primary={`${project.projectKey}-${id}`} />
+                        </div>
+                      </ListItem>
+                    </RouterLink>
+                  </Fragment>
+                )
+              )}
             </List>
           ) : (
             <Typography color="textSecondary" className={classes.empty}>
@@ -83,8 +88,8 @@ const IssuesList: React.FC<Props> = ({ issues, project, teamMembers, currentUser
 
 const mapStateToProps = (state: RootState, { listId }: { listId: number }) => ({
   issues: getIssuesByListId(state, listId),
-  teamMembers: state.teamMembers,
-  currentUserId: state.user.id,
+  teamMembers: getTeamMembers(state),
+  currentUserId: getUser(state).id,
 });
 
 const connector = connect(mapStateToProps)

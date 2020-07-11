@@ -7,6 +7,7 @@ import SubmitButton from '../forms/SubmitButton';
 import {fetchDeleteMember} from '../../redux/actions/teamMember/creators';
 import {RootState} from "../../redux/reducers/rootReducer";
 import {TeamMember} from "../../propTypes";
+import {getCurrentProjectId} from "../../redux/selectors/ui";
 
 interface Props extends ReduxProps {
   member: TeamMember
@@ -49,7 +50,7 @@ const DeleteMember: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
-  currentProjectId: state.ui.currentProject,
+  currentProjectId: getCurrentProjectId(state),
 });
 
 const connector = connect(mapStateToProps, { fetchDeleteMember })

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link as RouterLink} from 'react-router-dom';
 import {Divider, Link, List, ListItem, ListItemText, makeStyles, Paper, Typography,} from '@material-ui/core';
@@ -34,19 +34,19 @@ const ProjectsList: React.FC<ReduxProps> = ({ projects, loading }) => {
 
   return (
     <>
-      {Object.keys(projects).length ? (
+      {projects.length ? (
         <>
           <Paper elevation={2} variant="outlined" className={classes.root}>
             <List dense className={classes.list}>
               {projects.map(({ name, id }, idx, arr) => (
-                <>
+                <Fragment key={id}>
                   <Link component={RouterLink} to={`/app/projects/${id}`}>
-                    <ListItem button key={id}>
+                    <ListItem button>
                       <ListItemText primary={name} />
                     </ListItem>
                   </Link>
                   {idx !== arr.length - 1 && <Divider />}
-                </>
+                </Fragment>
               ))}
             </List>
           </Paper>
@@ -55,7 +55,7 @@ const ProjectsList: React.FC<ReduxProps> = ({ projects, loading }) => {
       ) : (
         <>
           <Typography color="textSecondary" className={classes.infoText}>
-            Project list is empty
+            Projects list is empty
           </Typography>
           <CreateProject first />
         </>

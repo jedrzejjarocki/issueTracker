@@ -68,7 +68,6 @@ const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fe
             />
             <SelectField
               name="role"
-              label="Role"
               options={memberRoleOptions}
             />
           </>
@@ -80,7 +79,7 @@ const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fe
 };
 
 const mapStateToProps = (state: RootState) => ({
-  projectsWhereCurrentUserIsLeader: getProjectsWhereCurrentUserIsLeader(state)
+  projectsWhereCurrentUserIsLeader: getProjectsWhereCurrentUserIsLeader(state, state.user.id)
 })
 
 const connector = connect(mapStateToProps, { fetchInviteUser })

@@ -14,6 +14,7 @@ import {fetchUpdateSprint, UpdateSprintRequestBody} from '../../../redux/actions
 import {Sprint, UserRole} from "../../../propTypes";
 import {RootState} from "../../../redux/reducers/rootReducer";
 import {getSprintsByProjectId} from "../../../redux/selectors/issuesLists";
+import {getCurrentProjectUserRole} from "../../../redux/selectors/ui";
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -129,7 +130,7 @@ const StartSprint: React.FC<Props> = ({
 
 const mapStateToProps = (state: RootState, { projectId }: { projectId: number}) => ({
   sprints: getSprintsByProjectId(state, projectId),
-  userRole: state.ui.currentProjectUserRole,
+  userRole: getCurrentProjectUserRole(state),
 });
 
 const connector = connect(mapStateToProps, { fetchUpdateSprint })

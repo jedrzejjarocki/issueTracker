@@ -60,7 +60,7 @@ const NavDrawer: React.FC<Props> = ({
       <Divider />
       <List>
         {listItems.map(({ to, icon, text }) => (
-          <RouterLink to={to}>
+          <RouterLink key={to} to={to}>
             <ListItem button className={classes.listItem}>
               <ListItemIcon>
                 {icon}
@@ -95,9 +95,7 @@ const NavDrawer: React.FC<Props> = ({
         </Hidden>
         <Hidden smDown implementation="css">
           <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
+            classes={{ paper: classes.drawerPaper }}
             variant="permanent"
             open
           >

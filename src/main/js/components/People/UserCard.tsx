@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Card, CardActions, CardContent, Collapse, Grid, IconButton, makeStyles, Typography} from "@material-ui/core";
 import UserAvatar from "../commons/UserAvatar";
 import AddTeamMember from "./AddTeamMember";
@@ -33,8 +33,9 @@ interface Props {
 
 const UserCard: React.FC<Props> = ({userWithProjects, currentUserId}) => {
   const {userId, projects, username} = userWithProjects;
+
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -49,7 +50,7 @@ const UserCard: React.FC<Props> = ({userWithProjects, currentUserId}) => {
           </Grid>
         </CardContent>
         <CardActions disableSpacing>
-          <AddTeamMember/>
+          <AddTeamMember userWithProjects={userWithProjects} />
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -65,8 +66,8 @@ const UserCard: React.FC<Props> = ({userWithProjects, currentUserId}) => {
           <CardContent>
             <Grid container direction="column" justify="center" alignItems="center">
               <Typography>PROJECTS</Typography>
-              {projects.map(({projectName, userRole}) => (
-                <Typography variant="overline">
+              {projects.map(({id, projectName, userRole}) => (
+                <Typography key={id} variant="overline">
                   {`${projectName} \u2022 ${userRole}`}
                 </Typography>
               ))}

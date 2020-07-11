@@ -11,6 +11,7 @@ import EditSprint from './EditSprint';
 import DeleteSprint from './DeleteSprint';
 import {RootState} from "../../../redux/reducers/rootReducer";
 import {Project, Sprint, UserRole} from "../../../propTypes";
+import {getCurrentProjectUserRole} from "../../../redux/selectors/ui";
 
 const formatDate = (str: string) => format(Date.parse(str), 'dd/MMM/yyyy');
 
@@ -97,7 +98,7 @@ const SprintHeader: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
-  userRole: state.ui.currentProjectUserRole,
+  userRole: getCurrentProjectUserRole(state),
 });
 
 const connector = connect(mapStateToProps)

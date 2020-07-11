@@ -5,6 +5,7 @@ import InviteUser from './InviteUser';
 import {RootState} from "../../redux/reducers/rootReducer";
 import {getUsersWithTheirProjects} from "../../redux/selectors/project";
 import UserCard from './UserCard'
+import {getUser} from "../../redux/selectors/user";
 
 const People: React.FC<ReduxProps> = ({ usersWithProjects, currentUserId }) => (
   <>
@@ -19,7 +20,7 @@ const People: React.FC<ReduxProps> = ({ usersWithProjects, currentUserId }) => (
 
 const mapStateToProps = (state: RootState) => ({
   usersWithProjects: getUsersWithTheirProjects(state),
-  currentUserId: state.user.id,
+  currentUserId: getUser(state).id,
 });
 
 const connector = connect(mapStateToProps)

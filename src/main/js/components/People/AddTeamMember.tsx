@@ -9,10 +9,17 @@ import SelectField from '../forms/fields/SelectField';
 import {fetchAddTeamMember} from '../../redux/actions/teamMember/creators';
 import {UserRole} from "../../propTypes";
 import {RootState} from "../../redux/reducers/rootReducer";
-import {getProjectsWhereCurrentUserIsLeader} from "../../redux/selectors/project";
+import {getProjectsWhereCurrentUserIsLeader, UserWithProjects} from "../../redux/selectors/project";
+import {getUser} from "../../redux/selectors/user";
 
-const AddTeamMember: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, user, fetchAddTeamMember} ) => {
+interface Props extends ReduxProps {
+  userWithProjects: UserWithProjects
+}
+
+const AddTeamMember: React.FC<Props> = ({projectsWhereCurrentUserIsLeader, userWithProjects, fetchAddTeamMember}) => {
   const history = useHistory();
+
+  const {userId, projects: userProjects, username} = userWithProjects;
 
   interface AddTeamMemberFormFields {
     role: UserRole
@@ -22,7 +29,7 @@ const AddTeamMember: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader,
   const handleSubmit = (values: AddTeamMemberFormFields) => {
     const requestBody = {
       user: {
-        id: user.id,
+        id: userId,
       },
       role: values.role,
       project: {
@@ -30,13 +37,16 @@ const AddTeamMember: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader,
       },
     };
 
-    fetchAddTeamMember(requestBody, user.username, history);
+    fetchAddTeamMember(requestBody, username, history);
   };
 
-  const projectsOptions = projectsWhereCurrentUserIsLeader.map(({ id, name }) => ({
-      value: id,
-      label: name,
-    }));
+  //filter out projects where user is already team member
+  const projectsOptions = projectsWhereCurrentUserIsLeader
+    .filter(project => !userProjects.some(({ id }) => id === project.id))
+    .map(({id, name}) => ({
+    value: id,
+    label: name,
+  }));
 
   const initialValues = {
     role: UserRole.DEVELOPER,
@@ -64,7 +74,7 @@ const AddTeamMember: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader,
       initialValues={initialValues}
       renderToggleComponent={(toggleOpen) => (
         <IconButton disabled={!projectsOptions.length} aria-label="add to project" onClick={toggleOpen}>
-          <AddIcon />
+          <AddIcon/>
         </IconButton>
       )}
     />
@@ -72,11 +82,11 @@ const AddTeamMember: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader,
 };
 
 const mapStateToProps = (state: RootState) => ({
-  user: state.user,
-  projectsWhereCurrentUserIsLeader: getProjectsWhereCurrentUserIsLeader(state)
+  currentUser: getUser(state),
+  projectsWhereCurrentUserIsLeader: getProjectsWhereCurrentUserIsLeader(state, state.user.id)
 })
 
-const connector = connect(mapStateToProps, { fetchAddTeamMember })
+const connector = connect(mapStateToProps, {fetchAddTeamMember})
 type ReduxProps = ConnectedProps<typeof connector>
 
 export default connector(AddTeamMember);

@@ -19,6 +19,7 @@ import {Project} from "../../propTypes";
 import {RootState} from "../../redux/reducers/rootReducer";
 import {getUser} from "../../redux/selectors/user";
 import {getTeamMembersByProjectId} from "../../redux/selectors/teamMembers";
+import {getIssueById} from "../../redux/selectors/issues";
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -49,9 +50,7 @@ export interface Props extends RouteComponentProps<any>, ReduxProps{
   project: Project,
 }
 
-const IssueDetails: React.FC<Props> = ({
-  project, issue, userId, fetchUpdateIssue, history, teamMembers,
-}) => {
+const IssueDetails: React.FC<Props> = ({ project, issue, userId, fetchUpdateIssue, history, teamMembers }) => {
   const classes = useStyles();
 
   const onSubmit = (values: UpdateIssueFormFields) => {
@@ -154,9 +153,9 @@ const IssueDetails: React.FC<Props> = ({
 const mapStateToProps = (state: RootState, props: RouteComponentProps<{ issueId: string, projectId: string}>) => {
   const { issueId, projectId } = props.match.params;
   return {
-    issue: state.issues[issueId],
+    issue: getIssueById(state, issueId),
     userId: getUser(state).id,
-    teamMembers: getTeamMembersByProjectId(state, +projectId),
+    teamMembers: getTeamMembersByProjectId(state, projectId),
   };
 };
 

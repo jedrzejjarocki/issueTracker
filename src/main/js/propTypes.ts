@@ -4,7 +4,7 @@ interface Entity {
   id: id
 }
 
-export enum UserRole {LEADER, DEVELOPER}
+export enum UserRole {LEADER = "LEADER", DEVELOPER = "DEVELOPER"}
 export enum IssueType {TASK, IMPROVEMENT, NEW_FEATURE, BUG}
 export enum IssueStatus {TO_DO, IN_PROGRESS, DONE}
 
