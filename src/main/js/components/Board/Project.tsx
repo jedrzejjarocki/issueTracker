@@ -12,32 +12,28 @@ import {getProjectById} from "../../redux/selectors/project";
 import {getSprintsByProjectId} from "../../redux/selectors/issuesLists";
 import {getCurrentUserRoleByProjectId} from "../../redux/selectors/teamMembers";
 
-interface ProjectProps extends RouteComponentProps<any>, ReduxProps{}
-
-const Project: React.FC<ProjectProps> = ({
-  project, sprints, match: { path, url, isExact }, userRole,
-}) => {
+const Project: React.FC<RouteComponentProps<any> & ReduxProps> = ({project, sprints, match, userRole }) => {
   useSetCurrentProject(userRole);
   return (
     <>
-      <Grid container spacing={3}>
+      <Grid container>
         <Switch>
-          <Route path={`${path}/board`}>
-              <Grid item xs={isExact ? 12 : 8} lg={isExact ? 12 : 7}>
-              {sprints && sprints.map((sprint) => (
-                <Sprint key={sprint.id} project={project} sprint={sprint} />
-              ))}
-              <Backlog project={project} />
+          <Route path={`${match.path}/board`}>
+              <Grid container spacing={2}>
+                <Grid item xs lg>
+                  { sprints.map((sprint) => <Sprint key={sprint.id} project={project} sprint={sprint} /> ) }
+                  <Backlog project={project} />
+                </Grid>
+                <Route path={`${match.path}/board/issues/:issueId`}>
+                  <IssueDetails project={project} />
+                </Route>
               </Grid>
-            <Route path={`${path}/board/issues/:issueId`}>
-              <IssueDetails project={project} />
-            </Route>
           </Route>
-          <Route path={`${path}/team`}>
+          <Route path={`${match.path}/team`}>
             <Team />
           </Route>
           <Route>
-            <Redirect to={`${url}/board`} />
+            <Redirect to={`${match.url}/board`} />
           </Route>
         </Switch>
       </Grid>
@@ -47,7 +43,7 @@ const Project: React.FC<ProjectProps> = ({
 
 const mapStateToProps = (state: RootState, props: RouteComponentProps<{ projectId: string }>) => ({
   project: getProjectById(state, props.match.params.projectId),
-  sprints: getSprintsByProjectId(state, +props.match.params.projectId),
+  sprints: getSprintsByProjectId(state, props.match.params.projectId),
   userRole: getCurrentUserRoleByProjectId(state, +props.match.params.projectId),
 });
 

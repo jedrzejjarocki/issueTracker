@@ -1,9 +1,7 @@
-import {IssueStatus} from "../propTypes";
-
 type color = "default" | "primary" | "secondary"
 
 type IssueStatusProperties = {
-  [status in IssueStatus]: {
+  [status: string]: {
     value: string
     text: string
     color: color
@@ -11,19 +9,19 @@ type IssueStatusProperties = {
 };
 
 const issueStatusProperties: IssueStatusProperties = {
-  [IssueStatus.TO_DO]: {
+  TO_DO: {
     value: "TO_DO",
-    text: "To do",
+    text: "TO DO",
     color: "default"
   },
-  [IssueStatus.IN_PROGRESS]: {
+  IN_PROGRESS: {
     value: "IN_PROGRESS",
-    text: "In progress",
+    text: "IN PROGRESS",
     color: "secondary"
   },
-  [IssueStatus.DONE]: {
+  DONE: {
     value: "DONE",
-    text: "Done",
+    text: "DONE",
     color: "primary"
   }
 }

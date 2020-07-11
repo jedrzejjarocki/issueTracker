@@ -4,6 +4,7 @@ import {CreateSprintRequestBody, fetchCreateSprint} from '../../../redux/actions
 import SprintForm from '../../forms/SprintForm';
 import {RootState} from "../../../redux/reducers/rootReducer";
 import {UserRole} from "../../../propTypes";
+import {getCurrentProjectUserRole} from "../../../redux/selectors/ui";
 
 interface CreateSprintFormFields {
   name: string
@@ -51,7 +52,7 @@ const CreateSprint: React.FC<Props> = ({ fetchCreateSprint, projectId, userRole 
 };
 
 const mapStateToProps = (state: RootState) => ({
-  userRole: state.ui.currentProjectUserRole,
+  userRole: getCurrentProjectUserRole(state),
 });
 
 const connector = connect(mapStateToProps, { fetchCreateSprint })
