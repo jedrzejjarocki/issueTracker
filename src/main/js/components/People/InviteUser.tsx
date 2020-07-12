@@ -7,12 +7,11 @@ import memberRoleOptions from '../forms/selectOptions/memberRoleOptions';
 import BasicTextField from '../forms/fields/BasicTextField';
 import SelectField from '../forms/fields/SelectField';
 import {fetchInviteUser} from '../../redux/actions/teamMember/creators';
-import {UserRole} from "../../propTypes";
-import {RootState} from "../../redux/reducers/rootReducer";
-import {getProjectsWhereCurrentUserIsLeader} from "../../redux/selectors/project";
+import {UserRole} from '../../propTypes';
+import {RootState} from '../../redux/reducers/rootReducer';
+import {getProjectsWhereCurrentUserIsLeader} from '../../redux/selectors/project';
 
 const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fetchInviteUser }) => {
-
   interface InviteUserFormFields {
     projectId: number
     email: string
@@ -32,9 +31,9 @@ const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fe
   };
 
   const projectsOptions = projectsWhereCurrentUserIsLeader.map(({ id, name }) => ({
-      value: id,
-      label: name,
-    }));
+    value: id,
+    label: name,
+  }));
 
   const initialValues = {
     projectId: projectsOptions.length ? projectsOptions[0].value : 0,
@@ -79,10 +78,10 @@ const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fe
 };
 
 const mapStateToProps = (state: RootState) => ({
-  projectsWhereCurrentUserIsLeader: getProjectsWhereCurrentUserIsLeader(state, state.user.id)
-})
+  projectsWhereCurrentUserIsLeader: getProjectsWhereCurrentUserIsLeader(state, state.user.id),
+});
 
-const connector = connect(mapStateToProps, { fetchInviteUser })
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, { fetchInviteUser });
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(InviteUser);

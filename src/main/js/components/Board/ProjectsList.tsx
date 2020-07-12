@@ -4,9 +4,9 @@ import {Link as RouterLink} from 'react-router-dom';
 import {Divider, Link, List, ListItem, ListItemText, makeStyles, Paper, Typography,} from '@material-ui/core';
 import CreateProject from '../issuesList/CreateProject';
 import Loading from '../Loading';
-import {RootState} from "../../redux/reducers/rootReducer";
-import {getProjectsAsArray} from "../../redux/selectors/project";
-import {getLoading} from "../../redux/selectors/ui";
+import {RootState} from '../../redux/reducers/rootReducer';
+import {getProjectsAsArray} from '../../redux/selectors/project';
+import {getLoading} from '../../redux/selectors/ui';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,6 +71,6 @@ const mapStateToProps = (state: RootState) => ({
 
 const connector = connect(mapStateToProps);
 
-type ReduxProps = ConnectedProps<typeof connector>
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(ProjectsList);

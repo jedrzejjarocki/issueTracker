@@ -4,9 +4,7 @@
         "es2020": true
     },
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "airbnb",
+        "airbnb-typescript",
         "airbnb/hooks"
     ],
     "parserOptions": {
@@ -14,7 +12,8 @@
             "jsx": true
         },
         "ecmaVersion": 11,
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "plugins": [
         "react"
@@ -22,7 +21,10 @@
     "rules": {
         "react/jsx-filename-extension": 0,
         "react/jsx-props-no-spreading":  0,
+        "react/prop-types": 0,
         "no-plusplus": 0,
-        "no-nested-ternary": 0
+        "no-nested-ternary": 0,
+        "no-shadow": 1,
+        "import/no-cycle": 0
     }
 }

@@ -1,6 +1,6 @@
 import {Typography} from '@material-ui/core';
 import React from 'react';
-import {Backlog, Sprint} from "../../../propTypes";
+import {Backlog, Sprint} from '../../../propTypes';
 
 const backlogLabel = (
   <Typography color="textSecondary" component="i">

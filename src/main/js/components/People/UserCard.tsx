@@ -1,10 +1,10 @@
-import React, {useState} from "react";
-import {Card, CardActions, CardContent, Collapse, Grid, IconButton, makeStyles, Typography} from "@material-ui/core";
-import UserAvatar from "../commons/UserAvatar";
-import AddTeamMember from "./AddTeamMember";
-import clsx from "clsx";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {UserWithProjects} from "../../redux/selectors/project";
+import React, {useState} from 'react';
+import {Card, CardActions, CardContent, Collapse, Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
+import clsx from 'clsx';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import UserAvatar from '../commons/UserAvatar';
+import AddTeamMember from './AddTeamMember';
+import {UserWithProjects} from '../../redux/selectors/project';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,8 +31,8 @@ interface Props {
   currentUserId: number
 }
 
-const UserCard: React.FC<Props> = ({userWithProjects, currentUserId}) => {
-  const {userId, projects, username} = userWithProjects;
+const UserCard: React.FC<Props> = ({ userWithProjects, currentUserId }) => {
+  const { userId, projects, username } = userWithProjects;
 
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
@@ -45,8 +45,8 @@ const UserCard: React.FC<Props> = ({userWithProjects, currentUserId}) => {
       <Card variant="outlined" className={classes.root}>
         <CardContent>
           <Grid container direction="column" alignItems="center" justify="space-between">
-            <UserAvatar name={username} isCurrentUser={userId === currentUserId} size="large"/>
-            <Typography style={{paddingTop: '12px'}} variant="h5">{username}</Typography>
+            <UserAvatar name={username} isCurrentUser={userId === currentUserId} size="large" />
+            <Typography style={{ paddingTop: '12px' }} variant="h5">{username}</Typography>
           </Grid>
         </CardContent>
         <CardActions disableSpacing>
@@ -59,14 +59,14 @@ const UserCard: React.FC<Props> = ({userWithProjects, currentUserId}) => {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <ExpandMoreIcon/>
+            <ExpandMoreIcon />
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Grid container direction="column" justify="center" alignItems="center">
               <Typography>PROJECTS</Typography>
-              {projects.map(({id, projectName, userRole}) => (
+              {projects.map(({ id, projectName, userRole }) => (
                 <Typography key={id} variant="overline">
                   {`${projectName} \u2022 ${userRole}`}
                 </Typography>

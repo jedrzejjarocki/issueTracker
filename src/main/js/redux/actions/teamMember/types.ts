@@ -1,8 +1,8 @@
-import {TeamMembersState} from "../../reducers/teamMembers";
-import {TeamMember, UserRole} from "../../../propTypes";
+import {TeamMembersState} from '../../reducers/teamMembers';
+import {TeamMember, UserRole} from '../../../propTypes';
 
 export const SET_TEAM_MEMBERS = 'SET_TEAM_MEMBERS';
-export const UPDATE_MEMBER_ROLE = 'UPDATE_MEMBER_ROLE';
+export const UPDATE_MEMBER = 'UPDATE_MEMBER';
 export const DELETE_MEMBER = 'DELETE_MEMBER';
 export const ADD_MEMBER = 'ADD_MEMBER';
 
@@ -11,8 +11,8 @@ export interface SetTeamMembersAction {
   payload: TeamMembersState
 }
 
-export interface UpdateMemberRoleAction {
-  type: typeof UPDATE_MEMBER_ROLE
+export interface UpdateMemberAction {
+  type: typeof UPDATE_MEMBER
   payload: TeamMember
 }
 
@@ -37,4 +37,4 @@ export interface DeleteTeamMemberAction {
   }
 }
 
-export type TeamMemberAction = SetTeamMembersAction | UpdateMemberRoleAction | AddTeamMemberAction | DeleteTeamMemberAction
+export type TeamMemberAction = SetTeamMembersAction | UpdateMemberAction | AddTeamMemberAction | DeleteTeamMemberAction;

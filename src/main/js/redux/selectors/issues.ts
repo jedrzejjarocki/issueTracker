@@ -1,6 +1,9 @@
-import {RootState} from "../reducers/rootReducer";
+import {createSelector} from 'reselect';
+import {RootState} from '../reducers/rootReducer';
+import {getIssuesListById} from './issuesLists';
 
-export const getIssuesByListId = (state: RootState, listId: number) =>
-  Object.values(state.issues).filter(issue => issue.listId === listId)
+const getIssues = (state: RootState) => state.issues;
 
-export const getIssueById = (state: RootState, issueId: number | string) => state.issues[issueId]
+export const getIssuesByListId = createSelector(getIssuesListById, getIssues, (list, issues) => list.issues.map((id) => issues[id]));
+
+export const getIssueById = (state: RootState, issueId: number | string) => state.issues[issueId];

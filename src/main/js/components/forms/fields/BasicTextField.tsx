@@ -1,11 +1,11 @@
 import React from 'react';
 import {TextField} from 'material-ui-formik-components/TextField';
+import {FormikProps} from 'formik';
 import FormField from './FormField';
-import {FormikProps} from "formik";
 
 interface Props {
   name: string
-  type?: "password" | "number" | "text"
+  type?: 'password' | 'number' | 'text'
   formikProps: FormikProps<any>
   [x:string]: any;
 }

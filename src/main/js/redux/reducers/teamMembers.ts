@@ -1,7 +1,7 @@
 import {ADD_PROJECT} from '../actions/project/types';
-import {ADD_MEMBER, DELETE_MEMBER, SET_TEAM_MEMBERS, UPDATE_MEMBER_ROLE,} from '../actions/teamMember/types';
-import {TeamMember} from "../../propTypes";
-import {RootAction} from "../store";
+import {ADD_MEMBER, DELETE_MEMBER, SET_TEAM_MEMBERS, UPDATE_MEMBER,} from '../actions/teamMember/types';
+import {TeamMember} from '../../propTypes';
+import {RootAction} from '../store';
 
 export interface TeamMembersState {
   [id: string]: TeamMember
@@ -19,13 +19,8 @@ export default (state: TeamMembersState = {}, action: RootAction) => {
       return stateCopy;
     }
 
-    case UPDATE_MEMBER_ROLE: {
-      const stateCopy = { ...state };
-      stateCopy[action.payload.id] = action.payload;
-      return stateCopy;
-    }
-
-    case ADD_MEMBER: {
+    case ADD_MEMBER:
+    case UPDATE_MEMBER: {
       const stateCopy = { ...state };
       stateCopy[action.payload.id] = action.payload;
       return stateCopy;

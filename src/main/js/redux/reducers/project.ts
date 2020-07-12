@@ -1,8 +1,8 @@
 import {ADD_MEMBER, DELETE_MEMBER} from '../actions/teamMember/types';
 import {ADD_PROJECT, SET_PROJECTS} from '../actions/project/types';
 import {ADD_SPRINT, DELETE_SPRINT} from '../actions/issuesList/types';
-import {Project} from "../../propTypes";
-import {RootAction} from "../store";
+import {Project} from '../../propTypes';
+import {RootAction} from '../store';
 
 const editSprints = (state: ProjectsState, projectId: number, cb: (sprints: number[]) => number[]) => {
   const stateCopy = { ...state };

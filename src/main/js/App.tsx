@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './components/dashboard/Dashboard';
@@ -7,8 +7,8 @@ import Index from './components/Index';
 import InfoSnackbar from './components/InfoSnackbars';
 import Loading from './components/Loading';
 import useFetchInitialData from './hooks/useFetchInitialData';
-import {Message, User} from "./propTypes";
-import {RootState} from "./redux/reducers/rootReducer";
+import {Message, User} from './propTypes';
+import {RootState} from './redux/reducers/rootReducer';
 
 interface Props {
   user: User

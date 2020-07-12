@@ -2,10 +2,10 @@ import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Grid} from '@material-ui/core';
 import InviteUser from './InviteUser';
-import {RootState} from "../../redux/reducers/rootReducer";
-import {getUsersWithTheirProjects} from "../../redux/selectors/project";
-import UserCard from './UserCard'
-import {getUser} from "../../redux/selectors/user";
+import {RootState} from '../../redux/reducers/rootReducer';
+import {getUsersWithTheirProjects} from '../../redux/selectors/project';
+import UserCard from './UserCard';
+import {getUser} from '../../redux/selectors/user';
 
 const People: React.FC<ReduxProps> = ({ usersWithProjects, currentUserId }) => (
   <>
@@ -23,7 +23,7 @@ const mapStateToProps = (state: RootState) => ({
   currentUserId: getUser(state).id,
 });
 
-const connector = connect(mapStateToProps)
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps);
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(People);

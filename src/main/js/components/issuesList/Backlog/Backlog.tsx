@@ -2,7 +2,7 @@ import React from 'react';
 import IssuesList from '../IssuesList';
 import BacklogHeader from './BacklogHeader';
 import Wrapper from '../Wrapper';
-import {Project} from "../../../propTypes";
+import {Project} from '../../../propTypes';
 
 const Backlog: React.FC<{ project: Project }> = ({ project }) => (
   <Wrapper>

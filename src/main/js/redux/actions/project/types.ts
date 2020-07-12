@@ -1,5 +1,5 @@
-import {ProjectsState} from "../../reducers/project";
-import {UserRole} from "../../../propTypes";
+import {ProjectsState} from '../../reducers/project';
+import {UserRole} from '../../../propTypes';
 
 export const SET_PROJECTS = 'SET_PROJECTS';
 export const ADD_PROJECT = 'ADD_PROJECT';
@@ -31,4 +31,4 @@ export interface AddProjectAction {
   payload: AddProjectPayload
 }
 
-export type ProjectAction = SetProjectsAction | AddProjectAction
+export type ProjectAction = SetProjectsAction | AddProjectAction;

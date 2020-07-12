@@ -3,13 +3,13 @@ import {connect, ConnectedProps} from 'react-redux';
 import {MenuItem} from '@material-ui/core';
 import SprintForm from '../../forms/SprintForm';
 import {fetchUpdateSprint, UpdateSprintRequestBody} from '../../../redux/actions/issuesList/creators';
-import {Sprint} from "../../../propTypes";
+import {Sprint} from '../../../propTypes';
 
 const toggleComponent = (handleToggle: MouseEventHandler) => <MenuItem onClick={handleToggle}>edit sprint</MenuItem>;
 
 interface Props extends ReduxProps {
-    sprint: Sprint
-    projectId: number
+  sprint: Sprint
+  projectId: number
 }
 
 const EditSprint: React.FC<Props> = ({ sprint, projectId, fetchUpdateSprint }) => {
@@ -21,7 +21,7 @@ const EditSprint: React.FC<Props> = ({ sprint, projectId, fetchUpdateSprint }) =
       project: {
         id: projectId,
       },
-      ['@type']: 'Sprint'
+      '@type': 'Sprint',
     };
     fetchUpdateSprint(requestBody, projectId);
   };
@@ -37,8 +37,8 @@ const EditSprint: React.FC<Props> = ({ sprint, projectId, fetchUpdateSprint }) =
   );
 };
 
-const connector = connect(null, { fetchUpdateSprint })
+const connector = connect(null, { fetchUpdateSprint });
 
-type ReduxProps = ConnectedProps<typeof connector>
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(EditSprint);

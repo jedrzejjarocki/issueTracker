@@ -1,4 +1,4 @@
-import {Message, UserRole} from "../../../propTypes";
+import {Message, UserRole} from '../../../propTypes';
 
 export const SET_LOADING = 'SET_LOADING';
 export const SET_MESSAGE = 'SET_MESSAGE';
@@ -22,4 +22,4 @@ export interface SetCurrentProjectAction {
   }
 }
 
-export type UIAction = SetLoadingAction | SetMessageAction | SetCurrentProjectAction
+export type UIAction = SetLoadingAction | SetMessageAction | SetCurrentProjectAction;

@@ -1,4 +1,4 @@
-type color = "default" | "primary" | "secondary"
+type color = 'default' | 'primary' | 'secondary';
 
 type IssueStatusProperties = {
   [status: string]: {
@@ -10,20 +10,20 @@ type IssueStatusProperties = {
 
 const issueStatusProperties: IssueStatusProperties = {
   TO_DO: {
-    value: "TO_DO",
-    text: "TO DO",
-    color: "default"
+    value: 'TO_DO',
+    text: 'TO DO',
+    color: 'default',
   },
   IN_PROGRESS: {
-    value: "IN_PROGRESS",
-    text: "IN PROGRESS",
-    color: "secondary"
+    value: 'IN_PROGRESS',
+    text: 'IN PROGRESS',
+    color: 'secondary',
   },
   DONE: {
-    value: "DONE",
-    text: "DONE",
-    color: "primary"
-  }
-}
+    value: 'DONE',
+    text: 'DONE',
+    color: 'primary',
+  },
+};
 
-export default issueStatusProperties
+export default issueStatusProperties;

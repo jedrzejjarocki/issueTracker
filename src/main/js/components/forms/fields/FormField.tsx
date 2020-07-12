@@ -5,7 +5,7 @@ interface Props {
   name: string
   error?: string,
   touched?: boolean
-  type?: "password" | "number" | "text"
+  type?: 'password' | 'number' | 'text'
   component: React.ComponentType
   options?: React.ReactNode
   multiline?: boolean

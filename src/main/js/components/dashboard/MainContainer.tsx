@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core';
-import {Route, RouteComponentProps, Switch, withRouter} from 'react-router-dom';
+import {Route, RouteComponentProps, Switch, withRouter,} from 'react-router-dom';
 import ProjectsList from '../Board/ProjectsList';
 import Project from '../Board/Project';
 import People from '../People/People';

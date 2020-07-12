@@ -1,3 +1,3 @@
 export interface RouterHistory {
-    push: (url: string) => void
+  push: (url: string) => void
 }

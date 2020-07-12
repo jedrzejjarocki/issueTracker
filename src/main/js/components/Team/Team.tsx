@@ -3,10 +3,10 @@ import {Grid} from '@material-ui/core';
 import {connect, ConnectedProps} from 'react-redux';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import TeamMember from './TeamMember';
-import {RootState} from "../../redux/reducers/rootReducer";
-import {getTeamMembersByProjectId} from "../../redux/selectors/teamMembers";
-import {getUser} from "../../redux/selectors/user";
-import {getCurrentProjectUserRole} from "../../redux/selectors/ui";
+import {RootState} from '../../redux/reducers/rootReducer';
+import {getTeamMembersByProjectId} from '../../redux/selectors/teamMembers';
+import {getUser} from '../../redux/selectors/user';
+import {getCurrentProjectUserRole} from '../../redux/selectors/ui';
 
 const Team: React.FC<ReduxProps> = ({ team, userRole, currentUserId }) => (
   <Grid container item spacing={3}>
@@ -23,6 +23,6 @@ const mapStateToProps = (state: RootState, { match }: RouteComponentProps<{ proj
 });
 
 const connector = connect(mapStateToProps);
-type ReduxProps = ConnectedProps<typeof connector>
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default withRouter(connector(Team));
