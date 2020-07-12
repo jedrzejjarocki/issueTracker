@@ -4,7 +4,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import SubmitButton from '../forms/SubmitButton';
 import {fetchChangeTeamMemberRole} from '../../redux/actions/teamMember/creators';
-import {TeamMember, UserRole} from "../../propTypes";
+import {TeamMember, UserRole} from '../../propTypes';
 
 interface Props extends ReduxProps {
   member: TeamMember
@@ -57,7 +57,7 @@ const ChangeRole: React.FC<Props> = ({
   );
 };
 
-const connector = connect(null, { fetchChangeTeamMemberRole })
-type ReduxProps  =ConnectedProps<typeof connector>
+const connector = connect(null, { fetchChangeTeamMemberRole });
+type ReduxProps =ConnectedProps<typeof connector>;
 
 export default connector(ChangeRole);

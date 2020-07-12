@@ -70,7 +70,7 @@ const PasswordRecoveryRequestForm: React.FC<ReduxProps> = ({ fetchRequestPasswor
   );
 };
 
-const connector = connect(null, { fetchRequestPasswordRecovery })
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(null, { fetchRequestPasswordRecovery });
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(PasswordRecoveryRequestForm);

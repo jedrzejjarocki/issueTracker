@@ -3,7 +3,7 @@ import {Grid, makeStyles, Paper, Typography,} from '@material-ui/core';
 import UserAvatar from '../commons/UserAvatar';
 import DeleteMember from './DeleteMember';
 import ChangeTeamMemberRole from './ChangeTeamMemberRole';
-import {TeamMember, UserRole} from "../../propTypes";
+import {TeamMember, UserRole} from '../../propTypes';
 
 const useStyles = makeStyles(() => ({
   root: {

@@ -1,17 +1,17 @@
 import axios from 'axios';
-import {BASE_URL, LOGIN_URL, LOGOUT_URL, USERS_URL} from '../../../api/commons';
+import {Dispatch} from 'redux';
+import React from 'react';
+import {BASE_URL, LOGIN_URL, LOGOUT_URL, USERS_URL,} from '../../../api/commons';
 import {setLoading, setMessage} from '../ui/creators';
 import normalize from '../../schema';
 import {setProjects} from '../project/creators';
 import {setIssuesLists} from '../issuesList/creators';
 import {setIssues} from '../issue/creators';
 import {setTeamMembers} from '../teamMember/creators';
-import {SetUserAction} from "./types";
-import {User, UserRole} from "../../../propTypes";
-import {Dispatch} from "redux";
-import {RouterHistory} from "../../utilTypes";
-import {RootThunk} from "../../store";
-import React from "react";
+import {SetUserAction} from './types';
+import {User, UserRole} from '../../../propTypes';
+import {RouterHistory} from '../../utilTypes';
+import {RootThunk} from '../../store';
 
 export const SET_USER = 'SET_USER';
 
@@ -33,7 +33,7 @@ export const fetchLogin = (credentials: Credentials): RootThunk => async (dispat
   } catch (error) {
     dispatch(setMessage({
       content: 'Incorrect username or password',
-      severity: 'error'
+      severity: 'error',
     }));
   }
 };
@@ -53,9 +53,8 @@ export const fetchRegister = (requestBody: RegisterRequestBody, token: string, t
       if (status === 201) {
         dispatch(setMessage({
           content: 'Account created!',
-          severity: 'success'
-          })
-        );
+          severity: 'success',
+        }));
         toggleFormDialog();
       }
     } catch (err) {
@@ -158,38 +157,34 @@ export const fetchChangePassword = (password: string, token: string, history: Ro
         password,
       });
       dispatch(setMessage({
-          content: 'Password changed successfully',
-          severity: 'success'
-        })
-      );
+        content: 'Password changed successfully',
+        severity: 'success',
+      }));
       history.push('/signin');
     } catch (err) {
       dispatch(setMessage({
-          content: err.response.data,
-          severity: 'error'
-        })
-      );
+        content: err.response.data,
+        severity: 'error',
+      }));
     }
   }
 );
 
 export const fetchRequestPasswordRecovery = (credentials: { email: string }, history: RouterHistory): RootThunk => (
   async (dispatch) => {
-  try {
-    await axios.post(`${BASE_URL}/users/reset-password`, credentials);
-    dispatch(setMessage({
-        content: 'Check your email for password recovery link',
-        severity: 'success'
-      })
-    );
-    history.push('/');
-  } catch (err) {
-    if (err.response.status === 401) {
+    try {
+      await axios.post(`${BASE_URL}/users/reset-password`, credentials);
       dispatch(setMessage({
+        content: 'Check your email for password recovery link',
+        severity: 'success',
+      }));
+      history.push('/');
+    } catch (err) {
+      if (err.response.status === 401) {
+        dispatch(setMessage({
           content: "User with a given email does't exists",
-          severity: 'error'
-        })
-      );
+          severity: 'error',
+        }));
+      }
     }
-  }
-});
+  });

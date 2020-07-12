@@ -4,12 +4,12 @@ import DialogForm from './DialogForm';
 import BasicTextField from './fields/BasicTextField';
 
 interface Props {
-    title: string
-    toggleButtonText?: string
-    onSubmit: (values: any) => Promise<void>
-    initialValues: any
-    submitButtonText?: string
-    toggleComponent?: (toggle: MouseEventHandler) => JSX.Element
+  title: string
+  toggleButtonText?: string
+  onSubmit: (values: any) => Promise<void>
+  initialValues: any
+  submitButtonText?: string
+  toggleComponent?: (toggle: MouseEventHandler) => JSX.Element
 }
 
 const SprintForm: React.FC<Props> = ({

@@ -1,4 +1,4 @@
-import {User} from "../../../propTypes";
+import {User} from '../../../propTypes';
 
 export const SET_USER = 'SET_USER';
 
@@ -7,4 +7,4 @@ export interface SetUserAction {
   payload: User
 }
 
-export type UserAction = SetUserAction
+export type UserAction = SetUserAction;

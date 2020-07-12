@@ -9,7 +9,7 @@ import {
   projectId,
   storyPointsEstimate,
 } from '../validators';
-import {IssueStatus, IssueType} from "../../../../propTypes";
+import {IssueStatus, IssueType} from '../../../../propTypes';
 
 export interface CreateIssueFormFields {
   projectId: number

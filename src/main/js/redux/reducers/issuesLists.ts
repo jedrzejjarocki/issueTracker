@@ -1,8 +1,8 @@
 import {ADD_ISSUE, DELETE_ISSUE} from '../actions/issue/types';
 import {ADD_PROJECT} from '../actions/project/types';
 import {ADD_SPRINT, DELETE_SPRINT, SET_ISSUES_LISTS, UPDATE_SPRINT,} from '../actions/issuesList/types';
-import {IssuesContainer, Sprint} from "../../propTypes";
-import {RootAction} from "../store";
+import {IssuesContainer, Sprint} from '../../propTypes';
+import {RootAction} from '../store';
 
 const setSprint = (state: IssuesListsState, payload: { sprint: Sprint}) => {
   const stateCopy = { ...state };
@@ -26,6 +26,8 @@ export default (state: IssuesListsState = {}, action: RootAction) => {
     case DELETE_SPRINT: {
       const stateCopy = { ...state };
       delete stateCopy[action.payload.sprint.id];
+      const backlog = stateCopy[action.payload.backlogId];
+      backlog.issues = [...action.payload.sprint.issues, ...backlog.issues];
       return stateCopy;
     }
 
@@ -46,7 +48,7 @@ export default (state: IssuesListsState = {}, action: RootAction) => {
 
     case ADD_PROJECT: {
       const stateCopy = { ...state };
-      stateCopy[`${action.payload.backlog.id}`] = action.payload.backlog;
+      stateCopy[action.payload.backlog.id] = action.payload.backlog;
       return stateCopy;
     }
 

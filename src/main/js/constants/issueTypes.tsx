@@ -13,21 +13,21 @@ type IssueTypeProperties = {
 
 const issueTypeProperties: IssueTypeProperties = {
   TASK: {
-    value: "TASK",
-    icon: <AssignmentTurnedInOutlinedIcon color="primary"/>
+    value: 'TASK',
+    icon: <AssignmentTurnedInOutlinedIcon color="primary" />,
   },
   IMPROVEMENT: {
-    value: "IMPROVEMENT",
-    icon: <TrendingUpIcon htmlColor="green"/>
+    value: 'IMPROVEMENT',
+    icon: <TrendingUpIcon htmlColor="green" />,
   },
   NEW_FEATURE: {
-    value: "NEW FEATURE",
-    icon: <AddBoxOutlinedIcon htmlColor="green"/>
+    value: 'NEW FEATURE',
+    icon: <AddBoxOutlinedIcon htmlColor="green" />,
   },
   BUG: {
     value: 'BUG',
-    icon: <BugReportOutlinedIcon color="error"/>
-  }
-}
+    icon: <BugReportOutlinedIcon color="error" />,
+  },
+};
 
 export default issueTypeProperties;

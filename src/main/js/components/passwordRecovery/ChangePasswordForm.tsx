@@ -82,7 +82,7 @@ const ChangePasswordForm: React.FC<Props> = ({ token, fetchChangePassword }) => 
   );
 };
 
-const connector = connect(null, { fetchChangePassword })
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(null, { fetchChangePassword });
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(ChangePasswordForm);

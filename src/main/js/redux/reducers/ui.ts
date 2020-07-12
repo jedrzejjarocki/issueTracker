@@ -1,6 +1,6 @@
 import {SET_CURRENT_PROJECT, SET_LOADING, SET_MESSAGE} from '../actions/ui/types';
-import {Message, UserRole} from "../../propTypes";
-import {RootAction} from "../store";
+import {Message, UserRole} from '../../propTypes';
+import {RootAction} from '../store';
 
 export interface UIState {
   message: Message | null

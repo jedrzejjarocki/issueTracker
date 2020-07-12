@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {Dispatch} from 'redux';
 import {TEAM_MEMBERS_URL} from '../../../api/commons';
 import {setMessage} from '../ui/creators';
 
@@ -10,14 +11,13 @@ import {
   DeleteTeamMemberAction,
   SET_TEAM_MEMBERS,
   SetTeamMembersAction,
-  UPDATE_MEMBER_ROLE,
-  UpdateMemberRoleAction
-} from "./types";
-import {TeamMember, UserRole} from "../../../propTypes";
-import {TeamMembersState} from "../../reducers/teamMembers";
-import {Dispatch} from "redux";
-import {RouterHistory} from "../../utilTypes";
-import {RootThunk} from "../../store";
+  UPDATE_MEMBER,
+  UpdateMemberAction,
+} from './types';
+import {TeamMember, UserRole} from '../../../propTypes';
+import {TeamMembersState} from '../../reducers/teamMembers';
+import {RouterHistory} from '../../utilTypes';
+import {RootThunk} from '../../store';
 
 export const setTeamMembers = (members: TeamMembersState): SetTeamMembersAction => ({
   type: SET_TEAM_MEMBERS,
@@ -29,8 +29,8 @@ export const addMember = (payload: AddTeamMemberPayload): AddTeamMemberAction =>
   payload,
 });
 
-const updateMemberRole = (member: TeamMember): UpdateMemberRoleAction => ({
-  type: UPDATE_MEMBER_ROLE,
+export const updateMemberRole = (member: TeamMember): UpdateMemberAction => ({
+  type: UPDATE_MEMBER,
   payload: member,
 });
 
@@ -61,9 +61,8 @@ export const fetchAddTeamMember: FetchAddTeamMemberFunc = (requestBody, username
   dispatch(addMember(payload));
   dispatch(setMessage({
     content: 'Team member successfully added',
-    severity: 'success'
-    })
-  );
+    severity: 'success',
+  }));
   history.push('/app/people');
 };
 
@@ -83,16 +82,14 @@ export const fetchInviteUser: FetchInviteUserFunc = (requestBody) => async (disp
   try {
     await axios.post(`${TEAM_MEMBERS_URL}/invitations`, requestBody);
     dispatch(setMessage({
-      content:'User has been invited',
-      severity: 'success'
-      })
-    );
+      content: 'User has been invited',
+      severity: 'success',
+    }));
   } catch (err) {
     dispatch(setMessage({
       content: 'Something went wrong, try again',
-      severity: 'error'
-      })
-    );
+      severity: 'error',
+    }));
   }
 };
 
@@ -114,10 +111,9 @@ export const fetchChangeTeamMemberRole = (requestBody: ChangeTeamMemberRoleReque
       dispatch(updateMemberRole(data));
     } catch (err) {
       dispatch(setMessage({
-          content: err.response.data.message,
-          severity: 'error'
-        })
-      );
+        content: err.response.data.message,
+        severity: 'error',
+      }));
     }
     toggleDialog();
   }
@@ -135,9 +131,8 @@ export const fetchDeleteMember = (projectId: number, memberId: number, history: 
       if (err.response.status === 409) {
         dispatch(setMessage({
           content: err.response.data.message,
-          severity:  'error'
-          })
-        );
+          severity: 'error',
+        }));
       }
     }
     toggleDialog();

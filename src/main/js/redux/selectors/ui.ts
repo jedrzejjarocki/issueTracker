@@ -1,4 +1,4 @@
-import {RootState} from "../reducers/rootReducer";
+import {RootState} from '../reducers/rootReducer';
 
 export const getLoading = (state: RootState) => state.ui.loading;
 

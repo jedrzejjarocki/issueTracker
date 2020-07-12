@@ -1,7 +1,7 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import {Message} from "../propTypes";
+import {Message} from '../propTypes';
 
 interface Props {
   onClose: (event: SyntheticEvent) => void
@@ -12,7 +12,7 @@ const Alert: React.FC<Props> = ({ onClose, message }) => (
   <MuiAlert elevation={6} variant="filled" severity={message.severity} onClose={onClose}>
     {message.content}
   </MuiAlert>
-)
+);
 
 const InfoSnackbar = ({ message }: { message: Message}) => {
   const [open, setOpen] = useState(false);

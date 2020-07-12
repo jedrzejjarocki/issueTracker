@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {Divider, Drawer, Hidden, List, ListItem, ListItemIcon, ListItemText, makeStyles} from '@material-ui/core';
+import {Divider, Drawer, Hidden, List, ListItem, ListItemIcon, ListItemText, makeStyles,} from '@material-ui/core';
 import ListOutlinedIcon from '@material-ui/icons/ListOutlined';
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined';
 import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined';
 import RouterLink from '../commons/RouterLink';
-import {RootState} from "../../redux/reducers/rootReducer";
-import {getCurrentProjectId} from "../../redux/selectors/ui";
+import {RootState} from '../../redux/reducers/rootReducer';
+import {getCurrentProjectId} from '../../redux/selectors/ui';
 
 const drawerWidth = 210;
 
@@ -112,8 +112,8 @@ const mapStateToProps = (state: RootState) => ({
   currentProjectId: getCurrentProjectId(state),
 });
 
-const connector = connect(mapStateToProps)
+const connector = connect(mapStateToProps);
 
-type ReduxProps = ConnectedProps<typeof connector>
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(NavDrawer);

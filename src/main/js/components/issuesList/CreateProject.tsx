@@ -10,7 +10,6 @@ interface Props {
 }
 
 const CreateProject: React.FC<Props> = ({ first }) => {
-
   interface CreateProjectFormFields {
     name: string
     key: string
@@ -26,8 +25,8 @@ const CreateProject: React.FC<Props> = ({ first }) => {
   const onSubmit = ({ name, key }: CreateProjectFormFields, { resetForm }: { resetForm: () => void}) => {
     const requestBody = {
       name,
-      projectKey: key ? key.toUpperCase() : generateKey(name)
-    }
+      projectKey: key ? key.toUpperCase() : generateKey(name),
+    };
 
     fetchCreateProject(requestBody);
     resetForm();

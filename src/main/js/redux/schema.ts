@@ -1,5 +1,5 @@
 import {normalize, schema} from 'normalizr';
-import {CurrentUserResponseBody} from "./actions/user/creators";
+import {CurrentUserResponseBody} from './actions/user/creators';
 
 const teamMember = new schema.Entity('teamMembers');
 

@@ -1,11 +1,11 @@
 import axios from 'axios';
 import {PROJECTS_URL} from '../../../api/commons';
 import {setMessage} from '../ui/creators';
-import {ADD_PROJECT, AddProjectAction, AddProjectPayload, SET_PROJECTS, SetProjectsAction} from "./types";
-import {ProjectsState} from "../../reducers/project";
-import {RootThunk} from "../../store";
+import {ADD_PROJECT, AddProjectAction, AddProjectPayload, SET_PROJECTS, SetProjectsAction,} from './types';
+import {ProjectsState} from '../../reducers/project';
+import {RootThunk} from '../../store';
 
-const addProject = (payload: AddProjectPayload): AddProjectAction => ({
+export const addProject = (payload: AddProjectPayload): AddProjectAction => ({
   type: ADD_PROJECT,
   payload,
 });
@@ -28,8 +28,8 @@ export const fetchCreateProject = (requestBody: CreateProjectRequestBody): RootT
     if (err.response.status <= 400) {
       dispatch(setMessage({
         content: 'Something went wrong, try again',
-        severity: 'error'})
-      );
+        severity: 'error',
+      }));
     }
   }
 };

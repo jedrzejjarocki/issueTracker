@@ -5,9 +5,9 @@ import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typograph
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import SubmitButton from '../forms/SubmitButton';
 import {fetchDeleteMember} from '../../redux/actions/teamMember/creators';
-import {RootState} from "../../redux/reducers/rootReducer";
-import {TeamMember} from "../../propTypes";
-import {getCurrentProjectId} from "../../redux/selectors/ui";
+import {RootState} from '../../redux/reducers/rootReducer';
+import {TeamMember} from '../../propTypes';
+import {getCurrentProjectId} from '../../redux/selectors/ui';
 
 interface Props extends ReduxProps {
   member: TeamMember
@@ -53,7 +53,7 @@ const mapStateToProps = (state: RootState) => ({
   currentProjectId: getCurrentProjectId(state),
 });
 
-const connector = connect(mapStateToProps, { fetchDeleteMember })
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, { fetchDeleteMember });
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(DeleteMember);

@@ -2,9 +2,9 @@ import {ADD_ISSUE, DELETE_ISSUE, SET_ISSUES, UPDATE_ISSUE,} from '../actions/iss
 
 import {DELETE_MEMBER} from '../actions/teamMember/types';
 
-import {Issue} from "../../propTypes";
-import {DELETE_SPRINT} from "../actions/issuesList/types";
-import {RootAction} from "../store";
+import {Issue} from '../../propTypes';
+import {DELETE_SPRINT} from '../actions/issuesList/types';
+import {RootAction} from '../store';
 
 const setIssue = (state: IssuesState, issue: Issue) => {
   const stateCopy = { ...state };
@@ -16,7 +16,7 @@ export interface IssuesState {
   [id: string]: Issue
 }
 
-export default (state: IssuesState = {}, action: RootAction ) => {
+export default (state: IssuesState = {}, action: RootAction) => {
   switch (action.type) {
     case SET_ISSUES:
       return action.payload || {};

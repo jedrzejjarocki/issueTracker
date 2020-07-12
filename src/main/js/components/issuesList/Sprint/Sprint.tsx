@@ -3,7 +3,7 @@ import {Collapse} from '@material-ui/core';
 import Wrapper from '../Wrapper';
 import SprintHeader from './SprintHeader';
 import IssuesList from '../IssuesList';
-import {Project, Sprint} from "../../../propTypes";
+import {Project, Sprint} from '../../../propTypes';
 
 const Sprint = ({ sprint, project }: { sprint: Sprint, project: Project}) => {
   const [expanded, setExpanded] = useState(true);

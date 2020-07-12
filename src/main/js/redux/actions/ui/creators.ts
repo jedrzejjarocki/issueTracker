@@ -1,5 +1,12 @@
-import {Message, UserRole} from "../../../propTypes";
-import {SET_CURRENT_PROJECT, SET_LOADING, SET_MESSAGE, SetLoadingAction, SetMessageAction} from "./types";
+import {Message, UserRole} from '../../../propTypes';
+import {
+  SET_CURRENT_PROJECT,
+  SET_LOADING,
+  SET_MESSAGE,
+  SetCurrentProjectAction,
+  SetLoadingAction,
+  SetMessageAction,
+} from './types';
 
 export const setMessage = (message: Message): SetMessageAction => ({
   type: SET_MESSAGE,
@@ -11,7 +18,7 @@ export const setLoading = (loading: boolean): SetLoadingAction => ({
   payload: loading,
 });
 
-export const setCurrentProject = (id: number, userRole: UserRole) => ({
+export const setCurrentProject = (id: number, userRole: UserRole): SetCurrentProjectAction => ({
   type: SET_CURRENT_PROJECT,
   payload: {
     id, userRole,

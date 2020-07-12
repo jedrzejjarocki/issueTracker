@@ -11,10 +11,10 @@ import SelectField from '../../forms/fields/SelectField';
 import TextAreaField from '../../forms/fields/TextAreaField';
 import schema from '../../forms/validation/schemas/startSprint';
 import {fetchUpdateSprint, UpdateSprintRequestBody} from '../../../redux/actions/issuesList/creators';
-import {Sprint, UserRole} from "../../../propTypes";
-import {RootState} from "../../../redux/reducers/rootReducer";
-import {getSprintsByProjectId} from "../../../redux/selectors/issuesLists";
-import {getCurrentProjectUserRole} from "../../../redux/selectors/ui";
+import {Sprint, UserRole} from '../../../propTypes';
+import {RootState} from '../../../redux/reducers/rootReducer';
+import {getSprintsByProjectId} from '../../../redux/selectors/issuesLists';
+import {getCurrentProjectUserRole} from '../../../redux/selectors/ui';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -28,10 +28,7 @@ const isEmpty = (sprint: Sprint) => !sprint.issues || !sprint.issues.length;
 
 const projectHasActiveSprint = (sprints: Sprint[]) => sprints.some((s) => !!s.startDate);
 
-const canBeStarted = (sprint: Sprint, sprints: Sprint[]) => {
-  return !(isEmpty(sprint) || projectHasActiveSprint(sprints));
-
-};
+const canBeStarted = (sprint: Sprint, sprints: Sprint[]) => !(isEmpty(sprint) || projectHasActiveSprint(sprints));
 
 interface Props extends ReduxProps {
   sprint: Sprint
@@ -54,7 +51,9 @@ const StartSprint: React.FC<Props> = ({
     duration: 2,
   };
 
-  const onSubmit = async ({ name, goal, duration, id }: StartSprintFormValues) => {
+  const onSubmit = async ({
+    name, goal, duration, id,
+  }: StartSprintFormValues) => {
     const requestBody: UpdateSprintRequestBody = {
       project: {
         id: projectId,
@@ -133,7 +132,7 @@ const mapStateToProps = (state: RootState, { projectId }: { projectId: number}) 
   userRole: getCurrentProjectUserRole(state),
 });
 
-const connector = connect(mapStateToProps, { fetchUpdateSprint })
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, { fetchUpdateSprint });
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(StartSprint);

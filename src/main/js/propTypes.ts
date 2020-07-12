@@ -4,7 +4,7 @@ interface Entity {
   id: id
 }
 
-export enum UserRole {LEADER = "LEADER", DEVELOPER = "DEVELOPER"}
+export enum UserRole {LEADER = 'LEADER', DEVELOPER = 'DEVELOPER'}
 export enum IssueType {TASK, IMPROVEMENT, NEW_FEATURE, BUG}
 export enum IssueStatus {TO_DO, IN_PROGRESS, DONE}
 
@@ -28,7 +28,7 @@ export interface IssuesContainer extends Entity {
 }
 
 export interface Backlog extends IssuesContainer {
-  type?: "Backlog"
+  type?: 'Backlog'
 }
 
 export interface Sprint extends IssuesContainer {
@@ -36,7 +36,7 @@ export interface Sprint extends IssuesContainer {
   goal?: string,
   startDate?: string,
   endDate?: string
-  type?: "Sprint"
+  type?: 'Sprint'
 }
 
 export interface Project extends Entity {

@@ -4,8 +4,8 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import {fetchDeleteIssue} from '../../redux/actions/issue/creators';
 import SubmitButton from '../forms/SubmitButton';
-import {Issue} from "../../propTypes";
-import {RouterHistory} from "../../redux/utilTypes";
+import {Issue} from '../../propTypes';
+import {RouterHistory} from '../../redux/utilTypes';
 
 interface Props extends ReduxProps {
   issue: Issue
@@ -48,7 +48,7 @@ const DeleteIssue: React.FC<Props> = ({
   );
 };
 
-const connector = connect(null, { fetchDeleteIssue })
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(null, { fetchDeleteIssue });
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(DeleteIssue);

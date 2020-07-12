@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography} from '@material-ui/core';
+import {AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography,} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import {fetchLogout} from '../../redux/actions/user/creators';
@@ -9,9 +9,9 @@ import Dropdown from './Dropdown';
 import RouterLink from '../commons/RouterLink';
 import UserAvatar from '../commons/UserAvatar';
 import CreateIssue from './CreateIssue';
-import {RootState} from "../../redux/reducers/rootReducer";
-import {getUser} from "../../redux/selectors/user";
-import {getProjectsAsArray} from "../../redux/selectors/project";
+import {RootState} from '../../redux/reducers/rootReducer';
+import {getUser} from '../../redux/selectors/user';
+import {getProjectsAsArray} from '../../redux/selectors/project';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -121,7 +121,7 @@ const mapStateToProps = (state: RootState) => ({
   projects: getProjectsAsArray(state),
 });
 
-const connector = connect(mapStateToProps, { fetchLogout })
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, { fetchLogout });
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default withRouter(connector(TopBar));

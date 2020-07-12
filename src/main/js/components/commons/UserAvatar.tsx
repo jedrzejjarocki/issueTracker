@@ -8,10 +8,12 @@ const color = deepOrange[500];
 interface Props {
   name: string,
   isCurrentUser?: boolean,
-  size?: "small" | "large"
+  size?: 'small' | 'large'
 }
 
-const UserAvatar: React.FC<Props> = ({ name, isCurrentUser, size, ...rest}) => {
+const UserAvatar: React.FC<Props> = ({
+  name, isCurrentUser, size, ...rest
+}) => {
   const styles = makeStyles((theme) => ({
     currentUserColors: {
       color: theme.palette.getContrastText(color),
@@ -36,6 +38,5 @@ const UserAvatar: React.FC<Props> = ({ name, isCurrentUser, size, ...rest}) => {
     </Avatar>
   );
 };
-
 
 export default UserAvatar;

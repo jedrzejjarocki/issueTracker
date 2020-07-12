@@ -1,8 +1,8 @@
-import React, {KeyboardEventHandler, MouseEventHandler, useRef, useState} from 'react';
+import React, {KeyboardEventHandler, MouseEventHandler, MutableRefObject, useRef, useState,} from 'react';
 import {ClickAwayListener, Grow, MenuList, Paper, Popper,} from '@material-ui/core';
 
 interface Props {
-  render: (ref: React.MutableRefObject<any>, ariaHasPopup: boolean, toggleOpen: () => void) => React.ReactNode
+  render: (ref: MutableRefObject<any>, ariaHasPopup: boolean, toggleOpen: () => void) => React.ReactNode
 }
 
 const Dropdown: React.FC<Props> = ({ children, render }) => {

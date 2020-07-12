@@ -4,7 +4,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Typography,} from '@material-ui/core';
 import SubmitButton from '../../forms/SubmitButton';
 import {fetchDeleteSprint} from '../../../redux/actions/issuesList/creators';
-import {Sprint} from "../../../propTypes";
+import {Sprint} from '../../../propTypes';
 
 interface Props extends ReduxProps {
   sprint: Sprint
@@ -46,8 +46,8 @@ const DeleteSprint: React.FC<Props> = ({
   );
 };
 
-const connector = connect(null, { fetchDeleteSprint })
+const connector = connect(null, { fetchDeleteSprint });
 
-type ReduxProps = ConnectedProps<typeof connector>
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(DeleteSprint);

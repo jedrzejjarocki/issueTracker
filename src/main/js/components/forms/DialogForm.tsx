@@ -1,8 +1,8 @@
 import React, {MouseEventHandler, useState} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, Tooltip,} from '@material-ui/core';
 import {Form, Formik, FormikProps} from 'formik';
+import {ObjectSchema} from 'yup';
 import SubmitButton from './SubmitButton';
-import {ObjectSchema} from "yup";
 
 const WithTooltip: React.FC<{tooltipText: string}> = ({ children, tooltipText }) => (
   <>
@@ -17,8 +17,7 @@ const WithTooltip: React.FC<{tooltipText: string}> = ({ children, tooltipText })
   </>
 );
 
-
-//@TODO types
+// @TODO types
 interface Props {
   validationSchema?: ObjectSchema
   initialValues: {

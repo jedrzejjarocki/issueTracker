@@ -10,6 +10,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/yup": "^0.29.3",
+    "@typescript-eslint/parser": "^3.6.0",
     "axios": "^0.19.2",
     "clsx": "^1.1.1",
     "date-fns": "^2.14.0",
@@ -33,22 +34,30 @@
     "yup": "^0.29.1"
   },
   "scripts": {
-    "watch": "webpack --watch -d --output ./target/classes/static/bundle.js"
+    "watch": "webpack --watch -d --output ./target/classes/static/bundle.js",
+    "test": "jest",
+    "test:watch": "jest --watch *.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.1.0",
     "@babel/plugin-transform-runtime": "^7.10.3",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
+    "@types/jest": "^26.0.4",
+    "@types/node": "^14.0.22",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
     "babel-loader": "^8.0.2",
     "css-loader": "^3.6.0",
-    "eslint": "^7.2.0",
+    "eslint": "^7.4.0",
     "eslint-config-airbnb": "^18.2.0",
-    "eslint-plugin-import": "^2.21.2",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.0",
+    "jest": "^26.1.0",
     "style-loader": "^1.2.1",
+    "ts-jest": "^26.1.1",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0"
   }

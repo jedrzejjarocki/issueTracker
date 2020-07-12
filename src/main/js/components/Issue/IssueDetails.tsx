@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Card, Grid, IconButton, makeStyles, Typography} from '@material-ui/core';
+import {Card, Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
 import {Form, Formik} from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
 import schema, {UpdateIssueFormFields} from '../forms/validation/schemas/updateIssue';
@@ -15,11 +15,11 @@ import DeleteIssue from './DeleteIssue';
 import SelectField from '../forms/fields/SelectField';
 import BasicTextField from '../forms/fields/BasicTextField';
 import TextAreaField from '../forms/fields/TextAreaField';
-import {Project} from "../../propTypes";
-import {RootState} from "../../redux/reducers/rootReducer";
-import {getUser} from "../../redux/selectors/user";
-import {getTeamMembersByProjectId} from "../../redux/selectors/teamMembers";
-import {getIssueById} from "../../redux/selectors/issues";
+import {Project} from '../../propTypes';
+import {RootState} from '../../redux/reducers/rootReducer';
+import {getUser} from '../../redux/selectors/user';
+import {getTeamMembersByProjectId} from '../../redux/selectors/teamMembers';
+import {getIssueById} from '../../redux/selectors/issues';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -50,7 +50,9 @@ export interface Props extends RouteComponentProps<any>, ReduxProps{
   project: Project,
 }
 
-const IssueDetails: React.FC<Props> = ({ project, issue, userId, fetchUpdateIssue, history, teamMembers }) => {
+const IssueDetails: React.FC<Props> = ({
+  project, issue, userId, fetchUpdateIssue, history, teamMembers,
+}) => {
   const classes = useStyles();
 
   const onSubmit = (values: UpdateIssueFormFields) => {
@@ -66,9 +68,9 @@ const IssueDetails: React.FC<Props> = ({ project, issue, userId, fetchUpdateIssu
       summary: values.summary,
       description: values.description,
       assignee: values.assigneeId ? {
-          id: values.assigneeId,
-        } : null,
-      storyPointsEstimate: values.storyPointsEstimate
+        id: values.assigneeId,
+      } : null,
+      storyPointsEstimate: values.storyPointsEstimate,
     };
 
     fetchUpdateIssue(request, project.id, history);
@@ -159,7 +161,7 @@ const mapStateToProps = (state: RootState, props: RouteComponentProps<{ issueId:
   };
 };
 
-const connector = connect(mapStateToProps, { fetchUpdateIssue })
+const connector = connect(mapStateToProps, { fetchUpdateIssue });
 
 type ReduxProps = ConnectedProps<typeof connector>;
 

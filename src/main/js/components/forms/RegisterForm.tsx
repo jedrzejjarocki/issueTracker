@@ -71,7 +71,7 @@ const RegisterForm: React.FC<Props> = ({ fetchRegister, isOpen }) => {
   );
 };
 
-const connector = connect(null, { fetchRegister })
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(null, { fetchRegister });
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(RegisterForm);

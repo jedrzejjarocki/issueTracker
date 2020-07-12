@@ -8,16 +8,16 @@ import issuesListsOptions from '../forms/selectOptions/IssuesListsOptions';
 import issueTypeOptions from '../forms/selectOptions/issueTypeOptions';
 import DialogForm from '../forms/DialogForm';
 import {fetchCreateIssue, IssueRequestBody} from '../../redux/actions/issue/creators';
-import {setCurrentProject} from "../../redux/actions/ui/creators";
+import {setCurrentProject} from '../../redux/actions/ui/creators';
 import SelectField from '../forms/fields/SelectField';
 import BasicTextField from '../forms/fields/BasicTextField';
 import TextAreaField from '../forms/fields/TextAreaField';
-import {RootState} from "../../redux/reducers/rootReducer";
-import {IssueStatus, IssueType, UserRole} from "../../propTypes";
-import {getUser} from "../../redux/selectors/user";
-import {getCurrentProjectId, getLoading} from "../../redux/selectors/ui";
-import {getIssuesListsByProjectId, getSprintsByProjectId} from "../../redux/selectors/issuesLists";
-import {getTeamMembersByProjectId} from "../../redux/selectors/teamMembers";
+import {RootState} from '../../redux/reducers/rootReducer';
+import {IssueStatus, IssueType, UserRole} from '../../propTypes';
+import {getUser} from '../../redux/selectors/user';
+import {getCurrentProjectId, getLoading} from '../../redux/selectors/ui';
+import {getIssuesListsByProjectId, getSprintsByProjectId} from '../../redux/selectors/issuesLists';
+import {getTeamMembersByProjectId} from '../../redux/selectors/teamMembers';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -58,11 +58,11 @@ const CreateIssue: React.FC<Props> = ({
       description: values.description,
       status: values.status,
       assignee: values.assigneeId ? {
-          id: values.assigneeId,
-        } : null,
+        id: values.assigneeId,
+      } : null,
       list: {
         id: values.listId,
-        '@type': issuesLists.find((list) => list.id === values.listId).type as "Backlog" | "Sprint",
+        '@type': issuesLists.find((list) => list.id === values.listId).type as 'Backlog' | 'Sprint',
       },
       storyPointsEstimate: values.storyPointsEstimate,
     };
@@ -166,7 +166,7 @@ const mapDispatchToProps = {
   fetchCreateIssue,
 };
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default withRouter(connector(CreateIssue));

@@ -48,7 +48,7 @@ const LoginForm: React.FC<Props> = ({ fetchLogin, isOpen }) => {
   );
 };
 
-const connector = connect(null, { fetchLogin })
-type ReduxProps = ConnectedProps<typeof connector>
+const connector = connect(null, { fetchLogin });
+type ReduxProps = ConnectedProps<typeof connector>;
 
 export default connector(LoginForm);

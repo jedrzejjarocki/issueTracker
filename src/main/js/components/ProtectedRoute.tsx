@@ -1,6 +1,6 @@
 import {Redirect, Route} from 'react-router-dom';
 import React from 'react';
-import {User} from "../propTypes";
+import {User} from '../propTypes';
 
 interface Props {
   user: User
