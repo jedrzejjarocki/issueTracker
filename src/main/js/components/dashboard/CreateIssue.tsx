@@ -7,17 +7,18 @@ import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
 import issuesListsOptions from '../forms/selectOptions/IssuesListsOptions';
 import issueTypeOptions from '../forms/selectOptions/issueTypeOptions';
 import DialogForm from '../forms/DialogForm';
-import {fetchCreateIssue, IssueRequestBody} from '../../redux/actions/issue/creators';
-import {setCurrentProject} from '../../redux/actions/ui/creators';
+import {fetchCreateIssue, IssueRequestBody} from '../../redux/issues/actionCreators';
+import {setCurrentProject} from '../../redux/ui/actionCreators';
 import SelectField from '../forms/fields/SelectField';
 import BasicTextField from '../forms/fields/BasicTextField';
 import TextAreaField from '../forms/fields/TextAreaField';
-import {RootState} from '../../redux/reducers/rootReducer';
-import {IssueStatus, IssueType, UserRole} from '../../propTypes';
-import {getUser} from '../../redux/selectors/user';
-import {getCurrentProjectId, getLoading} from '../../redux/selectors/ui';
-import {getIssuesListsByProjectId, getSprintsByProjectId} from '../../redux/selectors/issuesLists';
-import {getTeamMembersByProjectId} from '../../redux/selectors/teamMembers';
+import {RootState} from '../../redux/rootReducer';
+import {IssueStatus, IssueType, UserRole} from '../../redux/utilTypes';
+import {getCurrentProject, getLoading} from '../../redux/ui/selectors';
+import {getUser} from '../../redux/user/selectors';
+import {getIssuesContainersByProjectId} from '../../redux/issuesContainers/selectors';
+import {getTeamMembersByProjectId} from '../../redux/teamMembers/selectors';
+import {getProjectsAsArray} from '../../redux/projects/selectors';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -50,6 +51,8 @@ const CreateIssue: React.FC<Props> = ({
     listId: issuesLists[0] ? issuesLists[0].id : 0,
     storyPointsEstimate: 0,
   };
+
+  issuesLists.map((list) => console.log(list));
 
   const onSubmit = (values: CreateIssueFormFields) => {
     const request: IssueRequestBody = {
@@ -98,7 +101,7 @@ const CreateIssue: React.FC<Props> = ({
             onChange={handleProjectChange}
             placeholder="Select project"
           >
-            {Object.values(projects).map(({ id, name }) => (
+            {projects.map(({ id, name }) => (
               <MenuItem key={id} value={id}>
                 {name}
               </MenuItem>
@@ -149,13 +152,12 @@ const CreateIssue: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => {
-  const currentProjectId = getCurrentProjectId(state);
+  const currentProjectId = getCurrentProject(state);
   return {
     user: getUser(state),
-    projects: state.projects,
-    sprints: getSprintsByProjectId(state, currentProjectId),
-    issuesLists: getIssuesListsByProjectId(state, currentProjectId),
-    teamMembers: getTeamMembersByProjectId(state, currentProjectId),
+    projects: getProjectsAsArray(state),
+    issuesLists: getIssuesContainersByProjectId(state, String(currentProjectId)),
+    teamMembers: getTeamMembersByProjectId(state, String(currentProjectId)),
     currentProjectId,
     loading: getLoading(state),
   };

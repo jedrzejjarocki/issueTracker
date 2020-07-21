@@ -4,10 +4,10 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import SubmitButton from '../forms/SubmitButton';
-import {fetchDeleteMember} from '../../redux/actions/teamMember/creators';
-import {RootState} from '../../redux/reducers/rootReducer';
-import {TeamMember} from '../../propTypes';
-import {getCurrentProjectId} from '../../redux/selectors/ui';
+import {fetchDeleteMember} from '../../redux/teamMembers/actionCreators';
+import {RootState} from '../../redux/rootReducer';
+import {getCurrentProject} from '../../redux/ui/selectors';
+import TeamMember from '../../entities/TeamMember';
 
 interface Props extends ReduxProps {
   member: TeamMember
@@ -50,7 +50,7 @@ const DeleteMember: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
-  currentProjectId: getCurrentProjectId(state),
+  currentProjectId: getCurrentProject(state),
 });
 
 const connector = connect(mapStateToProps, { fetchDeleteMember });

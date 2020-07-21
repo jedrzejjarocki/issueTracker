@@ -7,7 +7,7 @@ import {
   listId,
   storyPointsEstimate,
 } from '../validators';
-import {IssueStatus, IssueType} from '../../../../propTypes';
+import {IssueStatus, IssueType} from '../../../../redux/utilTypes';
 
 export interface UpdateIssueFormFields {
   id: number

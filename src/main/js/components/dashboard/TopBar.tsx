@@ -4,14 +4,14 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography,} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
-import {fetchLogout} from '../../redux/actions/user/creators';
+import {fetchLogout} from '../../redux/user/actionCreators';
 import Dropdown from './Dropdown';
 import RouterLink from '../commons/RouterLink';
 import UserAvatar from '../commons/UserAvatar';
 import CreateIssue from './CreateIssue';
-import {RootState} from '../../redux/reducers/rootReducer';
-import {getUser} from '../../redux/selectors/user';
-import {getProjectsAsArray} from '../../redux/selectors/project';
+import {RootState} from '../../redux/rootReducer';
+import {getUser} from '../../redux/user/selectors';
+import {getProjectsAsArray} from '../../redux/projects/selectors';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -43,7 +43,7 @@ interface Props extends RouteComponentProps<any>, ReduxProps {
 }
 
 const TopBar: React.FC<Props> = ({
-  user, projects, handleDrawerToggle, fetchLogout, match,
+  username, projects, handleDrawerToggle, fetchLogout, match,
 }) => {
   const classes = useStyles();
 
@@ -104,7 +104,7 @@ const TopBar: React.FC<Props> = ({
                 aria-haspopup={ariaHaspopup}
                 onClick={onClick}
               >
-                <UserAvatar name={user.username} isCurrentUser size="small" />
+                <UserAvatar name={username} isCurrentUser size="small" />
               </IconButton>
             )}
           >
@@ -117,7 +117,7 @@ const TopBar: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
-  user: getUser(state),
+  username: getUser(state).get('username'),
   projects: getProjectsAsArray(state),
 });
 

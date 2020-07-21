@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import UserAvatar from '../commons/UserAvatar';
 import AddTeamMember from './AddTeamMember';
-import {UserWithProjects} from '../../redux/selectors/project';
+import {UserWithProjects} from '../../redux/user/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {

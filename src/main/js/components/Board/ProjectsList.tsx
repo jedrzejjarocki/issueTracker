@@ -4,9 +4,9 @@ import {Link as RouterLink} from 'react-router-dom';
 import {Divider, Link, List, ListItem, ListItemText, makeStyles, Paper, Typography,} from '@material-ui/core';
 import CreateProject from '../issuesList/CreateProject';
 import Loading from '../Loading';
-import {RootState} from '../../redux/reducers/rootReducer';
-import {getProjectsAsArray} from '../../redux/selectors/project';
-import {getLoading} from '../../redux/selectors/ui';
+import {RootState} from '../../redux/rootReducer';
+import {getProjectsAsArray} from '../../redux/projects/selectors';
+import {getLoading} from '../../redux/ui/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,11 +38,11 @@ const ProjectsList: React.FC<ReduxProps> = ({ projects, loading }) => {
         <>
           <Paper elevation={2} variant="outlined" className={classes.root}>
             <List dense className={classes.list}>
-              {projects.map(({ name, id }, idx, arr) => (
-                <Fragment key={id}>
-                  <Link component={RouterLink} to={`/app/projects/${id}`}>
+              {projects.map((project, idx, arr) => (
+                <Fragment key={project.id}>
+                  <Link component={RouterLink} to={`/app/projects/${project.get('id')}`}>
                     <ListItem button>
-                      <ListItemText primary={name} />
+                      <ListItemText primary={project.get('name')} />
                     </ListItem>
                   </Link>
                   {idx !== arr.length - 1 && <Divider />}

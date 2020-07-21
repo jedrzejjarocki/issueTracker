@@ -10,11 +10,13 @@ import BasicTextField from '../../forms/fields/BasicTextField';
 import SelectField from '../../forms/fields/SelectField';
 import TextAreaField from '../../forms/fields/TextAreaField';
 import schema from '../../forms/validation/schemas/startSprint';
-import {fetchUpdateSprint, UpdateSprintRequestBody} from '../../../redux/actions/issuesList/creators';
-import {Sprint, UserRole} from '../../../propTypes';
-import {RootState} from '../../../redux/reducers/rootReducer';
-import {getSprintsByProjectId} from '../../../redux/selectors/issuesLists';
-import {getCurrentProjectUserRole} from '../../../redux/selectors/ui';
+import {fetchUpdateSprint, UpdateSprintRequestBody} from '../../../redux/issuesContainers/actionCreators';
+import {RootState} from '../../../redux/rootReducer';
+
+import Sprint from '../../../entities/Sprint';
+import {UserRole} from '../../../redux/utilTypes';
+import {getSprintsByProjectId} from '../../../redux/issuesContainers/selectors';
+import {getCurrentProjectUserRole} from '../../../redux/ui/selectors';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -24,7 +26,7 @@ const useStyles = makeStyles(() => ({
 
 const isStarted = (sprint: Sprint) => !!sprint.startDate;
 
-const isEmpty = (sprint: Sprint) => !sprint.issues || !sprint.issues.length;
+const isEmpty = (sprint: Sprint) => !sprint.issues || !sprint.issues.size;
 
 const projectHasActiveSprint = (sprints: Sprint[]) => sprints.some((s) => !!s.startDate);
 
@@ -128,7 +130,7 @@ const StartSprint: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState, { projectId }: { projectId: number}) => ({
-  sprints: getSprintsByProjectId(state, projectId),
+  sprints: getSprintsByProjectId(state, String(projectId)),
   userRole: getCurrentProjectUserRole(state),
 });
 

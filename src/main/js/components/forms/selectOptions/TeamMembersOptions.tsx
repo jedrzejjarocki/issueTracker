@@ -1,9 +1,9 @@
 import {ListItem, ListItemAvatar, ListItemText, Typography,} from '@material-ui/core';
 import React from 'react';
 import UserAvatar from '../../commons/UserAvatar';
+import TeamMember from '../../../entities/TeamMember';
 
-// @TODO types
-export default (teamMembers: { username: string, id: number, userId: number}[], currentUserId: number) => {
+export default (teamMembers: TeamMember[], currentUserId: number) => {
   const members = [
     {
       value: 0,

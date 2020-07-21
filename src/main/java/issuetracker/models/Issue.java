@@ -40,7 +40,7 @@ public class Issue extends Auditable<String> {
     @JoinColumn
     @NotNull
     @NotAudited
-    private IssueContainer list;
+    private IssueContainer container;
 
     @ManyToOne
     @JoinColumn

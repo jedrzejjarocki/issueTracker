@@ -3,8 +3,9 @@ import {connect, ConnectedProps} from 'react-redux';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
 import SubmitButton from '../forms/SubmitButton';
-import {fetchChangeTeamMemberRole} from '../../redux/actions/teamMember/creators';
-import {TeamMember, UserRole} from '../../propTypes';
+import {fetchChangeTeamMemberRole} from '../../redux/teamMembers/actionCreators';
+import TeamMember from '../../entities/TeamMember';
+import {UserRole} from '../../redux/utilTypes';
 
 interface Props extends ReduxProps {
   member: TeamMember

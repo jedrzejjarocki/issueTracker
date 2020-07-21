@@ -3,8 +3,8 @@ import {useHistory} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 import {Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Typography,} from '@material-ui/core';
 import SubmitButton from '../../forms/SubmitButton';
-import {fetchDeleteSprint} from '../../../redux/actions/issuesList/creators';
-import {Sprint} from '../../../propTypes';
+import {fetchDeleteSprint} from '../../../redux/issuesContainers/actionCreators';
+import Sprint from '../../../entities/Sprint';
 
 interface Props extends ReduxProps {
   sprint: Sprint

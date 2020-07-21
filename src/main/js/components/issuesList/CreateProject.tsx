@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {TextField} from 'material-ui-formik-components';
 import DialogForm from '../forms/DialogForm';
 import FormField from '../forms/fields/FormField';
-import {fetchCreateProject} from '../../redux/actions/project/creators';
+import {fetchCreateProject} from '../../redux/projects/actionCreators';
 
 interface Props {
   first?: boolean

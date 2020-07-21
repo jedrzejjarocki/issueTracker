@@ -1,6 +1,6 @@
 import {Redirect, Route} from 'react-router-dom';
 import React from 'react';
-import {User} from '../propTypes';
+import {User} from '../entities/User';
 
 interface Props {
   user: User
@@ -10,7 +10,7 @@ interface Props {
 const ProtectedRoute: React.FC<Props> = ({ children, user, ...rest }) => (
   <Route
     {...rest}
-    render={({ location }) => (user ? (
+    render={({ location }) => (user && user.get('id') ? (
       children
     ) : (
       <Redirect
