@@ -5,12 +5,12 @@ import IssueType from '../../constants/issueTypes';
 import IssueStatus from '../../constants/issueStatuses';
 import RouterLink from '../commons/RouterLink';
 import UserAvatar from '../commons/UserAvatar';
-import {TeamMembersState} from '../../redux/reducers/teamMembers';
-import {Project} from '../../propTypes';
-import {RootState} from '../../redux/reducers/rootReducer';
-import {getIssuesByListId} from '../../redux/selectors/issues';
-import {getTeamMembers} from '../../redux/selectors/teamMembers';
-import {getUser} from '../../redux/selectors/user';
+import {RootState} from '../../redux/rootReducer';
+import Project from '../../entities/Project';
+import {getIssuesByContainerId} from '../../redux/issues/selectors';
+import {getUser} from '../../redux/user/selectors';
+import {getTeamMembers} from '../../redux/teamMembers/selectors';
+import {TeamMembersState} from '../../redux/teamMembers/types';
 
 const useStyles = makeStyles((theme) => ({
   itemDetails: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const getMember = (id: number, teamMembers: TeamMembersState) => teamMembers[id];
+const getMember = (id: number, teamMembers: TeamMembersState) => teamMembers.get(String(id));
 
 interface Props extends ReduxProps {
   project: Project
@@ -38,7 +38,6 @@ const IssuesList: React.FC<Props> = ({
   issues, project, teamMembers, currentUserId,
 }) => {
   const classes = useStyles();
-
   return (
     <>
       {
@@ -87,7 +86,7 @@ const IssuesList: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState, { listId }: { listId: number }) => ({
-  issues: getIssuesByListId(state, listId),
+  issues: getIssuesByContainerId(state, String(listId)),
   teamMembers: getTeamMembers(state),
   currentUserId: getUser(state).id,
 });

@@ -6,8 +6,8 @@ import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined';
 import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined';
 import RouterLink from '../commons/RouterLink';
-import {RootState} from '../../redux/reducers/rootReducer';
-import {getCurrentProjectId} from '../../redux/selectors/ui';
+import {RootState} from '../../redux/rootReducer';
+import {getCurrentProject} from '../../redux/ui/selectors';
 
 const drawerWidth = 210;
 
@@ -109,7 +109,7 @@ const NavDrawer: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
-  currentProjectId: getCurrentProjectId(state),
+  currentProjectId: getCurrentProject(state),
 });
 
 const connector = connect(mapStateToProps);

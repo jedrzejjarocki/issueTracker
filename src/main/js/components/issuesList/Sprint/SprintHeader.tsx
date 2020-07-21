@@ -9,9 +9,11 @@ import StartSprint from './StartSprint';
 import Dropdown from '../../dashboard/Dropdown';
 import EditSprint from './EditSprint';
 import DeleteSprint from './DeleteSprint';
-import {RootState} from '../../../redux/reducers/rootReducer';
-import {Project, Sprint, UserRole} from '../../../propTypes';
-import {getCurrentProjectUserRole} from '../../../redux/selectors/ui';
+import {RootState} from '../../../redux/rootReducer';
+import {getCurrentProjectUserRole} from '../../../redux/ui/selectors';
+import Sprint from '../../../entities/Sprint';
+import Project from '../../../entities/Project';
+import {UserRole} from '../../../redux/utilTypes';
 
 const formatDate = (str: string) => format(Date.parse(str), 'dd/MMM/yyyy');
 

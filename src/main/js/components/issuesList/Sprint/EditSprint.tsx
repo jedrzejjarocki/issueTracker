@@ -2,8 +2,8 @@ import React, {MouseEventHandler} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {MenuItem} from '@material-ui/core';
 import SprintForm from '../../forms/SprintForm';
-import {fetchUpdateSprint, UpdateSprintRequestBody} from '../../../redux/actions/issuesList/creators';
-import {Sprint} from '../../../propTypes';
+import {fetchUpdateSprint, UpdateSprintRequestBody} from '../../../redux/issuesContainers/actionCreators';
+import Sprint from '../../../entities/Sprint';
 
 const toggleComponent = (handleToggle: MouseEventHandler) => <MenuItem onClick={handleToggle}>edit sprint</MenuItem>;
 

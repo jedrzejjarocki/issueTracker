@@ -4,7 +4,7 @@ import schema from './validation/schemas/loginForm';
 import DialogForm from './DialogForm';
 import RouterLink from '../commons/RouterLink';
 import BasicTextField from './fields/BasicTextField';
-import {fetchLogin} from '../../redux/actions/user/creators';
+import {fetchLogin} from '../../redux/user/actionCreators';
 
 interface Props extends ReduxProps{
   isOpen: boolean

@@ -1,11 +1,11 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import {Message} from '../propTypes';
+import {NotificationMessage} from '../redux/ui/NotificationMessage';
 
 interface Props {
   onClose: (event: SyntheticEvent) => void
-  message: Message
+  message: NotificationMessage
 }
 
 const Alert: React.FC<Props> = ({ onClose, message }) => (
@@ -14,7 +14,7 @@ const Alert: React.FC<Props> = ({ onClose, message }) => (
   </MuiAlert>
 );
 
-const InfoSnackbar = ({ message }: { message: Message}) => {
+const InfoSnackbar = ({ message }: { message: NotificationMessage}) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {

@@ -6,10 +6,10 @@ import DialogForm from '../forms/DialogForm';
 import memberRoleOptions from '../forms/selectOptions/memberRoleOptions';
 import BasicTextField from '../forms/fields/BasicTextField';
 import SelectField from '../forms/fields/SelectField';
-import {fetchInviteUser} from '../../redux/actions/teamMember/creators';
-import {UserRole} from '../../propTypes';
-import {RootState} from '../../redux/reducers/rootReducer';
-import {getProjectsWhereCurrentUserIsLeader} from '../../redux/selectors/project';
+import {fetchInviteUser} from '../../redux/teamMembers/actionCreators';
+import {RootState} from '../../redux/rootReducer';
+import {UserRole} from '../../redux/utilTypes';
+import {getProjectsWhereCurrentUserIsLeader} from '../../redux/compoundSelectors';
 
 const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fetchInviteUser }) => {
   interface InviteUserFormFields {
@@ -36,7 +36,7 @@ const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fe
   }));
 
   const initialValues = {
-    projectId: projectsOptions.length ? projectsOptions[0].value : 0,
+    projectId: projectsOptions[0].value,
     email: '',
     role: UserRole.DEVELOPER,
   };

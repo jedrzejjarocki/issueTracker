@@ -7,7 +7,7 @@ import {Form, Formik} from 'formik';
 import schema from '../forms/validation/schemas/passwordRecoveryForm';
 import SubmitButton from '../forms/SubmitButton';
 import BasicTextField from '../forms/fields/BasicTextField';
-import {fetchRequestPasswordRecovery} from '../../redux/actions/user/creators';
+import {fetchRequestPasswordRecovery} from '../../redux/user/actionCreators';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {

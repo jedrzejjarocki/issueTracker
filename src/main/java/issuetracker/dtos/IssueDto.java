@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 public class IssueDto implements Dto<Issue> {
     private int id;
-    private int listId;
+    private int containerId;
     private String summary;
     private String description;
     private Integer version;

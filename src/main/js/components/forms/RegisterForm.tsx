@@ -4,7 +4,7 @@ import {useLocation} from 'react-router-dom';
 import schema from './validation/schemas/registerForm';
 import DialogForm from './DialogForm';
 import BasicTextField from './fields/BasicTextField';
-import {fetchRegister, RegisterRequestBody} from '../../redux/actions/user/creators';
+import {fetchRegister, RegisterRequestBody} from '../../redux/user/actionCreators';
 
 interface Props extends ReduxProps{
   isOpen: boolean

@@ -7,10 +7,10 @@ import Sprint from '../issuesList/Sprint/Sprint';
 import Backlog from '../issuesList/Backlog/Backlog';
 import useSetCurrentProject from '../../hooks/useSetCurrentProject';
 import Team from '../Team/Team';
-import {RootState} from '../../redux/reducers/rootReducer';
-import {getProjectById} from '../../redux/selectors/project';
-import {getSprintsByProjectId} from '../../redux/selectors/issuesLists';
-import {getCurrentUserRoleByProjectId} from '../../redux/selectors/teamMembers';
+import {RootState} from '../../redux/rootReducer';
+import {getProjectById} from '../../redux/projects/selectors';
+import {getSprintsByProjectId} from '../../redux/issuesContainers/selectors';
+import {getCurrentUserRoleByProjectId} from '../../redux/teamMembers/selectors';
 
 const Project: React.FC<RouteComponentProps<any> & ReduxProps> = ({
   project, sprints, match, userRole,
@@ -48,7 +48,7 @@ const Project: React.FC<RouteComponentProps<any> & ReduxProps> = ({
 const mapStateToProps = (state: RootState, props: RouteComponentProps<{ projectId: string }>) => ({
   project: getProjectById(state, props.match.params.projectId),
   sprints: getSprintsByProjectId(state, props.match.params.projectId),
-  userRole: getCurrentUserRoleByProjectId(state, +props.match.params.projectId),
+  userRole: getCurrentUserRoleByProjectId(state, props.match.params.projectId),
 });
 
 const connector = connect(mapStateToProps);

@@ -3,7 +3,8 @@ import {Grid, makeStyles, Paper, Typography,} from '@material-ui/core';
 import UserAvatar from '../commons/UserAvatar';
 import DeleteMember from './DeleteMember';
 import ChangeTeamMemberRole from './ChangeTeamMemberRole';
-import {TeamMember, UserRole} from '../../propTypes';
+import Member from '../../entities/TeamMember';
+import {UserRole} from '../../redux/utilTypes';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface Props {
-  member: TeamMember
+  member: Member
   userRole: UserRole
   currentUserId: number
 }

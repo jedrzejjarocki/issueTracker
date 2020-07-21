@@ -9,17 +9,17 @@ import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
 import RouterLink from '../commons/RouterLink';
 import issueTypeOptions from '../forms/selectOptions/issueTypeOptions';
 import SubmitButton from '../forms/SubmitButton';
-import {fetchUpdateIssue, IssueRequestBody} from '../../redux/actions/issue/creators';
+import {fetchUpdateIssue, IssueRequestBody} from '../../redux/issues/actionCreators';
 import issueStatusOptions from '../forms/selectOptions/issueStatusOptions';
 import DeleteIssue from './DeleteIssue';
 import SelectField from '../forms/fields/SelectField';
 import BasicTextField from '../forms/fields/BasicTextField';
 import TextAreaField from '../forms/fields/TextAreaField';
-import {Project} from '../../propTypes';
-import {RootState} from '../../redux/reducers/rootReducer';
-import {getUser} from '../../redux/selectors/user';
-import {getTeamMembersByProjectId} from '../../redux/selectors/teamMembers';
-import {getIssueById} from '../../redux/selectors/issues';
+import {RootState} from '../../redux/rootReducer';
+import {getUser} from '../../redux/user/selectors';
+import {getTeamMembersByProjectId} from '../../redux/teamMembers/selectors';
+import {getIssueById} from '../../redux/issues/selectors';
+import Project from '../../entities/Project';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {

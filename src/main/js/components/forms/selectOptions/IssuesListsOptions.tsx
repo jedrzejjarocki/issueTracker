@@ -1,6 +1,7 @@
 import {Typography} from '@material-ui/core';
 import React from 'react';
-import {Backlog, Sprint} from '../../../propTypes';
+import Backlog from '../../../entities/Backlog';
+import Sprint from '../../../entities/Sprint';
 
 const backlogLabel = (
   <Typography color="textSecondary" component="i">
@@ -8,7 +9,7 @@ const backlogLabel = (
   </Typography>
 );
 
-export default (issuesLists: (Backlog | Sprint)[]) => issuesLists.map((list) => ({
+export default (issuesLists: (Sprint | Backlog)[]) => issuesLists.map((list) => ({
   value: list.id,
   label: list.type === 'Backlog' ? backlogLabel : <Typography>{list.name}</Typography>,
 }));
