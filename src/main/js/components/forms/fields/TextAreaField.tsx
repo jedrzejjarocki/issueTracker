@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextField} from 'material-ui-formik-components/TextField';
+import { TextField } from 'material-ui-formik-components/TextField';
 import FormField from './FormField';
 
 interface Props {

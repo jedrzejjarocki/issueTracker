@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {useLocation} from 'react-router-dom';
+import React, { useState } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import schema from './validation/schemas/registerForm';
 import DialogForm from './DialogForm';
 import BasicTextField from './fields/BasicTextField';
-import {fetchRegister, RegisterRequestBody} from '../../redux/user/actionCreators';
+import { fetchRegister, RegisterRequestBody } from '../../redux/user/actionCreators';
 
-interface Props extends ReduxProps{
+interface Props extends ReduxProps {
   isOpen: boolean
 }
 
@@ -44,7 +44,7 @@ const RegisterForm: React.FC<Props> = ({ fetchRegister: register, isOpen }) => {
               required
               formikProps={formikProps}
               name="username"
-              error={responseError}
+              error={responseError || formikProps.errors.username}
             />
             <BasicTextField
               required

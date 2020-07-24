@@ -19,7 +19,7 @@ export const email = string.email('Must be valid email');
 export const password = string.min(8, 'Must be at least 8 characters long')
   .max(128, 'Must be at most 128 characters long')
   .required('Must be 8 characters or more');
-export const confirmPassword = string.oneOf([yup.ref('password'), null], 'Passwords must match');
+export const confirmPassword = string.oneOf([yup.ref('password')], 'Must match password');
 
 export const sprintName = stringRequired;
 export const sprintDuration = numberRequired.oneOf([1, 2, 3, 4]);
