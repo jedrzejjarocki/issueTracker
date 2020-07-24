@@ -1,6 +1,6 @@
-import {List, Map} from 'immutable';
+import { List, Map } from 'immutable';
 import reducer from '../../../../main/js/redux/issuesContainers/reducer';
-import {setLoading} from '../../../../main/js/redux/ui/actionCreators';
+import { setLoading } from '../../../../main/js/redux/ui/actionCreators';
 import Backlog from '../../../../main/js/entities/Backlog';
 import {
   deleteSprint,
@@ -8,12 +8,12 @@ import {
   updateSprint,
 } from '../../../../main/js/redux/issuesContainers/actionCreators';
 import Sprint from '../../../../main/js/entities/Sprint';
-import {IssuesContainer} from '../../../../main/js/entities/IssuesContainer';
-import {IssuesContainersState} from '../../../../main/js/redux/issuesContainers/types';
+import { IssuesContainer } from '../../../../main/js/entities/IssuesContainer';
+import { IssuesContainersState } from '../../../../main/js/redux/issuesContainers/types';
 import Issue from '../../../../main/js/entities/Issue';
-import {addIssue, deleteIssue} from '../../../../main/js/redux/issues/actionCreators';
-import {addProject} from '../../../../main/js/redux/projects/actionCreators';
-import {AddProjectPayload} from '../../../../main/js/redux/projects/types';
+import { addIssue, deleteIssue } from '../../../../main/js/redux/issues/actionCreators';
+import { addProject } from '../../../../main/js/redux/projects/actionCreators';
+import { AddProjectPayload } from '../../../../main/js/redux/projects/types';
 
 const backlog1 = new Backlog({ id: 2, issues: List() });
 const sprint1 = new Sprint({ id: 1, issues: List([2]) });
@@ -77,10 +77,10 @@ describe('issues containers reducer', () => {
   });
 
   it('should add backlog to state', () => {
-    const payload = { backlog: new Backlog({ id: 100 }) as IssuesContainer } as AddProjectPayload;
+    const payload = { backlog: { id: 100 } } as AddProjectPayload;
     const action = addProject(payload);
 
     const newState = reducer(initialState, action);
-    expect(newState.get(`${payload.backlog.id}`)).toBe(payload.backlog);
+    expect(newState.get(`${payload.backlog.id}`)).toEqual(new Backlog({ id: payload.backlog.id }));
   });
 });
