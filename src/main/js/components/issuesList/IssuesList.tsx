@@ -85,8 +85,8 @@ const IssuesList: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state: RootState, { listId }: { listId: number }) => ({
-  issues: getIssuesByContainerId(state, String(listId)),
+const mapStateToProps = (state: RootState, { containerId }: { containerId: number }) => ({
+  issues: getIssuesByContainerId(state, containerId),
   teamMembers: getTeamMembers(state),
   currentUserId: getUser(state).id,
 });

@@ -20,7 +20,7 @@ const SprintComponent = ({ sprint, project }: { sprint: Sprint, project: Project
       />
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <IssuesList
-          listId={sprint.id}
+          containerId={sprint.id}
           project={project}
         />
       </Collapse>

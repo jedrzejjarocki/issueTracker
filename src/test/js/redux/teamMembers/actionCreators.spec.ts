@@ -22,10 +22,10 @@ import {
   UPDATE_MEMBER,
   UpdateMemberAction,
 } from '../../../../main/js/redux/teamMembers/types';
-import {SET_NOTIFICATION, SetNotificationAction} from '../../../../main/js/redux/ui/reducer';
 import {TEAM_MEMBERS_URL} from '../../../../main/js/api/commons';
 import TeamMember from '../../../../main/js/entities/TeamMember';
 import {defaultErrorNotificationMessage, NotificationSeverity} from '../../../../main/js/redux/ui/NotificationMessage';
+import {SET_NOTIFICATION, SetNotificationAction} from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({

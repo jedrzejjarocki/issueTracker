@@ -10,7 +10,7 @@ interface Props extends ReduxProps{
   isOpen: boolean
 }
 
-const RegisterForm: React.FC<Props> = ({ fetchRegister, isOpen }) => {
+const RegisterForm: React.FC<Props> = ({ fetchRegister: register, isOpen }) => {
   const [responseError, setResponseError] = useState(null);
 
   const initialValues = {
@@ -23,7 +23,7 @@ const RegisterForm: React.FC<Props> = ({ fetchRegister, isOpen }) => {
   const token = useLocation().search.split('=')[1];
 
   const onSubmit = (values: RegisterRequestBody, _: any, toggle: () => void) => {
-    fetchRegister(values, token, toggle, setResponseError);
+    register(values, toggle, setResponseError, token);
   };
 
   return (

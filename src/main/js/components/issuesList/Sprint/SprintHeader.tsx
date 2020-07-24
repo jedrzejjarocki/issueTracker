@@ -10,10 +10,10 @@ import Dropdown from '../../dashboard/Dropdown';
 import EditSprint from './EditSprint';
 import DeleteSprint from './DeleteSprint';
 import {RootState} from '../../../redux/rootReducer';
-import {getCurrentProjectUserRole} from '../../../redux/ui/selectors';
 import Sprint from '../../../entities/Sprint';
 import Project from '../../../entities/Project';
 import {UserRole} from '../../../redux/utilTypes';
+import {getCurrentProject} from '../../../redux/ui/selectors';
 
 const formatDate = (str: string) => format(Date.parse(str), 'dd/MMM/yyyy');
 
@@ -100,7 +100,7 @@ const SprintHeader: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
-  userRole: getCurrentProjectUserRole(state),
+  userRole: getCurrentProject(state)?.userRole,
 });
 
 const connector = connect(mapStateToProps);

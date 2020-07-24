@@ -51,16 +51,21 @@ export interface Props extends RouteComponentProps<any>, ReduxProps{
 }
 
 const IssueDetails: React.FC<Props> = ({
-  project, issue, userId, fetchUpdateIssue, history, teamMembers,
+  project,
+  issue,
+  userId,
+  fetchUpdateIssue: fetchUpdate,
+  history,
+  teamMembers,
 }) => {
   const classes = useStyles();
 
   const onSubmit = (values: UpdateIssueFormFields) => {
     const request: IssueRequestBody = {
       id: values.id,
-      list: {
-        id: values.listId,
-        '@type': project.backlog === values.listId ? 'Backlog' : 'Sprint',
+      container: {
+        id: values.containerId,
+        '@type': project.backlog === values.containerId ? 'Backlog' : 'Sprint',
       },
       version: values.version,
       type: values.type,
@@ -73,7 +78,7 @@ const IssueDetails: React.FC<Props> = ({
       storyPointsEstimate: values.storyPointsEstimate,
     };
 
-    fetchUpdateIssue(request, project.id, history);
+    fetchUpdate(request, project.id, history);
   };
 
   return (
@@ -101,7 +106,7 @@ const IssueDetails: React.FC<Props> = ({
                 type: issue.type,
                 summary: issue.summary,
                 status: issue.status,
-                listId: issue.listId,
+                containerId: issue.containerId,
                 description: issue.description,
                 assigneeId: issue.assignee || 0,
                 storyPointsEstimate: issue.storyPointsEstimate,
@@ -152,7 +157,10 @@ const IssueDetails: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state: RootState, props: RouteComponentProps<{ issueId: string, projectId: string}>) => {
+const mapStateToProps = (
+  state: RootState,
+  props: RouteComponentProps<{ issueId: string, projectId: string}>,
+) => {
   const { issueId, projectId } = props.match.params;
   return {
     issue: getIssueById(state, issueId),

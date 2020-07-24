@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PasswordRecoveryRequestForm: React.FC<ReduxProps> = ({ fetchRequestPasswordRecovery }) => {
+const PasswordRecoveryRequestForm: React.FC<ReduxProps> = ({ fetchRequestPasswordRecovery: requestPasswordRecovery }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -33,7 +33,7 @@ const PasswordRecoveryRequestForm: React.FC<ReduxProps> = ({ fetchRequestPasswor
     email: string
   }
 
-  const onSubmit = (credentials: PasswordRecoveryFormFields) => fetchRequestPasswordRecovery(credentials, history);
+  const onSubmit = (credentials: PasswordRecoveryFormFields) => requestPasswordRecovery(credentials, history);
 
   return (
     <Card variant="outlined">

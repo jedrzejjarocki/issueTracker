@@ -1,3 +1,5 @@
+const CompressionPlugin = require('compression-webpack-plugin');
+
 module.exports = {
   entry: './src/main/js/index.tsx',
   module: {
@@ -20,5 +22,9 @@ module.exports = {
     path: __dirname,
     filename: './src/main/resources/static/bundle.js',
   },
-  mode: 'none',
+  mode: 'production',
+  optimization: {
+    minimize: true,
+  },
+  plugins: [new CompressionPlugin()],
 };

@@ -1,8 +1,9 @@
-import reducer, {initialState} from '../../../../main/js/redux/ui/reducer';
+import reducer from '../../../../main/js/redux/ui/reducer';
 import {setProjects} from '../../../../main/js/redux/projects/actionCreators';
 import {setCurrentProject, setLoading, setNotification} from '../../../../main/js/redux/ui/actionCreators';
 import {defaultErrorNotificationMessage} from '../../../../main/js/redux/ui/NotificationMessage';
 import {UserRole} from '../../../../main/js/redux/utilTypes';
+import {initialState} from '../../../../main/js/redux/ui/types';
 
 describe('ui reducer', () => {
   it('should return initial state when action type doesn\'t match', () => {

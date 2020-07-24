@@ -33,10 +33,10 @@ const CreateIssue: React.FC<Props> = ({
   user,
   projects,
   currentProjectId,
-  setCurrentProject, fetchCreateIssue,
+  setCurrentProject, fetchCreateIssue: fetchCreate,
   history,
   teamMembers,
-  issuesLists,
+  issuesContainers,
 }) => {
   const classes = useStyles();
 
@@ -48,11 +48,9 @@ const CreateIssue: React.FC<Props> = ({
     status: IssueStatus.TO_DO,
     reporterId: user.id,
     assigneeId: 0,
-    listId: issuesLists[0] ? issuesLists[0].id : 0,
+    containerId: issuesContainers[0] ? issuesContainers[0].id : 0,
     storyPointsEstimate: 0,
   };
-
-  issuesLists.map((list) => console.log(list));
 
   const onSubmit = (values: CreateIssueFormFields) => {
     const request: IssueRequestBody = {
@@ -63,14 +61,14 @@ const CreateIssue: React.FC<Props> = ({
       assignee: values.assigneeId ? {
         id: values.assigneeId,
       } : null,
-      list: {
-        id: values.listId,
-        '@type': issuesLists.find((list) => list.id === values.listId).type as 'Backlog' | 'Sprint',
+      container: {
+        id: values.containerId,
+        '@type': issuesContainers.find(({ id }) => id === values.containerId).type as 'Backlog' | 'Sprint',
       },
       storyPointsEstimate: values.storyPointsEstimate,
     };
 
-    fetchCreateIssue(request);
+    fetchCreate(request);
     history.push(`/app/projects/${currentProjectId}/board`);
   };
 
@@ -110,9 +108,9 @@ const CreateIssue: React.FC<Props> = ({
 
           {currentProjectId !== null && (
             <SelectField
-              name="listId"
+              name="containerId"
               label="Sprint"
-              options={issuesListsOptions(issuesLists)}
+              options={issuesListsOptions(issuesContainers)}
               className={classes.halfWidth}
             />
           )}
@@ -152,12 +150,12 @@ const CreateIssue: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => {
-  const currentProjectId = getCurrentProject(state);
+  const currentProjectId = getCurrentProject(state)?.id;
   return {
     user: getUser(state),
     projects: getProjectsAsArray(state),
-    issuesLists: getIssuesContainersByProjectId(state, String(currentProjectId)),
-    teamMembers: getTeamMembersByProjectId(state, String(currentProjectId)),
+    issuesContainers: getIssuesContainersByProjectId(state, `${currentProjectId}`),
+    teamMembers: getTeamMembersByProjectId(state, `${currentProjectId}`),
     currentProjectId,
     loading: getLoading(state),
   };

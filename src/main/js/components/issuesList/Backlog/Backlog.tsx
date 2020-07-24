@@ -7,7 +7,7 @@ import Project from '../../../entities/Project';
 const Backlog: React.FC<{ project: Project }> = ({ project }) => (
   <Wrapper>
     <BacklogHeader projectKey={project.projectKey} projectId={project.id} />
-    <IssuesList listId={project.backlog} project={project} />
+    <IssuesList containerId={project.backlog} project={project} />
   </Wrapper>
 );
 

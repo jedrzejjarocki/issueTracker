@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {Dispatch} from 'redux';
 import React from 'react';
-import {fromJS, isKeyed, List, Map, Record,} from 'immutable';
-import {LOGIN_URL, LOGOUT_URL, USERS_URL,} from '../../api/commons';
+import {fromJS, isKeyed, Map,} from 'immutable';
+import {LOGIN_URL, LOGOUT_URL, USERS_URL} from '../../api/commons';
 import {setLoading, setNotification} from '../ui/actionCreators';
 import normalize from '../schema';
 import {setProjects} from '../projects/actionCreators';
@@ -12,7 +12,6 @@ import {setTeamMembers} from '../teamMembers/actionCreators';
 import {RouterHistory, UserRole} from '../utilTypes';
 import {RootThunk} from '../store';
 import {User} from '../../entities/User';
-import {SetUserAction} from './reducer';
 import {
   accountCreatedMessage,
   checkEmailForPasswordRecoveryLinkMessage,
@@ -23,6 +22,13 @@ import {
   passwordChangedSuccessfullyMessage,
   userWithGivenEmailDoesNotExistMessage,
 } from '../ui/NotificationMessage';
+import {SetUserAction} from './types';
+import Project from '../../entities/Project';
+import {ProjectsState} from '../projects/types';
+import Issue from '../../entities/Issue';
+import TeamMember from '../../entities/TeamMember';
+import Backlog from '../../entities/Backlog';
+import Sprint from '../../entities/Sprint';
 
 export const SET_USER = 'SET_USER';
 
@@ -43,8 +49,7 @@ interface FetchLogin {
 export const fetchLogin: FetchLogin = (requestBody) => async (dispatch) => {
   try {
     const { data } = await axios.post(LOGIN_URL, requestBody);
-    const { id, username } = data;
-    dispatch(setUser(new User({ id, username })));
+    dispatch(setUser(new User(data)));
   } catch (err) {
     dispatch(setNotification(
       err?.response?.status === 401
@@ -61,7 +66,12 @@ export interface RegisterRequestBody {
 }
 
 interface FetchRegister {
-  (requestBody: RegisterRequestBody, toggleFormDialog: () => void, setResponseError: React.Dispatch<any>, token?: string): RootThunk
+  (
+    requestBody: RegisterRequestBody,
+    toggleFormDialog: () => void,
+    setResponseError: React.Dispatch<any>,
+    token?: string
+  ): RootThunk
 }
 
 export const fetchRegister: FetchRegister = (
@@ -104,7 +114,7 @@ export const fetchLogout: FetchLogoutFunc = () => async (dispatch) => {
 
 interface IssueDto {
   id: number
-  listId: number
+  containerId: number
   summary: string
   description: string
   version: number
@@ -147,20 +157,53 @@ export interface CurrentUserResponseBody {
   }[]
 }
 
+const parseUser = (usersData: any): User => new User(fromJS(usersData).first());
+const parseProjects = (projectsData: any): ProjectsState => fromJS(projectsData, (key, value) => {
+  if (isKeyed(value)) {
+    return key ? new Project(value) : value.toMap();
+  }
+  return value.toList();
+});
+
+const parseIssues = (issuesData: any) => fromJS(issuesData, (key, value) => {
+  if (isKeyed(value)) {
+    return key ? new Issue(value) : value.toMap();
+  }
+  return value.toList();
+}) || Map();
+
+const parseTeamMembers = (teamMembersData: any) => fromJS(teamMembersData, (key, value) => {
+  if (isKeyed(value)) {
+    return key ? new TeamMember(value) : value.toMap();
+  }
+  return value.toList();
+});
+
+const parseIssuesContainers = (issuesContainersData: any) => fromJS(issuesContainersData, (key, value) => {
+  if (isKeyed(value)) {
+    if (!key) return value.toMap();
+    return (<Sprint> value.toJS()).name === undefined
+      ? new Backlog(value)
+      : new Sprint(value);
+  }
+  return value.toList();
+});
+
 const setData = (responseBody: CurrentUserResponseBody, dispatch: Dispatch) => {
-  const normalized = fromJS(normalize(responseBody), (key, value) => {
-    if (isKeyed(value)) {
-      return parseInt(key as string, 10) ? Record(value.toJS())(value) : Map(value);
-    }
-    return List(value);
-  });
+  const normalized = normalize(responseBody);
+
+  const user = parseUser(normalized.user);
+  const projects = parseProjects(normalized.projects);
+  const issues = parseIssues(normalized.issues);
+  const teamMembers = parseTeamMembers(normalized.teamMembers);
+  const issuesContainers = parseIssuesContainers(normalized.issuesLists);
 
   const actions = [
-    setUser(normalized.get('user').first()),
-    setProjects(normalized.get('projects')),
-    setIssues(normalized.get('issues')),
-    setIssuesContainers(normalized.get('issuesLists')),
-    setTeamMembers(normalized.get('teamMembers')),
+    setUser(user),
+    setProjects(projects),
+    setIssues(issues),
+    setIssuesContainers(issuesContainers),
+    setTeamMembers(teamMembers),
   ];
 
   actions.map((action) => dispatch(action));

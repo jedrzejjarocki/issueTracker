@@ -16,7 +16,7 @@ import {RootState} from '../../../redux/rootReducer';
 import Sprint from '../../../entities/Sprint';
 import {UserRole} from '../../../redux/utilTypes';
 import {getSprintsByProjectId} from '../../../redux/issuesContainers/selectors';
-import {getCurrentProjectUserRole} from '../../../redux/ui/selectors';
+import {getCurrentProject} from '../../../redux/ui/selectors';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -38,7 +38,7 @@ interface Props extends ReduxProps {
 }
 
 const StartSprint: React.FC<Props> = ({
-  sprint, projectId, fetchUpdateSprint, sprints, userRole,
+  sprint, projectId, fetchUpdateSprint: fetchUpdate, sprints, userRole,
 }) => {
   const classes = useStyles();
 
@@ -49,7 +49,7 @@ const StartSprint: React.FC<Props> = ({
   }
 
   const initialValues = {
-    ...sprint,
+    ...sprint.toJS(),
     duration: 2,
   };
 
@@ -63,12 +63,12 @@ const StartSprint: React.FC<Props> = ({
       id,
       name,
       goal,
-      startDate: addMinutes(startDate, 15).getTime(),
-      endDate: addWeeks(startDate, duration).getTime(),
+      startDate: addMinutes(startDate, 15).toISOString(),
+      endDate: addWeeks(startDate, duration).toISOString(),
       '@type': 'Sprint',
     };
 
-    fetchUpdateSprint(requestBody, projectId);
+    fetchUpdate(requestBody);
   };
 
   return (
@@ -77,7 +77,7 @@ const StartSprint: React.FC<Props> = ({
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DialogForm
           enableReinitialize
-          title="Create Issue"
+          title="Start sprint"
           onSubmit={onSubmit}
           validationSchema={schema}
           submitButtonText="Start"
@@ -131,7 +131,7 @@ const StartSprint: React.FC<Props> = ({
 
 const mapStateToProps = (state: RootState, { projectId }: { projectId: number}) => ({
   sprints: getSprintsByProjectId(state, String(projectId)),
-  userRole: getCurrentProjectUserRole(state),
+  userRole: getCurrentProject(state)?.userRole,
 });
 
 const connector = connect(mapStateToProps, { fetchUpdateSprint });

@@ -19,9 +19,9 @@ import {
   DELETE_SPRINT,
   UPDATE_SPRINT,
 } from '../../../../main/js/redux/issuesContainers/types';
-import {SET_NOTIFICATION} from '../../../../main/js/redux/ui/reducer';
 import {IssuesContainer} from '../../../../main/js/entities/IssuesContainer';
 import {defaultErrorNotificationMessage} from '../../../../main/js/redux/ui/NotificationMessage';
+import {SET_NOTIFICATION} from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({

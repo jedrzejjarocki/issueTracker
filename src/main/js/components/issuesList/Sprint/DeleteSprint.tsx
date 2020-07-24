@@ -13,13 +13,13 @@ interface Props extends ReduxProps {
 }
 
 const DeleteSprint: React.FC<Props> = ({
-  sprint, fetchDeleteSprint, projectId, backlogId,
+  sprint, fetchDeleteSprint: fetchDelete, projectId, backlogId,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
   const history = useHistory();
 
-  const handleDelete = () => fetchDeleteSprint(sprint, backlogId, projectId, history);
+  const handleDelete = () => fetchDelete(sprint, backlogId, projectId, history);
 
   return (
     <>

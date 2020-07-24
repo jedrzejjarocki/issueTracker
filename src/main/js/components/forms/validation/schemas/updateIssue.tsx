@@ -1,10 +1,10 @@
 import * as yup from 'yup';
 import {
   assigneeId,
+  containerId,
   description,
   issueSummary as summary,
   issueType as type,
-  listId,
   storyPointsEstimate,
 } from '../validators';
 import {IssueStatus, IssueType} from '../../../../redux/utilTypes';
@@ -17,7 +17,7 @@ export interface UpdateIssueFormFields {
   summary: string
   description: string
   assigneeId: number
-  listId: number
+  containerId: number
   storyPointsEstimate: number
 }
 
@@ -26,6 +26,6 @@ export default yup.object().shape({
   summary,
   description,
   assigneeId,
-  listId,
+  containerId,
   storyPointsEstimate,
 });

@@ -10,7 +10,7 @@ import org.springframework.data.repository.history.RevisionRepository;
 
 public interface IssueRepository extends JpaRepository<Issue, Integer>, RevisionRepository<Issue, Integer, Integer> {
     @Modifying
-    @Query("UPDATE Issue i SET i.list = :to WHERE i.list = :from")
+    @Query("UPDATE Issue i SET i.container = :to WHERE i.container = :from")
     void replaceList(IssueContainer from, IssueContainer to);
 
     @Modifying

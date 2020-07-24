@@ -1,15 +1,15 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, ConnectedProps} from 'react-redux';
 import {TextField} from 'material-ui-formik-components';
 import DialogForm from '../forms/DialogForm';
 import FormField from '../forms/fields/FormField';
 import {fetchCreateProject} from '../../redux/projects/actionCreators';
 
-interface Props {
+interface Props extends ReduxProps {
   first?: boolean
 }
 
-const CreateProject: React.FC<Props> = ({ first }) => {
+const CreateProject: React.FC<Props> = ({ first, fetchCreateProject: fetchCreate }) => {
   interface CreateProjectFormFields {
     name: string
     key: string
@@ -27,8 +27,7 @@ const CreateProject: React.FC<Props> = ({ first }) => {
       name,
       projectKey: key ? key.toUpperCase() : generateKey(name),
     };
-
-    fetchCreateProject(requestBody);
+    fetchCreate(requestBody);
     resetForm();
   };
 
@@ -70,4 +69,7 @@ const CreateProject: React.FC<Props> = ({ first }) => {
   );
 };
 
-export default connect(null, { fetchCreateProject })(CreateProject);
+const connector = connect(null, { fetchCreateProject });
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(CreateProject);
