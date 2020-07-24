@@ -1,9 +1,10 @@
 import axios from 'axios';
-import {mocked} from 'ts-jest/utils';
+import { mocked } from 'ts-jest/utils';
 import reactRouterDom from 'react-router-dom';
-import thunk, {ThunkDispatch} from 'redux-thunk';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import {Action} from 'redux';
+import { Action } from 'redux';
+import { List } from 'immutable';
 import {
   CreateSprintRequestBody,
   fetchCreateSprint,
@@ -12,16 +13,16 @@ import {
   UpdateSprintRequestBody,
 } from '../../../../main/js/redux/issuesContainers/actionCreators';
 import Sprint from '../../../../main/js/entities/Sprint';
-import {SPRINTS_URL} from '../../../../main/js/api/commons';
+import { SPRINTS_URL } from '../../../../main/js/api/commons';
 import {
   ADD_SPRINT,
   AddSprintAction,
   DELETE_SPRINT,
   UPDATE_SPRINT,
 } from '../../../../main/js/redux/issuesContainers/types';
-import {IssuesContainer} from '../../../../main/js/entities/IssuesContainer';
-import {defaultErrorNotificationMessage} from '../../../../main/js/redux/ui/NotificationMessage';
-import {SET_NOTIFICATION} from '../../../../main/js/redux/ui/types';
+import { IssuesContainer } from '../../../../main/js/entities/IssuesContainer';
+import { defaultErrorNotificationMessage } from '../../../../main/js/redux/ui/NotificationMessage';
+import { SET_NOTIFICATION } from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({
@@ -48,15 +49,14 @@ describe('issue containers action creators', () => {
       '@type': 'Sprint',
     };
 
-    const successResponseBody = { data: new Sprint(requestBody) };
+    const successResponseBody = { data: { id: 1, ...requestBody } };
 
     it('should call api with proper arguments', () => {
       const { dispatch } = mockStore();
       mocked(axios.post).mockImplementationOnce(() => Promise.resolve(successResponseBody));
 
       return dispatch(fetchCreateSprint(requestBody)).then(() => {
-        const url = SPRINTS_URL;
-        expect(mocked(axios.post)).toBeCalledWith(url, requestBody);
+        expect(mocked(axios.post)).toBeCalledWith(SPRINTS_URL, requestBody);
       });
     });
 
@@ -72,7 +72,7 @@ describe('issue containers action creators', () => {
           type: ADD_SPRINT,
           payload: {
             projectId: requestBody.project.id,
-            sprint: successResponseBody.data as IssuesContainer,
+            sprint: new Sprint(successResponseBody.data) as IssuesContainer,
           },
         };
 
@@ -111,15 +111,14 @@ describe('issue containers action creators', () => {
       '@type': 'Sprint',
     };
 
-    const successResponseBody = { data: new Sprint(requestBody) };
+    const successResponseBody = { data: { ...requestBody, issues: [{ id: 1 }, { id: 2 }] } };
 
     it('should call api with proper arguments', () => {
       const { dispatch } = mockStore();
       mocked(axios.put).mockImplementationOnce(() => Promise.resolve(successResponseBody));
 
       return dispatch(fetchUpdateSprint(requestBody)).then(() => {
-        const url = SPRINTS_URL;
-        expect(mocked(axios.put)).toBeCalledWith(url, requestBody);
+        expect(mocked(axios.put)).toBeCalledWith(SPRINTS_URL, requestBody);
       });
     });
 
@@ -135,7 +134,10 @@ describe('issue containers action creators', () => {
           type: UPDATE_SPRINT,
           payload: {
             projectId: requestBody.project.id,
-            sprint: successResponseBody.data,
+            sprint: new Sprint({
+              ...successResponseBody.data,
+              issues: List(successResponseBody.data.issues.map(({ id }) => id)),
+            }),
           },
         };
 
