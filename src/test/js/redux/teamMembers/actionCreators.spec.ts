@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {mocked} from 'ts-jest/utils';
+import { mocked } from 'ts-jest/utils';
 import reactRouterDom from 'react-router-dom';
-import thunk, {ThunkDispatch} from 'redux-thunk';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import {Action} from 'redux';
+import { Action } from 'redux';
 import {
   AddTeamMemberRequestBody,
   ChangeTeamMemberRoleRequestBody,
@@ -13,7 +13,7 @@ import {
   fetchInviteUser,
   InviteUserRequestBody,
 } from '../../../../main/js/redux/teamMembers/actionCreators';
-import {UserRole} from '../../../../main/js/redux/utilTypes';
+import { UserRole } from '../../../../main/js/redux/utilTypes';
 import {
   ADD_MEMBER,
   AddTeamMemberAction,
@@ -22,10 +22,13 @@ import {
   UPDATE_MEMBER,
   UpdateMemberAction,
 } from '../../../../main/js/redux/teamMembers/types';
-import {TEAM_MEMBERS_URL} from '../../../../main/js/api/commons';
+import { TEAM_MEMBERS_URL } from '../../../../main/js/api/commons';
 import TeamMember from '../../../../main/js/entities/TeamMember';
-import {defaultErrorNotificationMessage, NotificationSeverity} from '../../../../main/js/redux/ui/NotificationMessage';
-import {SET_NOTIFICATION, SetNotificationAction} from '../../../../main/js/redux/ui/types';
+import {
+  defaultErrorNotificationMessage,
+  NotificationSeverity,
+} from '../../../../main/js/redux/ui/NotificationMessage';
+import { SET_NOTIFICATION, SetNotificationAction } from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({
@@ -73,8 +76,7 @@ describe('team members action creators', () => {
       mocked(axios.post).mockImplementationOnce(() => Promise.resolve({ data: {} }));
 
       return dispatch(fetchAddTeamMember(requestBody, username, history)).then(() => {
-        const url = TEAM_MEMBERS_URL;
-        expect(axios.post).toBeCalledWith(url, requestBody);
+        expect(axios.post).toBeCalledWith(TEAM_MEMBERS_URL, requestBody);
       });
     });
 
@@ -90,7 +92,7 @@ describe('team members action creators', () => {
 
         const expectedAddMemberAction: AddTeamMemberAction = {
           type: ADD_MEMBER,
-          payload: { ...successResponseBody.data, username },
+          payload: new TeamMember({ ...successResponseBody.data, username }),
         };
 
         const expectedSetMessageAction: SetNotificationAction = {
@@ -226,8 +228,7 @@ describe('team members action creators', () => {
       mocked(axios.put).mockImplementationOnce(() => Promise.resolve(successResponseBody));
 
       return dispatch(fetchChangeTeamMemberRole(requestBody, toggleDialog)).then(() => {
-        const url = TEAM_MEMBERS_URL;
-        expect(axios.put).toBeCalledWith(url, requestBody);
+        expect(axios.put).toBeCalledWith(TEAM_MEMBERS_URL, requestBody);
       });
     });
 
