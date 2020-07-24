@@ -1,6 +1,6 @@
 import React from 'react';
-import {Select} from 'material-ui-formik-components/Select';
-import {FormikProps} from 'formik';
+import { Select } from 'material-ui-formik-components/Select';
+import { FormikProps } from 'formik';
 import FormField from './FormField';
 
 interface Props {

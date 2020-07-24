@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field} from 'formik';
+import { Field } from 'formik';
 
 interface Props {
   name: string
@@ -24,7 +24,7 @@ const FormField: React.FC<Props> = ({
       label={capitalize(name)}
       variant="outlined"
       error={!!error && touched}
-      helperText={touched ? error : ''}
+      helperText={(touched && error) || ' '}
       {...rest}
     />
   );
