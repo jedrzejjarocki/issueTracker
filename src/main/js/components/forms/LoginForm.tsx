@@ -10,7 +10,7 @@ interface Props extends ReduxProps{
   isOpen: boolean
 }
 
-const LoginForm: React.FC<Props> = ({ fetchLogin, isOpen }) => {
+const LoginForm: React.FC<Props> = ({ fetchLogin: login, isOpen }) => {
   const initialValues = {
     username: '',
     password: '',
@@ -21,7 +21,7 @@ const LoginForm: React.FC<Props> = ({ fetchLogin, isOpen }) => {
       <DialogForm
         toggleButtonText="Sign in"
         initialValues={initialValues}
-        onSubmit={fetchLogin}
+        onSubmit={login}
         validationSchema={schema}
         title="Sign in"
         submitButtonText="Sign in"

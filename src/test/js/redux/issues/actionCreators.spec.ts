@@ -12,10 +12,10 @@ import {
 } from '../../../../main/js/redux/issues/actionCreators';
 import {IssueStatus, IssueType} from '../../../../main/js/redux/utilTypes';
 import {ISSUES_URL} from '../../../../main/js/api/commons';
-import {SET_NOTIFICATION} from '../../../../main/js/redux/ui/reducer';
 import {ADD_ISSUE, AddIssueAction, DELETE_ISSUE, UPDATE_ISSUE,} from '../../../../main/js/redux/issues/types';
 import Issue from '../../../../main/js/entities/Issue';
 import {defaultErrorNotificationMessage, NotificationSeverity} from '../../../../main/js/redux/ui/NotificationMessage';
+import {SET_NOTIFICATION} from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({

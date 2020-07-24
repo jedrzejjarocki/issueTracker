@@ -20,7 +20,7 @@ export const getSprintsByProjectId = createSelector(
 
 export const getBacklogByProjectId = createSelector(
   getProjectById, getIssuesContainers,
-  (project, containers) => <Backlog> containers.get(`${project.backlog}`),
+  (project, containers) => <Backlog> containers.get(`${project?.backlog}`),
 );
 
 export const getIssuesContainersByProjectId = createSelector(

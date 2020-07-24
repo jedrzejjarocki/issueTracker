@@ -14,12 +14,15 @@ interface Props extends ReduxProps {
 }
 
 const DeleteIssue: React.FC<Props> = ({
-  issue, fetchDeleteIssue, history, projectId,
+  issue,
+  fetchDeleteIssue: fetchDelete,
+  history,
+  projectId,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
 
-  const handleDelete = () => fetchDeleteIssue(issue.id, issue.listId, projectId, history);
+  const handleDelete = () => fetchDelete(issue.id, issue.containerId, projectId, history);
 
   return (
     <>

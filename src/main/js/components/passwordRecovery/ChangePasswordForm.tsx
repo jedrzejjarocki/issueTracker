@@ -28,7 +28,7 @@ interface Props extends ReduxProps {
   token?: string
 }
 
-const ChangePasswordForm: React.FC<Props> = ({ token, fetchChangePassword }) => {
+const ChangePasswordForm: React.FC<Props> = ({ token, fetchChangePassword: fetchChange }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -37,7 +37,7 @@ const ChangePasswordForm: React.FC<Props> = ({ token, fetchChangePassword }) => 
     confirmPassword: string
   }
 
-  const onSubmit = ({ password }: ChangePasswordFormFields) => fetchChangePassword(password, token, history);
+  const onSubmit = ({ password }: ChangePasswordFormFields) => fetchChange(password, token, history);
 
   return (
     <Card variant="outlined">

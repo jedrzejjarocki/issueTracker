@@ -6,8 +6,8 @@ import {mocked} from 'ts-jest/utils';
 import {CreateProjectRequestBody, fetchCreateProject} from '../../../../main/js/redux/projects/actionCreators';
 import {PROJECTS_URL} from '../../../../main/js/api/commons';
 import {ADD_PROJECT} from '../../../../main/js/redux/projects/types';
-import {SET_NOTIFICATION} from '../../../../main/js/redux/ui/reducer';
 import {defaultErrorNotificationMessage} from '../../../../main/js/redux/ui/NotificationMessage';
+import {SET_NOTIFICATION} from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 

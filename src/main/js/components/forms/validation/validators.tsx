@@ -11,7 +11,7 @@ export const issueType = stringRequired.oneOf(Object.values(IssueTypes).map(({ v
 export const issueSummary = stringRequired;
 export const description = string;
 export const assigneeId = number;
-export const listId = number;
+export const containerId = number;
 export const storyPointsEstimate = number.moreThan(-1, 'Must not be negative integer');
 
 export const username = stringRequired;

@@ -33,6 +33,6 @@ public abstract class IssueContainer {
     @EqualsAndHashCode.Include
     private int id;
 
-    @OneToMany(mappedBy = "list")
+    @OneToMany(mappedBy = "container")
     private Set<Issue> issues = new HashSet<>();
 }

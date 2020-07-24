@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {List} from 'immutable';
 import {SPRINTS_URL} from '../../api/commons';
 import {setNotification} from '../ui/actionCreators';
 import {RouterHistory} from '../utilTypes';
@@ -65,7 +66,8 @@ export const fetchCreateSprint: FetchCreateSprint = (requestBody) => (
   async (dispatch) => {
     try {
       const { data } = await axios.post(SPRINTS_URL, requestBody);
-      dispatch(addSprint(data, requestBody.project.id));
+      const sprint = new Sprint({ ...data, issues: List([]) });
+      dispatch(addSprint(sprint, requestBody.project.id));
     } catch (err) {
       dispatch(setNotification(defaultErrorNotificationMessage));
     }
@@ -91,8 +93,10 @@ interface FetchUpdateSprint {
 export const fetchUpdateSprint: FetchUpdateSprint = (requestBody) => (
   async (dispatch) => {
     try {
+      alert(JSON.stringify(requestBody, null, 4));
       const { data } = await axios.put(SPRINTS_URL, requestBody);
-      dispatch(updateSprint(data, requestBody.project.id));
+      const updatedSprint = new Sprint({ ...data, issues: List(data.issues.map(({ id }: { id: number}) => id)) });
+      dispatch(updateSprint(updatedSprint, requestBody.project.id));
     } catch (err) {
       dispatch(setNotification(defaultErrorNotificationMessage));
     }

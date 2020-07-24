@@ -70,7 +70,7 @@ export const fetchAddTeamMember: FetchAddTeamMember = (
       severity: NotificationSeverity.SUCCESS,
     };
 
-    dispatch(addMember(addMemberPayload));
+    dispatch(addMember(new TeamMember(addMemberPayload)));
     history.push('/app/people');
   } catch (err) {
     message = {
@@ -128,7 +128,7 @@ export const fetchChangeTeamMemberRole: FetchChangeTeamMemberRole = (requestBody
   async (dispatch) => {
     try {
       const { data } = await axios.put(TEAM_MEMBERS_URL, requestBody);
-      dispatch(updateMemberRole(data));
+      dispatch(updateMemberRole(new TeamMember(data)));
     } catch (err) {
       dispatch(setNotification({
         content: err.response.data.message,

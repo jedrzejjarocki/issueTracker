@@ -56,7 +56,7 @@ describe('issues reducer', () => {
     expect(newState.get(`${issue.id}`)).toBeUndefined();
   });
 
-  it('should change listId if equals deleted sprint id', () => {
+  it('should change containerId if equals deleted sprint id', () => {
     const sprint = new Sprint({
       id: issue.containerId,
       issues: List([issue.id]),

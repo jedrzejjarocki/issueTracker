@@ -16,8 +16,6 @@ import {
 } from '../../../../main/js/redux/user/actionCreators';
 import {LOGIN_URL, LOGOUT_URL, USERS_URL} from '../../../../main/js/api/commons';
 import {User} from '../../../../main/js/entities/User';
-import {SET_USER, SetUserAction} from '../../../../main/js/redux/user/reducer';
-import {SET_LOADING, SET_NOTIFICATION} from '../../../../main/js/redux/ui/reducer';
 import {
   accountCreatedMessage,
   checkEmailForPasswordRecoveryLinkMessage,
@@ -31,6 +29,8 @@ import {SET_PROJECTS} from '../../../../main/js/redux/projects/types';
 import {SET_ISSUES} from '../../../../main/js/redux/issues/types';
 import {SET_ISSUES_CONTAINERS} from '../../../../main/js/redux/issuesContainers/types';
 import {SET_TEAM_MEMBERS} from '../../../../main/js/redux/teamMembers/types';
+import {SET_USER, SetUserAction} from '../../../../main/js/redux/user/types';
+import {SET_LOADING, SET_NOTIFICATION} from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({

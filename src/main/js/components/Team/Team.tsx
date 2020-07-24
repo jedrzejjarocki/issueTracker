@@ -6,7 +6,7 @@ import TeamMember from './TeamMember';
 import {RootState} from '../../redux/rootReducer';
 import {getTeamMembersByProjectId} from '../../redux/teamMembers/selectors';
 import {getUser} from '../../redux/user/selectors';
-import {getCurrentProjectUserRole} from '../../redux/ui/selectors';
+import {getCurrentProject} from '../../redux/ui/selectors';
 
 const Team: React.FC<ReduxProps> = ({ team, userRole, currentUserId }) => (
   <Grid container item spacing={3}>
@@ -22,9 +22,12 @@ const Team: React.FC<ReduxProps> = ({ team, userRole, currentUserId }) => (
   </Grid>
 );
 
-const mapStateToProps = (state: RootState, { match }: RouteComponentProps<{ projectId: string }>) => ({
+const mapStateToProps = (
+  state: RootState,
+  { match }: RouteComponentProps<{ projectId: string }>,
+) => ({
   team: getTeamMembersByProjectId(state, match.params.projectId),
-  userRole: getCurrentProjectUserRole(state),
+  userRole: getCurrentProject(state)?.userRole,
   currentUserId: getUser(state).id,
 });
 

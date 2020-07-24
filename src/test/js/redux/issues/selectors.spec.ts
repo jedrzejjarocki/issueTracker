@@ -1,7 +1,6 @@
 import {List, Map, Record} from 'immutable';
 import {getIssueById, getIssuesByContainerId} from '../../../../main/js/redux/issues/selectors';
 import {RootState} from '../../../../main/js/redux/rootReducer';
-import {UIState} from '../../../../main/js/redux/ui/reducer';
 import {User} from '../../../../main/js/entities/User';
 import Project from '../../../../main/js/entities/Project';
 import TeamMember from '../../../../main/js/entities/TeamMember';
@@ -9,6 +8,7 @@ import Backlog from '../../../../main/js/entities/Backlog';
 import Issue from '../../../../main/js/entities/Issue';
 import {IssuesContainersState} from '../../../../main/js/redux/issuesContainers/types';
 import {IssuesContainer} from '../../../../main/js/entities/IssuesContainer';
+import {UIState} from '../../../../main/js/redux/ui/types';
 
 const ui: UIState = Record({
   loading: false,

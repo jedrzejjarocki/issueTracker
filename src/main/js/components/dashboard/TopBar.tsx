@@ -43,7 +43,7 @@ interface Props extends RouteComponentProps<any>, ReduxProps {
 }
 
 const TopBar: React.FC<Props> = ({
-  username, projects, handleDrawerToggle, fetchLogout, match,
+  username, projects, handleDrawerToggle, fetchLogout: logout, match,
 }) => {
   const classes = useStyles();
 
@@ -67,7 +67,11 @@ const TopBar: React.FC<Props> = ({
           </Typography>
           {!isAllProjectsUrl && hasProjects && (
             <Dropdown
-              render={(ref: React.MutableRefObject<any>, ariaHaspopup: boolean, onClick: () => void) => (
+              render={(
+                ref: React.MutableRefObject<any>,
+                ariaHaspopup: boolean,
+                onClick: () => void,
+              ) => (
                 <Button
                   ref={ref}
                   aria-haspopup={ariaHaspopup}
@@ -98,7 +102,11 @@ const TopBar: React.FC<Props> = ({
         </Toolbar>
         <div>
           <Dropdown
-            render={(ref: React.MutableRefObject<any>, ariaHaspopup: boolean, onClick: () => void): React.ReactNode => (
+            render={(
+              ref: React.MutableRefObject<any>,
+              ariaHaspopup: boolean,
+              onClick: () => void,
+            ) => (
               <IconButton
                 ref={ref}
                 aria-haspopup={ariaHaspopup}
@@ -108,7 +116,7 @@ const TopBar: React.FC<Props> = ({
               </IconButton>
             )}
           >
-            <Button onClick={fetchLogout}>Log out</Button>
+            <Button onClick={logout}>Log out</Button>
           </Dropdown>
         </div>
       </Toolbar>

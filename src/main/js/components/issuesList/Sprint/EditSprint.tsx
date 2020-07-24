@@ -12,7 +12,7 @@ interface Props extends ReduxProps {
   projectId: number
 }
 
-const EditSprint: React.FC<Props> = ({ sprint, projectId, fetchUpdateSprint }) => {
+const EditSprint: React.FC<Props> = ({ sprint, projectId, fetchUpdateSprint: fetchUpdate }) => {
   const onSubmit = async (values: Sprint) => {
     const requestBody: UpdateSprintRequestBody = {
       id: values.id,
@@ -23,14 +23,14 @@ const EditSprint: React.FC<Props> = ({ sprint, projectId, fetchUpdateSprint }) =
       },
       '@type': 'Sprint',
     };
-    fetchUpdateSprint(requestBody, projectId);
+    fetchUpdate(requestBody);
   };
 
   return (
     <SprintForm
       toggleComponent={toggleComponent}
       onSubmit={onSubmit}
-      initialValues={sprint}
+      initialValues={sprint.toJS()}
       title="Create sprint"
       submitButtonText="Edit"
     />

@@ -14,13 +14,13 @@ interface Props extends ReduxProps {
 }
 
 const DeleteMember: React.FC<Props> = ({
-  member, currentProjectId, fetchDeleteMember,
+  member, currentProjectId, fetchDeleteMember: fetchDelete,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
   const history = useHistory();
 
-  const handleDelete = () => fetchDeleteMember(currentProjectId, member.id, history, toggleOpen);
+  const handleDelete = () => fetchDelete(currentProjectId, member.id, history, toggleOpen);
 
   return (
     <>
@@ -50,7 +50,7 @@ const DeleteMember: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
-  currentProjectId: getCurrentProject(state),
+  currentProjectId: getCurrentProject(state)?.id,
 });
 
 const connector = connect(mapStateToProps, { fetchDeleteMember });

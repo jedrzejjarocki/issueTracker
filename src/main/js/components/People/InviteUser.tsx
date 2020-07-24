@@ -11,7 +11,7 @@ import {RootState} from '../../redux/rootReducer';
 import {UserRole} from '../../redux/utilTypes';
 import {getProjectsWhereCurrentUserIsLeader} from '../../redux/compoundSelectors';
 
-const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fetchInviteUser }) => {
+const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fetchInviteUser: inviteUser }) => {
   interface InviteUserFormFields {
     projectId: number
     email: string
@@ -27,7 +27,7 @@ const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fe
       role,
     };
 
-    fetchInviteUser(requestBody);
+    inviteUser(requestBody);
   };
 
   const projectsOptions = projectsWhereCurrentUserIsLeader.map(({ id, name }) => ({

@@ -16,7 +16,7 @@ interface Props extends ReduxProps {
   userWithProjects: UserWithProjects
 }
 
-const AddTeamMember: React.FC<Props> = ({ projectsWhereCurrentUserIsLeader, userWithProjects, fetchAddTeamMember }) => {
+const AddTeamMember: React.FC<Props> = ({ projectsWhereCurrentUserIsLeader, userWithProjects, fetchAddTeamMember: addTeamMember }) => {
   const history = useHistory();
 
   const { userId, projects: userProjects, username } = userWithProjects;
@@ -37,7 +37,7 @@ const AddTeamMember: React.FC<Props> = ({ projectsWhereCurrentUserIsLeader, user
       },
     };
 
-    fetchAddTeamMember(requestBody, username, history);
+    addTeamMember(requestBody, username, history);
   };
 
   // filter out projects where user is already team member

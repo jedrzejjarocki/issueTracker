@@ -2,10 +2,10 @@ import * as yup from 'yup';
 
 import {
   assigneeId,
+  containerId,
   description,
   issueSummary as summary,
   issueType as type,
-  listId,
   projectId,
   storyPointsEstimate,
 } from '../validators';
@@ -19,7 +19,7 @@ export interface CreateIssueFormFields {
   status: IssueStatus
   reporterId: number
   assigneeId: number
-  listId: number
+  containerId: number
   storyPointsEstimate: number
 }
 
@@ -29,6 +29,6 @@ export default yup.object().shape({
   summary,
   description,
   assigneeId,
-  listId,
+  containerId,
   storyPointsEstimate,
 });

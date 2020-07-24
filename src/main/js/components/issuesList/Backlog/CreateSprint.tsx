@@ -3,8 +3,8 @@ import {connect, ConnectedProps} from 'react-redux';
 import {CreateSprintRequestBody, fetchCreateSprint} from '../../../redux/issuesContainers/actionCreators';
 import SprintForm from '../../forms/SprintForm';
 import {RootState} from '../../../redux/rootReducer';
-import {getCurrentProjectUserRole} from '../../../redux/ui/selectors';
 import {UserRole} from '../../../redux/utilTypes';
+import {getCurrentProject} from '../../../redux/ui/selectors';
 
 interface CreateSprintFormFields {
   name: string
@@ -31,7 +31,7 @@ const CreateSprint: React.FC<Props> = ({ fetchCreateSprint, projectId, userRole 
         id: projectId,
       },
     };
-    fetchCreateSprint(requestBody, projectId);
+    fetchCreateSprint(requestBody);
   };
 
   return (
@@ -52,7 +52,7 @@ const CreateSprint: React.FC<Props> = ({ fetchCreateSprint, projectId, userRole 
 };
 
 const mapStateToProps = (state: RootState) => ({
-  userRole: getCurrentProjectUserRole(state),
+  userRole: getCurrentProject(state)?.userRole,
 });
 
 const connector = connect(mapStateToProps, { fetchCreateSprint });

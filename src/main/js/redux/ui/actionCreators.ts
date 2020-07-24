@@ -1,4 +1,5 @@
 import {UserRole} from '../utilTypes';
+import {NotificationMessage} from './NotificationMessage';
 import {
   SET_CURRENT_PROJECT,
   SET_LOADING,
@@ -6,8 +7,7 @@ import {
   SetCurrentProjectAction,
   SetLoadingAction,
   SetNotificationAction,
-} from './reducer';
-import {NotificationMessage} from './NotificationMessage';
+} from './types';
 
 export const setNotification = (notification: NotificationMessage): SetNotificationAction => ({
   type: SET_NOTIFICATION,
