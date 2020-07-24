@@ -1,24 +1,24 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {makeStyles, MenuItem, TextField as BaseTextField} from '@material-ui/core';
-import schema, {CreateIssueFormFields} from '../forms/validation/schemas/createIssue';
+import { connect, ConnectedProps } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { makeStyles, MenuItem, TextField as BaseTextField } from '@material-ui/core';
+import schema, { CreateIssueFormFields } from '../forms/validation/schemas/createIssue';
 import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
 import issuesListsOptions from '../forms/selectOptions/IssuesListsOptions';
 import issueTypeOptions from '../forms/selectOptions/issueTypeOptions';
 import DialogForm from '../forms/DialogForm';
-import {fetchCreateIssue, IssueRequestBody} from '../../redux/issues/actionCreators';
-import {setCurrentProject} from '../../redux/ui/actionCreators';
+import { fetchCreateIssue, IssueRequestBody } from '../../redux/issues/actionCreators';
+import { setCurrentProject } from '../../redux/ui/actionCreators';
 import SelectField from '../forms/fields/SelectField';
 import BasicTextField from '../forms/fields/BasicTextField';
 import TextAreaField from '../forms/fields/TextAreaField';
-import {RootState} from '../../redux/rootReducer';
-import {IssueStatus, IssueType, UserRole} from '../../redux/utilTypes';
-import {getCurrentProject, getLoading} from '../../redux/ui/selectors';
-import {getUser} from '../../redux/user/selectors';
-import {getIssuesContainersByProjectId} from '../../redux/issuesContainers/selectors';
-import {getTeamMembersByProjectId} from '../../redux/teamMembers/selectors';
-import {getProjectsAsArray} from '../../redux/projects/selectors';
+import { RootState } from '../../redux/rootReducer';
+import { IssueStatus, IssueType, UserRole } from '../../redux/utilTypes';
+import { getCurrentProject, getLoading } from '../../redux/ui/selectors';
+import { getUser } from '../../redux/user/selectors';
+import { getIssuesContainersByProjectId } from '../../redux/issuesContainers/selectors';
+import { getTeamMembersByProjectId } from '../../redux/teamMembers/selectors';
+import { getProjectsAsArray } from '../../redux/projects/selectors';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -77,75 +77,81 @@ const CreateIssue: React.FC<Props> = ({
   };
 
   return (
-    <DialogForm
-      enableReinitialize
-      title="Create Issue"
-      onSubmit={onSubmit}
-      validationSchema={schema}
-      submitButtonText="Create"
-      toggleButtonText="Create"
-      initialValues={initialValues}
-      renderFields={(formikProps) => (
-        <>
-          <BaseTextField
-            required
-            select
-            label="Project"
-            variant="outlined"
-            className={classes.halfWidth}
-            value={currentProjectId}
-            error={currentProjectId === null}
-            helperText={currentProjectId === null ? 'Required' : ''}
-            onChange={handleProjectChange}
-            placeholder="Select project"
-          >
-            {projects.map(({ id, name }) => (
-              <MenuItem key={id} value={id}>
-                {name}
-              </MenuItem>
-            ))}
-          </BaseTextField>
+    <>
+      {
+        projects.length && (
+        <DialogForm
+          enableReinitialize
+          title="Create Issue"
+          onSubmit={onSubmit}
+          validationSchema={schema}
+          submitButtonText="Create"
+          toggleButtonText="Create"
+          initialValues={initialValues}
+          renderFields={(formikProps) => (
+            <>
+              <BaseTextField
+                required
+                select
+                label="Project"
+                variant="outlined"
+                className={classes.halfWidth}
+                value={currentProjectId}
+                error={currentProjectId === null}
+                helperText={currentProjectId === null ? 'Required' : ''}
+                onChange={handleProjectChange}
+                placeholder="Select project"
+              >
+                {projects.map(({ id, name }) => (
+                  <MenuItem key={id} value={id}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </BaseTextField>
 
-          {currentProjectId !== null && (
-            <SelectField
-              name="containerId"
-              label="Sprint"
-              options={issuesListsOptions(issuesContainers)}
-              className={classes.halfWidth}
-            />
+              {currentProjectId !== null && (
+              <SelectField
+                name="containerId"
+                label="Sprint"
+                options={issuesListsOptions(issuesContainers)}
+                className={classes.halfWidth}
+              />
+              )}
+
+              <SelectField
+                formikProps={formikProps}
+                name="type"
+                label="Issue type"
+                className={classes.halfWidth}
+                options={issueTypeOptions}
+              />
+              <BasicTextField
+                autoFocus
+                required
+                formikProps={formikProps}
+                name="summary"
+              />
+              <TextAreaField name="description" />
+              <SelectField
+                name="assigneeId"
+                label="Assignee"
+                className={classes.halfWidth}
+                options={teamMembersOptions(teamMembers, user.id)}
+              />
+              <BasicTextField
+                name="storyPointsEstimate"
+                label="Story points estimate"
+                type="number"
+                inputProps={{ min: '0', step: '1' }}
+                className={classes.halfWidth}
+                formikProps={formikProps}
+              />
+            </>
           )}
-
-          <SelectField
-            formikProps={formikProps}
-            name="type"
-            label="Issue type"
-            className={classes.halfWidth}
-            options={issueTypeOptions}
-          />
-          <BasicTextField
-            autoFocus
-            required
-            formikProps={formikProps}
-            name="summary"
-          />
-          <TextAreaField name="description" />
-          <SelectField
-            name="assigneeId"
-            label="Assignee"
-            className={classes.halfWidth}
-            options={teamMembersOptions(teamMembers, user.id)}
-          />
-          <BasicTextField
-            name="storyPointsEstimate"
-            label="Story points estimate"
-            type="number"
-            inputProps={{ min: '0', step: '1' }}
-            className={classes.halfWidth}
-            formikProps={formikProps}
-          />
-        </>
-      )}
-    />
+        />
+        )
+      }
+    </>
   );
 };
 
