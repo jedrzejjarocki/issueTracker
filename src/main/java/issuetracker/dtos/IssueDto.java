@@ -15,6 +15,7 @@ public class IssueDto implements Dto<Issue> {
     private Integer version;
     private Issue.IssueType type;
     private Issue.IssueStatus status;
+    private int priority;
     private TeamMemberDto assignee;
     private int storyPointsEstimate;
     private String createdBy; //username

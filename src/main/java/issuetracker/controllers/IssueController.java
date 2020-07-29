@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/issues")
@@ -27,6 +29,14 @@ public class IssueController {
     @PostMapping
     public IssueDto create(@RequestBody Issue issue) {
         return mapper.toDto(service.addIssue(issue), new IssueDto());
+    }
+
+    @PutMapping(params = "index")
+    public Set<IssueDto> updateWithPriorityIndex(@RequestBody Issue updated, @RequestParam Integer index) throws InvalidVersionException {
+        return service.updateIssue(updated, index)
+                .stream()
+                .map(issue -> mapper.toDto(issue, new IssueDto()))
+                .collect(Collectors.toSet());
     }
 
     @PutMapping
