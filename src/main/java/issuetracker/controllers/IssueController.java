@@ -21,6 +21,14 @@ public class IssueController {
     private final IssueService service;
     private final DtoMapper<Issue, IssueDto> mapper;
 
+    @GetMapping
+    public List<IssueDto> getAll(@RequestParam(required = false) List<Integer> id) {
+        List<Issue> issues = id != null ? service.getAllById(id) : service.getAll();
+        return issues.stream()
+                .map(issue -> mapper.toDto(issue, new IssueDto()))
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/{id}/history")
     public List<IssueHistoryDto> getHistory(@PathVariable int id) {
         return service.getHistory(id);

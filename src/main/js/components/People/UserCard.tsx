@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {Card, CardActions, CardContent, Collapse, Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
+import React, { useState } from 'react';
+import { Card, CardActions, CardContent, Collapse, Grid, IconButton, makeStyles, Typography, } from '@material-ui/core';
 import clsx from 'clsx';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import UserAvatar from '../commons/UserAvatar';
 import AddTeamMember from './AddTeamMember';
-import {UserWithProjects} from '../../redux/user/selectors';
+import { UserWithProjects } from '../../redux/user/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {

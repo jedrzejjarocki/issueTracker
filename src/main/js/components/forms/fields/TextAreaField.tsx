@@ -7,7 +7,7 @@ interface Props {
   rows?: number
 }
 
-const TextAreaField: React.FC<Props> = ({ name, rows = 8 }: {name: string, rows: number}) => (
+const TextAreaField: React.FC<Props> = ({ name, rows = 6 }) => (
   <FormField
     multiline
     rows={rows}

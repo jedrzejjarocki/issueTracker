@@ -1,4 +1,4 @@
-import React, {MouseEventHandler} from 'react';
+import React, { MouseEventHandler } from 'react';
 import schema from './validation/schemas/sprintForm';
 import DialogForm from './DialogForm';
 import BasicTextField from './fields/BasicTextField';

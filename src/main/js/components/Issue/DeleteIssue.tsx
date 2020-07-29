@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import React, { useState } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,} from '@material-ui/core';
-import {fetchDeleteIssue} from '../../redux/issues/actionCreators';
+import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography, } from '@material-ui/core';
+import { fetchDeleteIssue } from '../../redux/issues/actionCreators';
 import SubmitButton from '../forms/SubmitButton';
-import {RouterHistory} from '../../redux/utilTypes';
+import { RouterHistory } from '../../redux/utilTypes';
 import Issue from '../../entities/Issue';
 
 interface Props extends ReduxProps {

@@ -1,10 +1,10 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import schema from './validation/schemas/loginForm';
 import DialogForm from './DialogForm';
 import RouterLink from '../commons/RouterLink';
 import BasicTextField from './fields/BasicTextField';
-import {fetchLogin} from '../../redux/user/actionCreators';
+import { fetchLogin } from '../../redux/user/actionCreators';
 
 interface Props extends ReduxProps{
   isOpen: boolean

@@ -1,7 +1,7 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import {NotificationMessage} from '../redux/ui/NotificationMessage';
+import { NotificationMessage } from '../redux/ui/NotificationMessage';
 
 interface Props {
   onClose: (event: SyntheticEvent) => void

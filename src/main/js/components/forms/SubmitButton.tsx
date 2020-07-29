@@ -1,9 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Button} from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { FormikErrors } from 'formik/dist/types';
+
+type Errors = {
+  [key: string]: string
+} | FormikErrors<any>;
 
 const SubmitButton = ({ errors = {}, text = 'Submit', ...rest }) => {
-  const hasErrors = (err: {[key: string]: string}) => Object.values(err).some((error) => !!error);
+  const hasErrors = (err: Errors) => Object.values(err).some((error) => !!error);
+
   return (
     <Button
       type="submit"
@@ -15,16 +20,6 @@ const SubmitButton = ({ errors = {}, text = 'Submit', ...rest }) => {
       {text}
     </Button>
   );
-};
-
-SubmitButton.defaultProps = {
-  text: 'Submit',
-  errors: {},
-};
-
-SubmitButton.propTypes = {
-  errors: PropTypes.objectOf(PropTypes.string),
-  text: PropTypes.string,
 };
 
 export default SubmitButton;

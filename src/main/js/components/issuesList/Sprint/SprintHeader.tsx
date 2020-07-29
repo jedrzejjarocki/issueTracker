@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import clsx from 'clsx';
-import {Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
+import { Grid, IconButton, makeStyles, Typography, } from '@material-ui/core';
 import format from 'date-fns/format';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
@@ -9,11 +9,11 @@ import StartSprint from './StartSprint';
 import Dropdown from '../../dashboard/Dropdown';
 import EditSprint from './EditSprint';
 import DeleteSprint from './DeleteSprint';
-import {RootState} from '../../../redux/rootReducer';
+import { RootState } from '../../../redux/rootReducer';
 import Sprint from '../../../entities/Sprint';
 import Project from '../../../entities/Project';
-import {UserRole} from '../../../redux/utilTypes';
-import {getCurrentProject} from '../../../redux/ui/selectors';
+import { UserRole } from '../../../redux/utilTypes';
+import { getCurrentProject } from '../../../redux/ui/selectors';
 
 const formatDate = (str: string) => format(Date.parse(str), 'dd/MMM/yyyy');
 

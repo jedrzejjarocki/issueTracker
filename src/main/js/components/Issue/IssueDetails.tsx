@@ -1,24 +1,24 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Card, Grid, IconButton, makeStyles, Typography,} from '@material-ui/core';
-import {Form, Formik} from 'formik';
+import { connect, ConnectedProps } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Card, Grid, IconButton, makeStyles, Typography, } from '@material-ui/core';
+import { Form, Formik } from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
-import schema, {UpdateIssueFormFields} from '../forms/validation/schemas/updateIssue';
+import schema, { UpdateIssueFormFields } from '../forms/validation/schemas/updateIssue';
 import teamMembersOptions from '../forms/selectOptions/TeamMembersOptions';
 import RouterLink from '../commons/RouterLink';
 import issueTypeOptions from '../forms/selectOptions/issueTypeOptions';
 import SubmitButton from '../forms/SubmitButton';
-import {fetchUpdateIssue, IssueRequestBody} from '../../redux/issues/actionCreators';
+import { fetchUpdateIssue, IssueRequestBody } from '../../redux/issues/actionCreators';
 import issueStatusOptions from '../forms/selectOptions/issueStatusOptions';
 import DeleteIssue from './DeleteIssue';
 import SelectField from '../forms/fields/SelectField';
 import BasicTextField from '../forms/fields/BasicTextField';
 import TextAreaField from '../forms/fields/TextAreaField';
-import {RootState} from '../../redux/rootReducer';
-import {getUser} from '../../redux/user/selectors';
-import {getTeamMembersByProjectId} from '../../redux/teamMembers/selectors';
-import {getIssueById} from '../../redux/issues/selectors';
+import { RootState } from '../../redux/rootReducer';
+import { getUser } from '../../redux/user/selectors';
+import { getTeamMembersByProjectId } from '../../redux/teamMembers/selectors';
+import { getIssueById } from '../../redux/issues/selectors';
 import Project from '../../entities/Project';
 
 const useStyles = makeStyles((theme) => ({
@@ -123,8 +123,8 @@ const IssueDetails: React.FC<Props> = ({
                   />
                   <SelectField
                     name="status"
-                    options={issueStatusOptions}
                     className={classes.halfWidth}
+                    options={issueStatusOptions}
                   />
                   <BasicTextField
                     name="summary"

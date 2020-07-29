@@ -1,16 +1,16 @@
-import React, {Fragment} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {Chip, List, ListItem, ListItemIcon, ListItemText, makeStyles, Typography,} from '@material-ui/core';
+import React, { Fragment } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { Chip, List, ListItem, ListItemIcon, ListItemText, makeStyles, Typography, } from '@material-ui/core';
 import IssueType from '../../constants/issueTypes';
 import IssueStatus from '../../constants/issueStatuses';
 import RouterLink from '../commons/RouterLink';
 import UserAvatar from '../commons/UserAvatar';
-import {RootState} from '../../redux/rootReducer';
+import { RootState } from '../../redux/rootReducer';
 import Project from '../../entities/Project';
-import {getIssuesByContainerId} from '../../redux/issues/selectors';
-import {getUser} from '../../redux/user/selectors';
-import {getTeamMembers} from '../../redux/teamMembers/selectors';
-import {TeamMembersState} from '../../redux/teamMembers/types';
+import { getIssuesByContainerId } from '../../redux/issues/selectors';
+import { getUser } from '../../redux/user/selectors';
+import { getTeamMembers } from '../../redux/teamMembers/selectors';
+import { TeamMembersState } from '../../redux/teamMembers/types';
 
 const useStyles = makeStyles((theme) => ({
   itemDetails: {

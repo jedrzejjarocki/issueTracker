@@ -1,22 +1,22 @@
-import React, {useState} from 'react';
-import {addMinutes, addWeeks} from 'date-fns';
+import React, { useState } from 'react';
+import { addMinutes, addWeeks } from 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
-import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
-import {connect, ConnectedProps} from 'react-redux';
-import {makeStyles} from '@material-ui/core';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { connect, ConnectedProps } from 'react-redux';
+import { makeStyles } from '@material-ui/core';
 import durationOptions from '../../forms/selectOptions/sprintDurationOptions';
 import DialogForm from '../../forms/DialogForm';
 import BasicTextField from '../../forms/fields/BasicTextField';
 import SelectField from '../../forms/fields/SelectField';
 import TextAreaField from '../../forms/fields/TextAreaField';
 import schema from '../../forms/validation/schemas/startSprint';
-import {fetchUpdateSprint, UpdateSprintRequestBody} from '../../../redux/issuesContainers/actionCreators';
-import {RootState} from '../../../redux/rootReducer';
+import { fetchUpdateSprint, UpdateSprintRequestBody } from '../../../redux/issuesContainers/actionCreators';
+import { RootState } from '../../../redux/rootReducer';
 
 import Sprint from '../../../entities/Sprint';
-import {UserRole} from '../../../redux/utilTypes';
-import {getSprintsByProjectId} from '../../../redux/issuesContainers/selectors';
-import {getCurrentProject} from '../../../redux/ui/selectors';
+import { UserRole } from '../../../redux/utilTypes';
+import { getSprintsByProjectId } from '../../../redux/issuesContainers/selectors';
+import { getCurrentProject } from '../../../redux/ui/selectors';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {

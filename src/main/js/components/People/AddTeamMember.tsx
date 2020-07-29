@@ -1,16 +1,16 @@
 import React from 'react';
 import AddIcon from '@material-ui/icons/Add';
-import {useHistory} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
-import {IconButton} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { connect, ConnectedProps } from 'react-redux';
+import { IconButton } from '@material-ui/core';
 import DialogForm from '../forms/DialogForm';
 import memberRoleOptions from '../forms/selectOptions/memberRoleOptions';
 import SelectField from '../forms/fields/SelectField';
-import {fetchAddTeamMember} from '../../redux/teamMembers/actionCreators';
-import {RootState} from '../../redux/rootReducer';
-import {UserRole} from '../../redux/utilTypes';
-import {getUser, UserWithProjects} from '../../redux/user/selectors';
-import {getProjectsWhereCurrentUserIsLeader} from '../../redux/compoundSelectors';
+import { fetchAddTeamMember } from '../../redux/teamMembers/actionCreators';
+import { RootState } from '../../redux/rootReducer';
+import { UserRole } from '../../redux/utilTypes';
+import { getUser, UserWithProjects } from '../../redux/user/selectors';
+import { getProjectsWhereCurrentUserIsLeader } from '../../redux/compoundSelectors';
 
 interface Props extends ReduxProps {
   userWithProjects: UserWithProjects

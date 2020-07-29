@@ -1,6 +1,6 @@
 import React from 'react';
-import {makeStyles, Typography} from '@material-ui/core';
-import {useLocation} from 'react-router-dom';
+import { makeStyles, Typography } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 import LoginForm from './forms/LoginForm';
 import RegisterForm from './forms/RegisterForm';
 import PasswordRecovery from './passwordRecovery/PasswordRecovery';

@@ -1,12 +1,12 @@
 import React from 'react';
-import {Grid} from '@material-ui/core';
-import {connect, ConnectedProps} from 'react-redux';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import { Grid } from '@material-ui/core';
+import { connect, ConnectedProps } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import TeamMember from './TeamMember';
-import {RootState} from '../../redux/rootReducer';
-import {getTeamMembersByProjectId} from '../../redux/teamMembers/selectors';
-import {getUser} from '../../redux/user/selectors';
-import {getCurrentProject} from '../../redux/ui/selectors';
+import { RootState } from '../../redux/rootReducer';
+import { getTeamMembersByProjectId } from '../../redux/teamMembers/selectors';
+import { getUser } from '../../redux/user/selectors';
+import { getCurrentProject } from '../../redux/ui/selectors';
 
 const Team: React.FC<ReduxProps> = ({ team, userRole, currentUserId }) => (
   <Grid container item spacing={3}>

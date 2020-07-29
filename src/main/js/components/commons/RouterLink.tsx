@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link as ReactRouterLink} from 'react-router-dom';
-import {Link, Typography} from '@material-ui/core';
+import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link, Typography } from '@material-ui/core';
 
 interface Props {
   to: string,

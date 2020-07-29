@@ -1,6 +1,6 @@
-import {Redirect, Route} from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import React from 'react';
-import {User} from '../entities/User';
+import { User } from '../entities/User';
 
 interface Props {
   user: User

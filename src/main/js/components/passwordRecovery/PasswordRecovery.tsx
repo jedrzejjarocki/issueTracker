@@ -1,6 +1,6 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core';
-import {useLocation} from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 import ChangePasswordForm from './ChangePasswordForm';
 import PasswordRecoveryRequestForm from './PasswordRecoveryRequestForm';
 
