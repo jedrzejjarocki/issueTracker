@@ -9,7 +9,7 @@ import {
   projectId,
   storyPointsEstimate,
 } from '../validators';
-import {IssueStatus, IssueType} from '../../../../redux/utilTypes';
+import { IssueStatus, IssueType } from '../../../../redux/utilTypes';
 
 export interface CreateIssueFormFields {
   projectId: number

@@ -1,7 +1,7 @@
-import React, {MouseEventHandler, useState} from 'react';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, Tooltip,} from '@material-ui/core';
-import {Form, Formik, FormikProps} from 'formik';
-import {ObjectSchema} from 'yup';
+import React, { MouseEventHandler, useState } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, Tooltip, } from '@material-ui/core';
+import { Form, Formik, FormikProps } from 'formik';
+import { ObjectSchema } from 'yup';
 import SubmitButton from './SubmitButton';
 
 const WithTooltip: React.FC<{tooltipText: string}> = ({ children, tooltipText }) => (
@@ -17,7 +17,7 @@ const WithTooltip: React.FC<{tooltipText: string}> = ({ children, tooltipText })
   </>
 );
 
-// @TODO types
+// @TODO
 interface Props {
   validationSchema?: ObjectSchema
   initialValues: {
@@ -67,8 +67,11 @@ const DialogForm: React.FC<Props> = ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing(1),
       },
+    },
+    dialogActions: {
+      padding: theme.spacing(2, 3),
     },
   }))();
 
@@ -102,7 +105,7 @@ const DialogForm: React.FC<Props> = ({
               <DialogContent className={classes.flexContainer}>
                 {renderFields(formikProps)}
               </DialogContent>
-              <DialogActions>
+              <DialogActions className={classes.dialogActions}>
                 {renderAdditionalActions && renderAdditionalActions()}
                 <SubmitButton
                   errors={formikProps.errors}

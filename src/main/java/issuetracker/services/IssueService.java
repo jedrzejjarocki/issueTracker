@@ -64,6 +64,14 @@ public class IssueService {
         return repository.findById(issueId).orElseThrow(ResourceNotFoundException::new);
     }
 
+    public List<Issue> getAllById(List<Integer> id) {
+        return repository.findAllById(id);
+    }
+
+    public List<Issue> getAll() {
+        return repository.findAll();
+    }
+
     public void delete(int id) {
         repository.deleteById(id);
     }

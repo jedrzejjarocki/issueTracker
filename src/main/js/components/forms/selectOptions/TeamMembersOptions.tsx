@@ -1,4 +1,4 @@
-import {ListItem, ListItemAvatar, ListItemText, Typography,} from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import UserAvatar from '../../commons/UserAvatar';
 import TeamMember from '../../../entities/TeamMember';
@@ -15,32 +15,30 @@ export default (teamMembers: TeamMember[], currentUserId: number) => {
     },
   ];
 
-  if (teamMembers) {
-    teamMembers.map(({ username, id, userId }) => {
-      const isCurrentUser = userId === currentUserId;
-      members.push({
-        value: id,
-        label: (
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <UserAvatar name={username} isCurrentUser={isCurrentUser} size="small" />
-            </ListItemAvatar>
-            <ListItemText primary={(
-              <Typography style={{ display: 'inline' }}>
-                {username}
-                {isCurrentUser && (
-                  <Typography color="textSecondary" component="i">
-                    {' (yourself)'}
-                  </Typography>
-                )}
+  teamMembers.map(({ username, id, userId }) => {
+    const isCurrentUser = userId === currentUserId;
+    members.push({
+      value: id,
+      label: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <UserAvatar name={username} isCurrentUser={isCurrentUser} size="small" style={{ marginRight: '8px' }} />
+          <Typography style={{ display: 'inline' }}>
+            {username}
+            {isCurrentUser && (
+              <Typography color="textSecondary" component="i">
+                {' (yourself)'}
               </Typography>
             )}
-            />
-          </ListItem>
-        ),
-      });
+          </Typography>
+        </div>
+      ),
     });
-  }
+  });
 
   return members;
 };

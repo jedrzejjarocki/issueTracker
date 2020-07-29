@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Collapse} from '@material-ui/core';
+import React, { useState } from 'react';
+import { Collapse } from '@material-ui/core';
 import Wrapper from '../Wrapper';
 import SprintHeader from './SprintHeader';
 import IssuesList from '../IssuesList';

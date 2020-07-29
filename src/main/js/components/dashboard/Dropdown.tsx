@@ -1,5 +1,5 @@
-import React, {KeyboardEventHandler, MouseEventHandler, MutableRefObject, useRef, useState,} from 'react';
-import {ClickAwayListener, Grow, MenuList, Paper, Popper,} from '@material-ui/core';
+import React, { KeyboardEventHandler, MouseEventHandler, MutableRefObject, useRef, useState, } from 'react';
+import { ClickAwayListener, Grow, MenuList, Paper, Popper, } from '@material-ui/core';
 
 interface Props {
   render: (ref: MutableRefObject<any>, ariaHasPopup: boolean, toggleOpen: () => void) => React.ReactNode

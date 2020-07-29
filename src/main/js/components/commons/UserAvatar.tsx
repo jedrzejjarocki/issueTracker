@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
-import {Avatar, makeStyles} from '@material-ui/core';
-import {deepOrange} from '@material-ui/core/colors';
+import { Avatar, makeStyles } from '@material-ui/core';
+import { deepOrange } from '@material-ui/core/colors';
 
 const color = deepOrange[500];
 
@@ -9,6 +9,7 @@ interface Props {
   name: string,
   isCurrentUser?: boolean,
   size?: 'small' | 'large'
+  style?: any
 }
 
 const UserAvatar: React.FC<Props> = ({

@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {useHistory} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
-import {Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Typography,} from '@material-ui/core';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { connect, ConnectedProps } from 'react-redux';
+import { Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Typography, } from '@material-ui/core';
 import SubmitButton from '../../forms/SubmitButton';
-import {fetchDeleteSprint} from '../../../redux/issuesContainers/actionCreators';
+import { fetchDeleteSprint } from '../../../redux/issuesContainers/actionCreators';
 import Sprint from '../../../entities/Sprint';
 
 interface Props extends ReduxProps {

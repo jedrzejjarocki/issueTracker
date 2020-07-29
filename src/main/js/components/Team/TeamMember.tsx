@@ -1,10 +1,10 @@
 import React from 'react';
-import {Grid, makeStyles, Paper, Typography,} from '@material-ui/core';
+import { Grid, makeStyles, Paper, Typography, } from '@material-ui/core';
 import UserAvatar from '../commons/UserAvatar';
 import DeleteMember from './DeleteMember';
 import ChangeTeamMemberRole from './ChangeTeamMemberRole';
 import Member from '../../entities/TeamMember';
-import {UserRole} from '../../redux/utilTypes';
+import { UserRole } from '../../redux/utilTypes';
 
 const useStyles = makeStyles(() => ({
   root: {

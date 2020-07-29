@@ -1,13 +1,13 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {Link as RouterLink, useHistory} from 'react-router-dom';
-import {makeStyles} from '@material-ui/core/styles';
-import {Button, Card, CardActions, CardContent, Typography,} from '@material-ui/core';
-import {Form, Formik} from 'formik';
+import { connect, ConnectedProps } from 'react-redux';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Card, CardActions, CardContent, Typography, } from '@material-ui/core';
+import { Form, Formik } from 'formik';
 import schema from '../forms/validation/schemas/passwordRecoveryForm';
 import SubmitButton from '../forms/SubmitButton';
 import BasicTextField from '../forms/fields/BasicTextField';
-import {fetchRequestPasswordRecovery} from '../../redux/user/actionCreators';
+import { fetchRequestPasswordRecovery } from '../../redux/user/actionCreators';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {

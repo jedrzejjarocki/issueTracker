@@ -1,8 +1,9 @@
-import {Map} from 'immutable';
-import {RootAction} from '../rootReducer';
-import {DELETE_SPRINT} from '../issuesContainers/types';
-import {ADD_ISSUE, DELETE_ISSUE, IssuesState, SET_ISSUES, UPDATE_ISSUE,} from './types';
-import {DELETE_MEMBER} from '../teamMembers/types';
+import { Map } from 'immutable';
+import { RootAction } from '../rootReducer';
+import { DELETE_SPRINT } from '../issuesContainers/types';
+import { ADD_ISSUE, DELETE_ISSUE, IssuesState, SET_ISSUES, UPDATE_ISSUE, UPDATE_ISSUES, } from './types';
+import { DELETE_MEMBER } from '../teamMembers/types';
+import Issue from '../../entities/Issue';
 
 export default (state: IssuesState = Map(), action: RootAction) => {
   switch (action.type) {
@@ -12,6 +13,16 @@ export default (state: IssuesState = Map(), action: RootAction) => {
     case ADD_ISSUE:
     case UPDATE_ISSUE:
       return state.set(`${action.payload.id}`, action.payload);
+
+    case UPDATE_ISSUES: {
+      const issues = action.payload.reduce((prev, current) => {
+        // eslint-disable-next-line no-param-reassign
+        prev[current.id] = current;
+        return prev;
+      }, {} as {[key: string]: Issue});
+
+      return state.merge(issues);
+    }
 
     case DELETE_ISSUE: {
       return state.delete(`${action.payload.issueId}`);

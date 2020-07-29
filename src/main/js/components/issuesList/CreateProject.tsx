@@ -1,9 +1,9 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {TextField} from 'material-ui-formik-components';
+import { connect, ConnectedProps } from 'react-redux';
+import { TextField } from 'material-ui-formik-components';
 import DialogForm from '../forms/DialogForm';
 import FormField from '../forms/fields/FormField';
-import {fetchCreateProject} from '../../redux/projects/actionCreators';
+import { fetchCreateProject } from '../../redux/projects/actionCreators';
 
 interface Props extends ReduxProps {
   first?: boolean

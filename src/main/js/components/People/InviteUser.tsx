@@ -1,15 +1,15 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {TextField} from 'material-ui-formik-components/TextField';
+import { connect, ConnectedProps } from 'react-redux';
+import { TextField } from 'material-ui-formik-components/TextField';
 import schema from '../forms/validation/schemas/inviteUserForm';
 import DialogForm from '../forms/DialogForm';
 import memberRoleOptions from '../forms/selectOptions/memberRoleOptions';
 import BasicTextField from '../forms/fields/BasicTextField';
 import SelectField from '../forms/fields/SelectField';
-import {fetchInviteUser} from '../../redux/teamMembers/actionCreators';
-import {RootState} from '../../redux/rootReducer';
-import {UserRole} from '../../redux/utilTypes';
-import {getProjectsWhereCurrentUserIsLeader} from '../../redux/compoundSelectors';
+import { fetchInviteUser } from '../../redux/teamMembers/actionCreators';
+import { RootState } from '../../redux/rootReducer';
+import { UserRole } from '../../redux/utilTypes';
+import { getProjectsWhereCurrentUserIsLeader } from '../../redux/compoundSelectors';
 
 const InviteUser: React.FC<ReduxProps> = ({ projectsWhereCurrentUserIsLeader, fetchInviteUser: inviteUser }) => {
   interface InviteUserFormFields {

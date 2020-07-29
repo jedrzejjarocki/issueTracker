@@ -1,17 +1,17 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography,} from '@material-ui/core';
+import { connect, ConnectedProps } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography, } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
-import {fetchLogout} from '../../redux/user/actionCreators';
+import { fetchLogout } from '../../redux/user/actionCreators';
 import Dropdown from './Dropdown';
 import RouterLink from '../commons/RouterLink';
 import UserAvatar from '../commons/UserAvatar';
 import CreateIssue from './CreateIssue';
-import {RootState} from '../../redux/rootReducer';
-import {getUser} from '../../redux/user/selectors';
-import {getProjectsAsArray} from '../../redux/projects/selectors';
+import { RootState } from '../../redux/rootReducer';
+import { getUser } from '../../redux/user/selectors';
+import { getProjectsAsArray } from '../../redux/projects/selectors';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {

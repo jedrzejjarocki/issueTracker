@@ -1,10 +1,10 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {CreateSprintRequestBody, fetchCreateSprint} from '../../../redux/issuesContainers/actionCreators';
+import { connect, ConnectedProps } from 'react-redux';
+import { CreateSprintRequestBody, fetchCreateSprint } from '../../../redux/issuesContainers/actionCreators';
 import SprintForm from '../../forms/SprintForm';
-import {RootState} from '../../../redux/rootReducer';
-import {UserRole} from '../../../redux/utilTypes';
-import {getCurrentProject} from '../../../redux/ui/selectors';
+import { RootState } from '../../../redux/rootReducer';
+import { UserRole } from '../../../redux/utilTypes';
+import { getCurrentProject } from '../../../redux/ui/selectors';
 
 interface CreateSprintFormFields {
   name: string

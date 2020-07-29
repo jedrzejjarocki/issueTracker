@@ -1,11 +1,11 @@
 import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {Grid} from '@material-ui/core';
+import { connect, ConnectedProps } from 'react-redux';
+import { Grid } from '@material-ui/core';
 import InviteUser from './InviteUser';
-import {RootState} from '../../redux/rootReducer';
-import {getUser} from '../../redux/user/selectors';
+import { RootState } from '../../redux/rootReducer';
+import { getUser } from '../../redux/user/selectors';
 import UserCard from './UserCard';
-import {getUsersWithTheirProjects} from '../../redux/compoundSelectors';
+import { getUsersWithTheirProjects } from '../../redux/compoundSelectors';
 
 const People: React.FC<ReduxProps> = ({ usersWithProjects, currentUserId }) => (
   <>
