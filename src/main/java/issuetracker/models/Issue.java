@@ -31,6 +31,9 @@ public class Issue extends Auditable<String> {
     private int version;
 
     @NotNull
+    private int priority;
+
+    @NotNull
     private IssueType type;
 
     @NotNull

@@ -21,6 +21,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class IssueService {
     private final IssueRepository repository;
+    private final IssuePriorityManager priorityManager;
     private final EntityManager entityManager;
 
     //@Todo implement reasonably
@@ -28,12 +29,12 @@ public class IssueService {
         List<IssueHistoryDto> history = new ArrayList<>();
 
         AuditReader auditReader = AuditReaderFactory.get(entityManager);
-        List results = auditReader.createQuery()
+        var results = auditReader.createQuery()
                 .forRevisionsOfEntityWithChanges(Issue.class, false)
                 .add(AuditEntity.id().eq(issueId))
                 .getResultList();
 
-        for ( Object row : results ) {
+        for (Object row : results) {
             Object[] rowArray = (Object[]) row;
             final Issue entity = (Issue) rowArray[0];
             final RevisionType revisionType = (RevisionType) rowArray[2];
@@ -68,22 +69,31 @@ public class IssueService {
     }
 
     public Issue addIssue(Issue issue) {
+        priorityManager.setInitialPriority(issue);
         return repository.save(issue);
     }
 
-    public Issue updateIssue(Issue updated) {
+    private void checkIsVersionValid(Issue updated) {
         try {
-            Issue issue = getById(updated.getId());
+            Issue fromDb = getById(updated.getId());
 
-            if (issue.getVersion() != updated.getVersion()) {
-                throw new ObjectOptimisticLockingFailureException(issue.toString(), issue.getId());
+            if (fromDb.getVersion() != updated.getVersion()) {
+                throw new ObjectOptimisticLockingFailureException(fromDb.toString(), fromDb.getId());
             }
-
-            return repository.save(updated);
 
         } catch (ObjectOptimisticLockingFailureException exception) {
             throw new InvalidVersionException();
         }
+    }
 
+    public List<Issue> updateIssue(Issue issue, int index) {
+        checkIsVersionValid(issue);
+        Set<Issue> updatedIssues = priorityManager.changePriority(issue, index);
+        return repository.saveAll(updatedIssues);
+    }
+
+    public Issue updateIssue(Issue issue) {
+        checkIsVersionValid(issue);
+        return repository.save(issue);
     }
 }

@@ -2,7 +2,9 @@ package issuetracker.services;
 
 import issuetracker.exceptions.InvalidVersionException;
 import issuetracker.exceptions.ResourceNotFoundException;
+import issuetracker.models.Backlog;
 import issuetracker.models.Issue;
+import issuetracker.models.common.IssueContainer;
 import issuetracker.repositories.IssueRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +21,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class IssueServiceTest {
     @Mock private IssueRepository repository;
+    @Mock private IssuePriorityManager priorityManager;
     @InjectMocks IssueService service;
 
     @Test
@@ -44,7 +47,21 @@ public class IssueServiceTest {
 
     @Test
     public void addIssue() {
+        IssueContainer container = new Backlog();
+        container.setId(1);
+
+        int expectedInitialPriority = 100;
+
         Issue issue = new Issue();
+        issue.setContainer(container);
+
+        when(priorityManager.setInitialPriority(issue))
+                .thenAnswer(i -> {
+                    Issue issueArgument = i.getArgument(0);
+                    issueArgument.setPriority(expectedInitialPriority);
+                    return issue;
+                });
+
         when(repository.save(issue)).thenAnswer(i -> {
             Issue fromDb = i.getArgument(0);
             fromDb.setId(1);
@@ -54,6 +71,7 @@ public class IssueServiceTest {
         Issue returned = service.addIssue(issue);
         verify(repository).save(issue);
         assertEquals(returned.getId(), 1);
+        assertEquals(returned.getPriority(), expectedInitialPriority);
     }
 
     @Test
