@@ -7,7 +7,7 @@ const string = yup.string();
 const stringRequired = string.required('Must not be empty');
 
 export const projectId = numberRequired;
-export const issueType = stringRequired.oneOf(Object.values(IssueTypes).map(({ value }) => value));
+export const issueType = stringRequired.oneOf(Object.keys(IssueTypes));
 export const issueSummary = stringRequired;
 export const description = string;
 export const assigneeId = number;
