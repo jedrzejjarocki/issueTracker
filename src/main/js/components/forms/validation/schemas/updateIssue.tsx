@@ -12,6 +12,7 @@ import { IssueStatus, IssueType } from '../../../../redux/utilTypes';
 export interface UpdateIssueFormFields {
   id: number
   version: number
+  priority: number
   type: IssueType
   status: IssueStatus
   summary: string
