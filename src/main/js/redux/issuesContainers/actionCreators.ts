@@ -1,9 +1,11 @@
+/* eslint-disable arrow-body-style */
 import axios from 'axios';
-import {List} from 'immutable';
-import {SPRINTS_URL} from '../../api/commons';
-import {setNotification} from '../ui/actionCreators';
-import {RouterHistory} from '../utilTypes';
-import {RootThunk} from '../store';
+import { List } from 'immutable';
+import { Dispatch } from 'redux';
+import { SPRINTS_URL } from '../../api/commons';
+import { setNotification } from '../ui/actionCreators';
+import { RouterHistory } from '../utilTypes';
+import { RootThunk } from '../store';
 import Sprint from '../../entities/Sprint';
 import {
   ADD_SPRINT,
@@ -11,13 +13,15 @@ import {
   DELETE_SPRINT,
   DeleteSprintAction,
   IssuesContainersState,
+  MANIPULATE_ISSUES_ORDER,
+  ManipulateIssuesOrderAction,
   SET_ISSUES_CONTAINERS,
   SetIssuesContainersAction,
   UPDATE_SPRINT,
   UpdateSprintAction,
 } from './types';
-import {IssuesContainer} from '../../entities/IssuesContainer';
-import {defaultErrorNotificationMessage} from '../ui/NotificationMessage';
+import { IssuesContainer } from '../../entities/IssuesContainer';
+import { defaultErrorNotificationMessage } from '../ui/NotificationMessage';
 
 export const setIssuesContainers = (issuesContainers: IssuesContainersState): SetIssuesContainersAction => ({
   type: SET_ISSUES_CONTAINERS,
@@ -48,6 +52,61 @@ export const deleteSprint = (sprint: Sprint, backlogId: number, projectId: numbe
     sprint: sprint as IssuesContainer,
   },
 });
+
+export interface IssuesListCb {
+  (issues: List<number>): List<number>
+}
+
+export const manipulateIssuesList = (
+  containerId: string,
+  callback: IssuesListCb,
+): ManipulateIssuesOrderAction => ({
+  type: MANIPULATE_ISSUES_ORDER,
+  payload: {
+    containerId,
+    callback,
+  },
+});
+
+interface ReorderIssues {
+  (
+    sourceContainerId: string,
+    destinationContainerId: string,
+    destinationIdx: number,
+    sourceIdx: number,
+    issueId: number,
+    dispatch: Dispatch<any>,
+  ): void
+}
+
+export const reorderIssues: ReorderIssues = (
+  sourceContainerId,
+  destinationContainerId,
+  destinationIdx,
+  sourceIdx,
+  issueId,
+  dispatch,
+) => {
+  const actions = [];
+
+  if (sourceContainerId === destinationContainerId) {
+    const callback: IssuesListCb = (issues) => {
+      return issues.splice(sourceIdx, 1).splice(destinationIdx, 0, issueId);
+    };
+
+    actions.push(manipulateIssuesList(sourceContainerId, callback));
+  } else {
+    const sourceContainerCb: IssuesListCb = (issues) => issues.splice(sourceIdx, 1);
+    const destinationContainerCb: IssuesListCb = (issues) => {
+      return issues.splice(destinationIdx, 0, issueId);
+    };
+
+    actions.push(manipulateIssuesList(sourceContainerId, sourceContainerCb));
+    actions.push(manipulateIssuesList(destinationContainerId, destinationContainerCb));
+  }
+
+  actions.map((action) => dispatch(action));
+};
 
 export interface CreateSprintRequestBody {
   name: string
@@ -93,7 +152,6 @@ interface FetchUpdateSprint {
 export const fetchUpdateSprint: FetchUpdateSprint = (requestBody) => (
   async (dispatch) => {
     try {
-      alert(JSON.stringify(requestBody, null, 4));
       const { data } = await axios.put(SPRINTS_URL, requestBody);
       const updatedSprint = new Sprint({ ...data, issues: List(data.issues.map(({ id }: { id: number}) => id)) });
       dispatch(updateSprint(updatedSprint, requestBody.project.id));

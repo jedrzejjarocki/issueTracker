@@ -14,18 +14,21 @@ import Sprint from '../../../entities/Sprint';
 import Project from '../../../entities/Project';
 import { UserRole } from '../../../redux/utilTypes';
 import { getCurrentProject } from '../../../redux/ui/selectors';
+import StoryPointsSummary from '../StoryPointsSummary';
+import Issue from '../../../entities/Issue';
 
 const formatDate = (str: string) => format(Date.parse(str), 'dd/MMM/yyyy');
 
 interface Props extends ReduxProps {
   sprint: Sprint
   project: Project
+  issues: Issue[]
   handleExpand: () => void
   expanded: boolean
 }
 
 const SprintHeader: React.FC<Props> = ({
-  sprint, project, handleExpand, expanded, userRole,
+  sprint, project, issues, handleExpand, expanded, userRole,
 }) => {
   const classes = (makeStyles((theme) => ({
     expand: {
@@ -76,6 +79,7 @@ const SprintHeader: React.FC<Props> = ({
           {`${formatDate(sprint.startDate)} \u2022 ${formatDate(sprint.endDate)}`}
         </Typography>
         )}
+        <StoryPointsSummary issues={issues} />
         <StartSprint sprint={sprint} projectId={project.id} />
         {userRole === UserRole.LEADER && (
           <Dropdown render={

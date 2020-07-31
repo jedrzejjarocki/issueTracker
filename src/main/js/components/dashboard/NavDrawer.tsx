@@ -54,13 +54,13 @@ const NavDrawer: React.FC<Props> = ({
     text: 'Reports',
   }];
 
-  const drawerContent = (
-    <div>
+  const DrawerContent = ({ toggleOnLinkClick }: { toggleOnLinkClick?: boolean }) => (
+    <>
       <div className={classes.toolbar} />
       <Divider />
       <List>
         {listItems.map(({ to, icon, text }) => (
-          <RouterLink key={to} to={to}>
+          <RouterLink key={to} to={to} onClick={toggleOnLinkClick ? handleDrawerToggle : null}>
             <ListItem button className={classes.listItem}>
               <ListItemIcon>
                 {icon}
@@ -70,7 +70,7 @@ const NavDrawer: React.FC<Props> = ({
           </RouterLink>
         ))}
       </List>
-    </div>
+    </>
   );
 
   return (
@@ -90,7 +90,7 @@ const NavDrawer: React.FC<Props> = ({
               keepMounted: true,
             }}
           >
-            {drawerContent}
+            <DrawerContent toggleOnLinkClick />
           </Drawer>
         </Hidden>
         <Hidden smDown implementation="css">
@@ -99,7 +99,7 @@ const NavDrawer: React.FC<Props> = ({
             variant="permanent"
             open
           >
-            {drawerContent}
+            <DrawerContent />
           </Drawer>
         </Hidden>
       </nav>

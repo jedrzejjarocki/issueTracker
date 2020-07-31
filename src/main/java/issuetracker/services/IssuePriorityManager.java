@@ -34,10 +34,7 @@ public class IssuePriorityManager {
     }
 
     private void checkIsValidIndex(int index, List<Issue> issuesList) throws IllegalArgumentException {
-        int lowestAvailableIndex = 0;
-        int highestAvailableIndex = issuesList.size() - 1;
-
-        if (index < lowestAvailableIndex || index > highestAvailableIndex) {
+        if (index < 0 || index > issuesList.size()) {
             throw new IllegalArgumentException();
         }
     }
@@ -58,22 +55,26 @@ public class IssuePriorityManager {
         Set<Issue> issuesToBeUpdated = new HashSet<>();
         checkIsValidIndex(requestedIndex, issuesByPriorityDesc);
 
-        int currentIssueIndex = issuesByPriorityDesc.indexOf(issue);
-
-        Issue issueAtIndex = issuesByPriorityDesc.get(requestedIndex);
-
-        boolean isIndexFirstAvailable = requestedIndex == 0;
-        boolean isIndexLastAvailable = requestedIndex == issuesByPriorityDesc.size() - 1;
-
-        if (isIndexFirstAvailable) {
-            issue.setPriority(issueAtIndex.getPriority() + DEFAULT_PRIORITY_OFFSET);
+        if (requestedIndex == 0) {
+            int priority = issuesByPriorityDesc.size() > 0
+                    ? issuesByPriorityDesc.get(requestedIndex).getPriority() + DEFAULT_PRIORITY_OFFSET
+                    : 0;
+            issue.setPriority(priority);
             issuesToBeUpdated.add(issue);
             return issuesToBeUpdated;
-        } else if (isIndexLastAvailable) {
-            issue.setPriority(issueAtIndex.getPriority() - DEFAULT_PRIORITY_OFFSET);
+        } else if (requestedIndex == issuesByPriorityDesc.size() - 1) {
+            issue.setPriority(issuesByPriorityDesc.get(requestedIndex).getPriority() - DEFAULT_PRIORITY_OFFSET);
+            issuesToBeUpdated.add(issue);
+            return issuesToBeUpdated;
+        } else if (requestedIndex == issuesByPriorityDesc.size()) {
+            issue.setPriority(issuesByPriorityDesc.get(requestedIndex - 1).getPriority() - DEFAULT_PRIORITY_OFFSET);
             issuesToBeUpdated.add(issue);
             return issuesToBeUpdated;
         }
+
+        int currentIssueIndex = issuesByPriorityDesc.indexOf(issue);
+
+        Issue issueAtIndex = issuesByPriorityDesc.get(requestedIndex);
 
         MoveDirection direction = requestedIndex < currentIssueIndex ? MoveDirection.UP : MoveDirection.DOWN;
 

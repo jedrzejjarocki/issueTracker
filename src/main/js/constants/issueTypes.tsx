@@ -18,11 +18,11 @@ const issueTypeProperties: IssueTypeProperties = {
   },
   IMPROVEMENT: {
     value: 'IMPROVEMENT',
-    icon: <TrendingUpIcon htmlColor="green" />,
+    icon: <TrendingUpIcon color="secondary" />,
   },
   NEW_FEATURE: {
     value: 'NEW FEATURE',
-    icon: <AddBoxOutlinedIcon htmlColor="green" />,
+    icon: <AddBoxOutlinedIcon color="secondary" />,
   },
   BUG: {
     value: 'BUG',
