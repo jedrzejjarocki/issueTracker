@@ -1,10 +1,10 @@
-type color = 'default' | 'primary' | 'secondary';
+type Color = 'default' | 'primary' | 'secondary';
 
 type IssueStatusProperties = {
   [status: string]: {
     value: string
     text: string
-    color: color
+    color: Color
   }
 };
 
@@ -17,12 +17,12 @@ const issueStatusProperties: IssueStatusProperties = {
   IN_PROGRESS: {
     value: 'IN_PROGRESS',
     text: 'IN PROGRESS',
-    color: 'secondary',
+    color: 'primary',
   },
   DONE: {
     value: 'DONE',
     text: 'DONE',
-    color: 'primary',
+    color: 'secondary',
   },
 };
 

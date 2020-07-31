@@ -1,4 +1,6 @@
+/* eslint-disable arrow-body-style */
 import axios from 'axios';
+import { List } from 'immutable';
 import { ISSUES_URL } from '../../api/commons';
 import { setNotification } from '../ui/actionCreators';
 import { IssueStatus, IssueType, RouterHistory } from '../utilTypes';
@@ -18,12 +20,13 @@ import {
   UpdateIssuesAction,
 } from './types';
 import { defaultErrorNotificationMessage, NotificationSeverity } from '../ui/NotificationMessage';
+import { manipulateIssuesList } from '../issuesContainers/actionCreators';
 
 export interface IssueRequestBody {
   id?: number
   container: {
     id: number
-    '@type': 'Backlog' | 'Sprint'
+    '@type'?: 'Backlog' | 'Sprint'
   }
   version?: number
   priority?: number
@@ -104,19 +107,12 @@ export const fetchUpdateIssue = (
   requestBody: IssueRequestBody,
   projectId: number,
   history: RouterHistory,
-  priorityIndex?: number,
 ): RootThunk => (
   async (dispatch) => {
     try {
-      const url = `${ISSUES_URL}${priorityIndex ? `?index=${priorityIndex}` : ''}`;
-      const { data } = await axios.put(url, requestBody);
-
-      if (Array.isArray(data)) {
-        dispatch(updateIssues(data.map((dto) => issueFromDto(dto))));
-      } else {
-        history.push(`/app/projects/${projectId}/board/issues/${data.id}`);
-        dispatch(updateIssue(issueFromDto(data)));
-      }
+      const { data } = await axios.put(ISSUES_URL, requestBody);
+      history.push(`/app/projects/${projectId}/board/issues/${data.id}`);
+      dispatch(updateIssue(issueFromDto(data)));
     } catch (err) {
       dispatch(setNotification({
         content: err.response.data.message,
@@ -125,6 +121,29 @@ export const fetchUpdateIssue = (
     }
   }
 );
+
+export const fetchReorderIssues = (
+  requestBody: IssueRequestBody,
+  priorityIndex: number,
+  prevOrderSnapshot: {[containerId: string]: List<number>},
+): RootThunk => async (dispatch) => {
+  try {
+    const url = `${ISSUES_URL}?index=${priorityIndex}`;
+    const { data } = await axios.put(url, requestBody);
+
+    dispatch(updateIssues(data.map((dto: IssueDto) => issueFromDto(dto))));
+  } catch (err) {
+    const rollbackActions = Object.entries(prevOrderSnapshot).map(([containerId, list]) => {
+      return manipulateIssuesList(containerId, () => list);
+    });
+
+    rollbackActions.map((action) => dispatch(action));
+    dispatch(setNotification({
+      content: err.response.status === 409 ? 'Stale data. Refresh the page and try again ' : 'Reordering issues failed',
+      severity: NotificationSeverity.ERROR,
+    }));
+  }
+};
 
 export const fetchDeleteIssue = (
   id: number,

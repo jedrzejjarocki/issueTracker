@@ -1,92 +1,61 @@
-import React, { Fragment } from 'react';
+import React, { useContext } from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 import { connect, ConnectedProps } from 'react-redux';
-import { Chip, List, ListItem, ListItemIcon, ListItemText, makeStyles, Typography, } from '@material-ui/core';
-import IssueType from '../../constants/issueTypes';
-import IssueStatus from '../../constants/issueStatuses';
-import RouterLink from '../commons/RouterLink';
-import UserAvatar from '../commons/UserAvatar';
+import { List, makeStyles, Typography } from '@material-ui/core';
 import { RootState } from '../../redux/rootReducer';
 import Project from '../../entities/Project';
-import { getIssuesByContainerId } from '../../redux/issues/selectors';
 import { getUser } from '../../redux/user/selectors';
 import { getTeamMembers } from '../../redux/teamMembers/selectors';
-import { TeamMembersState } from '../../redux/teamMembers/types';
+import IssueListItem from './IssueListItem';
+import Issue from '../../entities/Issue';
+import { DraggingOverContext } from '../Board/Project';
 
 const useStyles = makeStyles((theme) => ({
-  itemDetails: {
-    display: 'flex',
-    '& > *': {
-      marginLeft: theme.spacing(1),
-    },
-  },
   empty: {
     padding: theme.spacing(2),
   },
-  avatar: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-  },
 }));
-
-const getMember = (id: number, teamMembers: TeamMembersState) => teamMembers.get(String(id));
 
 interface Props extends ReduxProps {
   project: Project
+  containerId: number
+  issues: Issue[]
 }
 
 const IssuesList: React.FC<Props> = ({
-  issues, project, teamMembers, currentUserId,
+  issues, project, teamMembers, currentUserId, containerId,
 }) => {
   const classes = useStyles();
+  const draggingOver = useContext(DraggingOverContext);
+
   return (
-    <>
-      {
-        issues && issues.length
-          ? (
-            <List dense>
-              {issues.map(({
-                id, type, summary, storyPointsEstimate, status, assignee,
-              }) => (
-                <Fragment key={id}>
-                  <RouterLink to={`/app/projects/${project.id}/board/issues/${id}`}>
-                    <ListItem button>
-                      <ListItemIcon>{IssueType[type].icon}</ListItemIcon>
-                      <ListItemText primary={summary} />
-                      <div className={classes.itemDetails}>
-                        {!!assignee && (
-                        <UserAvatar
-                          isCurrentUser={getMember(assignee, teamMembers).userId === currentUserId}
-                          name={getMember(assignee, teamMembers).username}
-                          size="small"
-                        />
-                        )}
-                        {!!storyPointsEstimate && (
-                        <Chip size="small" label={storyPointsEstimate} />
-                        )}
-                        <Chip
-                          size="small"
-                          label={IssueStatus[status].text}
-                          color={IssueStatus[status].color}
-                        />
-                        <ListItemText primary={`${project.projectKey}-${id}`} />
-                      </div>
-                    </ListItem>
-                  </RouterLink>
-                </Fragment>
-              ))}
-            </List>
-          ) : (
-            <Typography color="textSecondary" className={classes.empty}>
-              <i>empty</i>
-            </Typography>
-          )
-      }
-    </>
+    <Droppable droppableId={`${containerId}`}>
+      {({ innerRef, droppableProps, placeholder }) => (
+        <List dense ref={innerRef} {...droppableProps}>
+          {issues.map((issue, index) => (
+            <IssueListItem
+              issue={issue}
+              index={index}
+              project={project}
+              teamMembers={teamMembers}
+              currentUserId={currentUserId}
+            />
+          ))}
+          {placeholder}
+          {
+            !issues.length && draggingOver !== containerId && (
+              <Typography color="textSecondary" className={classes.empty}>
+                <i>empty</i>
+              </Typography>
+            )
+          }
+        </List>
+      )}
+    </Droppable>
   );
 };
 
-const mapStateToProps = (state: RootState, { containerId }: { containerId: number }) => ({
-  issues: getIssuesByContainerId(state, containerId),
+const mapStateToProps = (state: RootState) => ({
   teamMembers: getTeamMembers(state),
   currentUserId: getUser(state).id,
 });

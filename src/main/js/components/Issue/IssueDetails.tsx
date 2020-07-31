@@ -68,6 +68,7 @@ const IssueDetails: React.FC<Props> = ({
         '@type': project.backlog === values.containerId ? 'Backlog' : 'Sprint',
       },
       version: values.version,
+      priority: values.priority,
       type: values.type,
       status: values.status,
       summary: values.summary,
@@ -103,6 +104,7 @@ const IssueDetails: React.FC<Props> = ({
               initialValues={{
                 id: issue.id,
                 version: issue.version,
+                priority: issue.priority,
                 type: issue.type,
                 summary: issue.summary,
                 status: issue.status,
@@ -110,7 +112,7 @@ const IssueDetails: React.FC<Props> = ({
                 description: issue.description,
                 assigneeId: issue.assignee || 0,
                 storyPointsEstimate: issue.storyPointsEstimate,
-              } as UpdateIssueFormFields}
+              }}
               validationSchema={schema}
             >
               {(formikProps) => (

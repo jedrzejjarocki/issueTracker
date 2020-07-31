@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography, } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { fetchDeleteIssue } from '../../redux/issues/actionCreators';
 import SubmitButton from '../forms/SubmitButton';
 import { RouterHistory } from '../../redux/utilTypes';
@@ -13,6 +14,12 @@ interface Props extends ReduxProps {
   projectId: number
 }
 
+const useStyles = makeStyles((theme) => ({
+  submitButton: {
+    backgroundColor: theme.palette.error.main,
+  },
+}));
+
 const DeleteIssue: React.FC<Props> = ({
   issue,
   fetchDeleteIssue: fetchDelete,
@@ -21,13 +28,14 @@ const DeleteIssue: React.FC<Props> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
+  const classes = useStyles();
 
   const handleDelete = () => fetchDelete(issue.id, issue.containerId, projectId, history);
 
   return (
     <>
-      <IconButton color="secondary" aria-label="delete" onClick={toggleOpen}>
-        <DeleteOutlinedIcon fontSize="inherit" />
+      <IconButton aria-label="delete" onClick={toggleOpen}>
+        <DeleteOutlinedIcon fontSize="inherit" color="error" />
       </IconButton>
       <Dialog
         open={open}
@@ -44,7 +52,11 @@ const DeleteIssue: React.FC<Props> = ({
           </Typography>
         </DialogContent>
         <DialogActions>
-          <SubmitButton onClick={handleDelete} color="secondary" />
+          <SubmitButton
+            onClick={handleDelete}
+            className={classes.submitButton}
+            text="delete"
+          />
         </DialogActions>
       </Dialog>
     </>
