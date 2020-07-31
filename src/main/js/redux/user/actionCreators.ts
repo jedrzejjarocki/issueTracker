@@ -1,17 +1,18 @@
+/* eslint-disable arrow-body-style */
 import axios from 'axios';
-import {Dispatch} from 'redux';
+import { Dispatch } from 'redux';
 import React from 'react';
-import {fromJS, isKeyed, Map,} from 'immutable';
-import {LOGIN_URL, LOGOUT_URL, USERS_URL} from '../../api/commons';
-import {setLoading, setNotification} from '../ui/actionCreators';
+import { fromJS, isKeyed, Map } from 'immutable';
+import { LOGIN_URL, LOGOUT_URL, USERS_URL } from '../../api/commons';
+import { setLoading, setNotification } from '../ui/actionCreators';
 import normalize from '../schema';
-import {setProjects} from '../projects/actionCreators';
-import {setIssuesContainers} from '../issuesContainers/actionCreators';
-import {setIssues} from '../issues/actionCreators';
-import {setTeamMembers} from '../teamMembers/actionCreators';
-import {RouterHistory, UserRole} from '../utilTypes';
-import {RootThunk} from '../store';
-import {User} from '../../entities/User';
+import { setProjects } from '../projects/actionCreators';
+import { setIssuesContainers } from '../issuesContainers/actionCreators';
+import { setIssues } from '../issues/actionCreators';
+import { setTeamMembers } from '../teamMembers/actionCreators';
+import { RouterHistory, UserRole } from '../utilTypes';
+import { RootThunk } from '../store';
+import { User } from '../../entities/User';
 import {
   accountCreatedMessage,
   checkEmailForPasswordRecoveryLinkMessage,
@@ -22,13 +23,15 @@ import {
   passwordChangedSuccessfullyMessage,
   userWithGivenEmailDoesNotExistMessage,
 } from '../ui/NotificationMessage';
-import {SetUserAction} from './types';
+import { SetUserAction } from './types';
 import Project from '../../entities/Project';
-import {ProjectsState} from '../projects/types';
+import { ProjectsState } from '../projects/types';
 import Issue from '../../entities/Issue';
 import TeamMember from '../../entities/TeamMember';
 import Backlog from '../../entities/Backlog';
 import Sprint from '../../entities/Sprint';
+import { IssuesContainersState } from '../issuesContainers/types';
+import { IssuesState } from '../issues/types';
 
 export const SET_USER = 'SET_USER';
 
@@ -158,36 +161,59 @@ export interface CurrentUserResponseBody {
 }
 
 const parseUser = (usersData: any): User => new User(fromJS(usersData).first());
-const parseProjects = (projectsData: any): ProjectsState => fromJS(projectsData, (key, value) => {
-  if (isKeyed(value)) {
-    return key ? new Project(value) : value.toMap();
-  }
-  return value.toList();
-});
+const parseProjects = (projectsData: any): ProjectsState => {
+  return fromJS(projectsData, (key, value) => {
+    if (isKeyed(value)) {
+      return key ? new Project(value) : value.toMap();
+    }
+    return value.toList();
+  });
+};
 
-const parseIssues = (issuesData: any) => fromJS(issuesData, (key, value) => {
-  if (isKeyed(value)) {
-    return key ? new Issue(value) : value.toMap();
-  }
-  return value.toList();
-}) || Map();
+const parseIssues = (issuesData: any) => {
+  return fromJS(issuesData, (key, value) => {
+    if (isKeyed(value)) {
+      return key ? new Issue(value) : value.toMap();
+    }
+    return value.toList();
+  }) || Map();
+};
 
-const parseTeamMembers = (teamMembersData: any) => fromJS(teamMembersData, (key, value) => {
-  if (isKeyed(value)) {
-    return key ? new TeamMember(value) : value.toMap();
-  }
-  return value.toList();
-});
+const parseTeamMembers = (teamMembersData: any) => {
+  return fromJS(teamMembersData, (key, value) => {
+    if (isKeyed(value)) {
+      return key ? new TeamMember(value) : value.toMap();
+    }
+    return value.toList();
+  });
+};
 
-const parseIssuesContainers = (issuesContainersData: any) => fromJS(issuesContainersData, (key, value) => {
-  if (isKeyed(value)) {
-    if (!key) return value.toMap();
-    return (<Sprint> value.toJS()).name === undefined
-      ? new Backlog(value)
-      : new Sprint(value);
-  }
-  return value.toList();
-});
+const parseIssuesContainers = (issuesContainersData: any) => {
+  return fromJS(issuesContainersData, (key, value) => {
+    if (isKeyed(value)) {
+      if (!key) return value.toMap();
+      return (<Sprint> value.toJS()).name === undefined
+        ? new Backlog(value)
+        : new Sprint(value);
+    }
+    return value.toList();
+  });
+};
+
+const sortIssuesListsByPriority = (
+  containers: IssuesContainersState,
+  issues: IssuesState,
+): IssuesContainersState => {
+  return containers.mapEntries(([key, container]) => {
+    const value = container.updateIn(['issues'], (ids) => {
+      return ids
+        .map((id: number) => issues.get(`${id}`))
+        .sort((a: Issue, b: Issue) => b.priority - a.priority)
+        .map(({ id }: Issue) => id);
+    });
+    return [key, value];
+  });
+};
 
 const setData = (responseBody: CurrentUserResponseBody, dispatch: Dispatch) => {
   const normalized = normalize(responseBody);
@@ -196,7 +222,7 @@ const setData = (responseBody: CurrentUserResponseBody, dispatch: Dispatch) => {
   const projects = parseProjects(normalized.projects);
   const issues = parseIssues(normalized.issues);
   const teamMembers = parseTeamMembers(normalized.teamMembers);
-  const issuesContainers = parseIssuesContainers(normalized.issuesLists);
+  const issuesContainers = sortIssuesListsByPriority(parseIssuesContainers(normalized.issuesLists), issues);
 
   const actions = [
     setUser(user),

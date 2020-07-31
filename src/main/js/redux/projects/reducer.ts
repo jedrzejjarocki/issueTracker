@@ -1,9 +1,9 @@
-import {List, Map, updateIn} from 'immutable';
+import { List, Map, updateIn } from 'immutable';
 import Project from '../../entities/Project';
-import {RootAction} from '../rootReducer';
-import {ADD_SPRINT, DELETE_SPRINT} from '../issuesContainers/types';
-import {ADD_PROJECT, ProjectsState, SET_PROJECTS} from './types';
-import {ADD_MEMBER, DELETE_MEMBER} from '../teamMembers/types';
+import { RootAction } from '../rootReducer';
+import { ADD_SPRINT, DELETE_SPRINT } from '../issuesContainers/types';
+import { ADD_PROJECT, ProjectsState, SET_PROJECTS } from './types';
+import { ADD_MEMBER, DELETE_MEMBER } from '../teamMembers/types';
 
 export default (state: ProjectsState = Map(), action: RootAction): ProjectsState => {
   switch (action.type) {

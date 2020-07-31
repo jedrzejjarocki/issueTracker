@@ -1,6 +1,13 @@
 import { Map, updateIn } from 'immutable';
 import { RootAction } from '../rootReducer';
-import { ADD_SPRINT, DELETE_SPRINT, IssuesContainersState, SET_ISSUES_CONTAINERS, UPDATE_SPRINT, } from './types';
+import {
+  ADD_SPRINT,
+  DELETE_SPRINT,
+  IssuesContainersState,
+  MANIPULATE_ISSUES_ORDER,
+  SET_ISSUES_CONTAINERS,
+  UPDATE_SPRINT,
+} from './types';
 import { ADD_ISSUE, DELETE_ISSUE } from '../issues/types';
 import { ADD_PROJECT } from '../projects/types';
 import Backlog from '../../entities/Backlog';
@@ -15,6 +22,11 @@ export default (state: IssuesContainersState = Map(), action: RootAction) => {
     case UPDATE_SPRINT: {
       const { sprint } = action.payload;
       return state.set(`${sprint.id}`, sprint);
+    }
+
+    case MANIPULATE_ISSUES_ORDER: {
+      const { containerId, callback } = action.payload;
+      return updateIn(state, [containerId, 'issues'], callback);
     }
 
     case DELETE_SPRINT: {

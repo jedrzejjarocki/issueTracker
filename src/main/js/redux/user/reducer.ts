@@ -1,5 +1,5 @@
-import {User} from '../../entities/User';
-import {SET_USER, UserAction} from './types';
+import { User } from '../../entities/User';
+import { SET_USER, UserAction } from './types';
 
 export default (state: User = null, action: UserAction) => {
   switch (action.type) {

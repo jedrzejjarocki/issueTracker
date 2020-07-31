@@ -1,6 +1,6 @@
-import {Record} from 'immutable';
-import {NotificationMessage} from './NotificationMessage';
-import {UserRole} from '../utilTypes';
+import { Record } from 'immutable';
+import { NotificationMessage } from './NotificationMessage';
+import { UserRole } from '../utilTypes';
 
 type StateProps = {
   notification: NotificationMessage | null

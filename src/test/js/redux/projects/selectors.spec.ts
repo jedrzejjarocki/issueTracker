@@ -1,7 +1,7 @@
-import {Map} from 'immutable';
-import {getProjectById, getProjectsAsArray} from '../../../../main/js/redux/projects/selectors';
+import { Map } from 'immutable';
+import { getProjectById, getProjectsAsArray } from '../../../../main/js/redux/projects/selectors';
 import Project from '../../../../main/js/entities/Project';
-import {RootState} from '../../../../main/js/redux/rootReducer';
+import { RootState } from '../../../../main/js/redux/rootReducer';
 
 const project1 = new Project({ id: 1 });
 const project2 = new Project({ id: 2 });

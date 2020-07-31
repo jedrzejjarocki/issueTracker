@@ -1,4 +1,4 @@
-import {List, Record} from 'immutable';
+import { List, Record } from 'immutable';
 import BaseEntity from './BaseEntity';
 
 export interface ProjectProps extends BaseEntity {

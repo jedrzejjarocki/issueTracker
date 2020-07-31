@@ -12,7 +12,7 @@ import useSetCurrentProject from '../../hooks/useSetCurrentProject';
 import Team from '../Team/Team';
 import { RootState } from '../../redux/rootReducer';
 import { getProjectById } from '../../redux/projects/selectors';
-import { getBacklogByProjectId, getSprintsByProjectId, } from '../../redux/issuesContainers/selectors';
+import { getBacklogByProjectId, getSprintsByProjectId } from '../../redux/issuesContainers/selectors';
 import { getCurrentUserRoleByProjectId } from '../../redux/teamMembers/selectors';
 import { reorderIssues } from '../../redux/issuesContainers/actionCreators';
 import { fetchReorderIssues, IssueRequestBody } from '../../redux/issues/actionCreators';

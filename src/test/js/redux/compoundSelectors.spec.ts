@@ -1,10 +1,10 @@
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 import {
   getProjectsWhereCurrentUserIsLeader,
   getUsersWithTheirProjects,
 } from '../../../main/js/redux/compoundSelectors';
 import TeamMember from '../../../main/js/entities/TeamMember';
-import {UserRole} from '../../../main/js/redux/utilTypes';
+import { UserRole } from '../../../main/js/redux/utilTypes';
 import Project from '../../../main/js/entities/Project';
 
 const member1 = new TeamMember({

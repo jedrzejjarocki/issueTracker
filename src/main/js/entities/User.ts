@@ -1,4 +1,4 @@
-import {Record} from 'immutable';
+import { Record } from 'immutable';
 import BaseEntity from './BaseEntity';
 
 export interface UserProps extends BaseEntity {

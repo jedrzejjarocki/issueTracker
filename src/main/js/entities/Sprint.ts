@@ -1,5 +1,5 @@
-import {Record} from 'immutable';
-import {defaultProps as issuesContainerDefaultProps, IssuesContainerProps} from './IssuesContainer';
+import { Record } from 'immutable';
+import { defaultProps as issuesContainerDefaultProps, IssuesContainerProps } from './IssuesContainer';
 
 export interface SprintProps extends IssuesContainerProps {
   name: string,

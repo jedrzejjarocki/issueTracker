@@ -1,5 +1,5 @@
-import {Record} from 'immutable';
-import {defaultProps as IssuesContainerDefaultProps, IssuesContainerProps} from './IssuesContainer';
+import { Record } from 'immutable';
+import { defaultProps as IssuesContainerDefaultProps, IssuesContainerProps } from './IssuesContainer';
 
 export interface BacklogProps extends IssuesContainerProps {
   type?: 'Backlog'

@@ -1,6 +1,6 @@
-import {createSelector} from 'reselect';
-import {RootState} from '../rootReducer';
-import {getProjectById} from '../projects/selectors';
+import { createSelector } from 'reselect';
+import { RootState } from '../rootReducer';
+import { getProjectById } from '../projects/selectors';
 import Sprint from '../../entities/Sprint';
 import Backlog from '../../entities/Backlog';
 

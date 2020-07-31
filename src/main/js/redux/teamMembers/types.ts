@@ -1,5 +1,5 @@
-import {Map} from 'immutable';
-import {UserRole} from '../utilTypes';
+import { Map } from 'immutable';
+import { UserRole } from '../utilTypes';
 import TeamMember from '../../entities/TeamMember';
 
 export type TeamMembersState = Map<string, TeamMember>;

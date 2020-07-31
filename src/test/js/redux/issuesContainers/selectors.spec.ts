@@ -1,4 +1,4 @@
-import {List, Map} from 'immutable';
+import { List, Map } from 'immutable';
 import {
   getBacklogByProjectId,
   getIssuesContainerById,
@@ -6,9 +6,9 @@ import {
   getSprintsByProjectId,
 } from '../../../../main/js/redux/issuesContainers/selectors';
 import Sprint from '../../../../main/js/entities/Sprint';
-import {IssuesContainer} from '../../../../main/js/entities/IssuesContainer';
+import { IssuesContainer } from '../../../../main/js/entities/IssuesContainer';
 import Project from '../../../../main/js/entities/Project';
-import {RootState} from '../../../../main/js/redux/rootReducer';
+import { RootState } from '../../../../main/js/redux/rootReducer';
 import Backlog from '../../../../main/js/entities/Backlog';
 
 const sprint1 = new Sprint({ id: 1 });
