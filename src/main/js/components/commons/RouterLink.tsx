@@ -5,6 +5,7 @@ import { Link, Typography } from '@material-ui/core';
 interface Props {
   to: string,
   text?: string
+  [key: string]: any
 }
 
 const RouterLink: React.FC<Props> = ({

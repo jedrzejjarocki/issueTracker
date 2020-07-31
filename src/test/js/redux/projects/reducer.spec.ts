@@ -1,17 +1,17 @@
-import {List, Map} from 'immutable';
+import { List, Map } from 'immutable';
 import reducer from '../../../../main/js/redux/projects/reducer';
-import {setLoading} from '../../../../main/js/redux/ui/actionCreators';
-import {AddProjectPayload, ProjectsState} from '../../../../main/js/redux/projects/types';
+import { setLoading } from '../../../../main/js/redux/ui/actionCreators';
+import { AddProjectPayload, ProjectsState } from '../../../../main/js/redux/projects/types';
 import Project from '../../../../main/js/entities/Project';
-import {addProject, setProjects} from '../../../../main/js/redux/projects/actionCreators';
+import { addProject, setProjects } from '../../../../main/js/redux/projects/actionCreators';
 import TeamMember from '../../../../main/js/entities/TeamMember';
-import {IssuesContainer} from '../../../../main/js/entities/IssuesContainer';
+import { IssuesContainer } from '../../../../main/js/entities/IssuesContainer';
 import Backlog from '../../../../main/js/entities/Backlog';
 import Sprint from '../../../../main/js/entities/Sprint';
-import {addSprint, deleteSprint} from '../../../../main/js/redux/issuesContainers/actionCreators';
-import {addMember, deleteMember} from '../../../../main/js/redux/teamMembers/actionCreators';
-import {UserRole} from '../../../../main/js/redux/utilTypes';
-import {AddTeamMemberPayload} from '../../../../main/js/redux/teamMembers/types';
+import { addSprint, deleteSprint } from '../../../../main/js/redux/issuesContainers/actionCreators';
+import { addMember, deleteMember } from '../../../../main/js/redux/teamMembers/actionCreators';
+import { UserRole } from '../../../../main/js/redux/utilTypes';
+import { AddTeamMemberPayload } from '../../../../main/js/redux/teamMembers/types';
 
 const initialState: ProjectsState = Map();
 

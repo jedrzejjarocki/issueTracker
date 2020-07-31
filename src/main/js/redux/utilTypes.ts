@@ -4,6 +4,6 @@ export interface RouterHistory {
 
 export enum UserRole {LEADER = 'LEADER', DEVELOPER = 'DEVELOPER'}
 
-export enum IssueType {TASK= 'TASK', IMPROVEMENT = 'IMPROVEMENT', NEW_FEATURE = 'NEW_FEATURE', BUG = 'BUG'}
+export enum IssueType {TASK = 'TASK', IMPROVEMENT = 'IMPROVEMENT', NEW_FEATURE = 'NEW_FEATURE', BUG = 'BUG'}
 
-export enum IssueStatus {TO_DO, IN_PROGRESS, DONE}
+export enum IssueStatus {TO_DO = 'TO_DO', IN_PROGRESS = 'IN_PROGRESS', DONE = 'DONE'}

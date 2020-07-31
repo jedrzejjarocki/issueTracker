@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
-import {createSelector} from 'reselect';
-import {RootState} from '../rootReducer';
+import { createSelector } from 'reselect';
+import { RootState } from '../rootReducer';
 
 export function getProjects(state: RootState) {
   return state.projects;

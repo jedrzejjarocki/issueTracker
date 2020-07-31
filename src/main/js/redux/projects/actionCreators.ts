@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {PROJECTS_URL} from '../../api/commons';
-import {setNotification} from '../ui/actionCreators';
-import {RootThunk} from '../store';
+import { PROJECTS_URL } from '../../api/commons';
+import { setNotification } from '../ui/actionCreators';
+import { RootThunk } from '../store';
 import {
   ADD_PROJECT,
   AddProjectAction,
@@ -10,7 +10,7 @@ import {
   SET_PROJECTS,
   SetProjectsAction,
 } from './types';
-import {defaultErrorNotificationMessage} from '../ui/NotificationMessage';
+import { defaultErrorNotificationMessage } from '../ui/NotificationMessage';
 
 export const addProject = (payload: AddProjectPayload): AddProjectAction => ({
   type: ADD_PROJECT,

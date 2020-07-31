@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {TEAM_MEMBERS_URL} from '../../api/commons';
-import {setNotification} from '../ui/actionCreators';
-import {RouterHistory, UserRole} from '../utilTypes';
+import { TEAM_MEMBERS_URL } from '../../api/commons';
+import { setNotification } from '../ui/actionCreators';
+import { RouterHistory, UserRole } from '../utilTypes';
 import TeamMember from '../../entities/TeamMember';
-import {RootThunk} from '../store';
+import { RootThunk } from '../store';
 import {
   ADD_MEMBER,
   AddTeamMemberAction,
@@ -16,7 +16,7 @@ import {
   UPDATE_MEMBER,
   UpdateMemberAction,
 } from './types';
-import {defaultErrorNotificationMessage, NotificationMessage, NotificationSeverity} from '../ui/NotificationMessage';
+import { defaultErrorNotificationMessage, NotificationMessage, NotificationSeverity } from '../ui/NotificationMessage';
 
 export const setTeamMembers = (members: TeamMembersState): SetTeamMembersAction => ({
   type: SET_TEAM_MEMBERS,

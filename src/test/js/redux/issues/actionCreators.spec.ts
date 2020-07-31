@@ -1,21 +1,24 @@
 import axios from 'axios';
-import {mocked} from 'ts-jest/utils';
+import { mocked } from 'ts-jest/utils';
 import reactRouterDom from 'react-router-dom';
-import thunk, {ThunkDispatch} from 'redux-thunk';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import {Action} from 'redux';
+import { Action } from 'redux';
 import {
   fetchCreateIssue,
   fetchDeleteIssue,
   fetchUpdateIssue,
   IssueRequestBody,
 } from '../../../../main/js/redux/issues/actionCreators';
-import {IssueStatus, IssueType} from '../../../../main/js/redux/utilTypes';
-import {ISSUES_URL} from '../../../../main/js/api/commons';
-import {ADD_ISSUE, AddIssueAction, DELETE_ISSUE, UPDATE_ISSUE,} from '../../../../main/js/redux/issues/types';
+import { IssueStatus, IssueType } from '../../../../main/js/redux/utilTypes';
+import { ISSUES_URL } from '../../../../main/js/api/commons';
+import { ADD_ISSUE, AddIssueAction, DELETE_ISSUE, UPDATE_ISSUE, } from '../../../../main/js/redux/issues/types';
 import Issue from '../../../../main/js/entities/Issue';
-import {defaultErrorNotificationMessage, NotificationSeverity} from '../../../../main/js/redux/ui/NotificationMessage';
-import {SET_NOTIFICATION} from '../../../../main/js/redux/ui/types';
+import {
+  defaultErrorNotificationMessage,
+  NotificationSeverity
+} from '../../../../main/js/redux/ui/NotificationMessage';
+import { SET_NOTIFICATION } from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({

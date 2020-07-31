@@ -1,12 +1,12 @@
-import {List, Map} from 'immutable';
+import { List, Map } from 'immutable';
 import Issue from '../../../../main/js/entities/Issue';
 import reducer from '../../../../main/js/redux/issues/reducer';
-import {addIssue, deleteIssue, setIssues} from '../../../../main/js/redux/issues/actionCreators';
-import {setLoading} from '../../../../main/js/redux/ui/actionCreators';
+import { addIssue, deleteIssue, setIssues } from '../../../../main/js/redux/issues/actionCreators';
+import { setLoading } from '../../../../main/js/redux/ui/actionCreators';
 import Sprint from '../../../../main/js/entities/Sprint';
-import {deleteSprint} from '../../../../main/js/redux/issuesContainers/actionCreators';
-import {deleteMember} from '../../../../main/js/redux/teamMembers/actionCreators';
-import {IssuesState} from '../../../../main/js/redux/issues/types';
+import { deleteSprint } from '../../../../main/js/redux/issuesContainers/actionCreators';
+import { deleteMember } from '../../../../main/js/redux/teamMembers/actionCreators';
+import { IssuesState } from '../../../../main/js/redux/issues/types';
 
 export const initialState: IssuesState = Map();
 

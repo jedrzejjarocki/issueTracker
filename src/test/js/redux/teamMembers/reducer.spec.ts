@@ -1,12 +1,12 @@
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 import reducer from '../../../../main/js/redux/teamMembers/reducer';
-import {AddTeamMemberPayload, TeamMembersState} from '../../../../main/js/redux/teamMembers/types';
+import { AddTeamMemberPayload, TeamMembersState } from '../../../../main/js/redux/teamMembers/types';
 import TeamMember from '../../../../main/js/entities/TeamMember';
-import {setLoading} from '../../../../main/js/redux/ui/actionCreators';
-import {addMember, deleteMember, setTeamMembers} from '../../../../main/js/redux/teamMembers/actionCreators';
-import {UserRole} from '../../../../main/js/redux/utilTypes';
-import {addProject} from '../../../../main/js/redux/projects/actionCreators';
-import {AddProjectPayload} from '../../../../main/js/redux/projects/types';
+import { setLoading } from '../../../../main/js/redux/ui/actionCreators';
+import { addMember, deleteMember, setTeamMembers } from '../../../../main/js/redux/teamMembers/actionCreators';
+import { UserRole } from '../../../../main/js/redux/utilTypes';
+import { addProject } from '../../../../main/js/redux/projects/actionCreators';
+import { AddProjectPayload } from '../../../../main/js/redux/projects/types';
 
 const initialState: TeamMembersState = Map();
 const member1 = new TeamMember({ id: 1 });

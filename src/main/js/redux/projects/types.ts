@@ -1,6 +1,6 @@
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 import TeamMember from '../../entities/TeamMember';
-import {IssuesContainer} from '../../entities/IssuesContainer';
+import { IssuesContainer } from '../../entities/IssuesContainer';
 import Project from '../../entities/Project';
 
 export const SET_PROJECTS = 'SET_PROJECTS';

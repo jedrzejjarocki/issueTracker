@@ -1,6 +1,6 @@
-import {Record} from 'immutable';
+import { Record } from 'immutable';
 import BaseEntity from './BaseEntity';
-import {UserRole} from '../redux/utilTypes';
+import { UserRole } from '../redux/utilTypes';
 
 export interface TeamMemberProps extends BaseEntity {
   projectId: number

@@ -1,4 +1,4 @@
-import {List, Map} from 'immutable';
+import { List, Map } from 'immutable';
 import {
   getCurrentUserRoleByProjectId,
   getTeamMembersByProjectId,
@@ -6,10 +6,10 @@ import {
   getTeamMembersByUserIdAndRole,
 } from '../../../../main/js/redux/teamMembers/selectors';
 import TeamMember from '../../../../main/js/entities/TeamMember';
-import {RootState} from '../../../../main/js/redux/rootReducer';
-import {UserRole} from '../../../../main/js/redux/utilTypes';
+import { RootState } from '../../../../main/js/redux/rootReducer';
+import { UserRole } from '../../../../main/js/redux/utilTypes';
 import Project from '../../../../main/js/entities/Project';
-import {User} from '../../../../main/js/entities/User';
+import { User } from '../../../../main/js/entities/User';
 
 const user = new User({ id: 1 });
 const member1 = new TeamMember({ id: 1 });

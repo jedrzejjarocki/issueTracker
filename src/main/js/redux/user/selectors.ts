@@ -1,5 +1,5 @@
-import {RootState} from '../rootReducer';
-import {UserRole} from '../utilTypes';
+import { RootState } from '../rootReducer';
+import { UserRole } from '../utilTypes';
 
 export const getUser = (state: RootState) => state.user;
 

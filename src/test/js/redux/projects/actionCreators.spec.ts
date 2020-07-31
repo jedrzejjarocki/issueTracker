@@ -1,13 +1,13 @@
 import axios from 'axios';
-import thunk, {ThunkDispatch} from 'redux-thunk';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import {Action} from 'redux';
-import {mocked} from 'ts-jest/utils';
-import {CreateProjectRequestBody, fetchCreateProject} from '../../../../main/js/redux/projects/actionCreators';
-import {PROJECTS_URL} from '../../../../main/js/api/commons';
-import {ADD_PROJECT} from '../../../../main/js/redux/projects/types';
-import {defaultErrorNotificationMessage} from '../../../../main/js/redux/ui/NotificationMessage';
-import {SET_NOTIFICATION} from '../../../../main/js/redux/ui/types';
+import { Action } from 'redux';
+import { mocked } from 'ts-jest/utils';
+import { CreateProjectRequestBody, fetchCreateProject } from '../../../../main/js/redux/projects/actionCreators';
+import { PROJECTS_URL } from '../../../../main/js/api/commons';
+import { ADD_PROJECT } from '../../../../main/js/redux/projects/types';
+import { defaultErrorNotificationMessage } from '../../../../main/js/redux/ui/NotificationMessage';
+import { SET_NOTIFICATION } from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 

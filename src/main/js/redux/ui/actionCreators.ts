@@ -1,5 +1,5 @@
-import {UserRole} from '../utilTypes';
-import {NotificationMessage} from './NotificationMessage';
+import { UserRole } from '../utilTypes';
+import { NotificationMessage } from './NotificationMessage';
 import {
   SET_CURRENT_PROJECT,
   SET_LOADING,

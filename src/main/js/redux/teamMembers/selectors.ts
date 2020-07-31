@@ -1,10 +1,10 @@
 /* eslint-disable arrow-body-style */
-import {createSelector} from 'reselect';
-import {RootState} from '../rootReducer';
-import {getProjectById} from '../projects/selectors';
-import {getUser} from '../user/selectors';
-import {UserRole} from '../utilTypes';
-import {TeamMembersState} from './types';
+import { createSelector } from 'reselect';
+import { RootState } from '../rootReducer';
+import { getProjectById } from '../projects/selectors';
+import { getUser } from '../user/selectors';
+import { UserRole } from '../utilTypes';
+import { TeamMembersState } from './types';
 
 export function getTeamMembers(state: RootState): TeamMembersState {
   return state.teamMembers;

@@ -1,9 +1,9 @@
 /* eslint-disable arrow-body-style */
-import {createSelector} from 'reselect';
-import {getTeamMembers, getTeamMembersByUserIdAndRole} from './teamMembers/selectors';
-import {getProjects} from './projects/selectors';
-import {UserWithProjects} from './user/selectors';
-import {UserRole} from './utilTypes';
+import { createSelector } from 'reselect';
+import { getTeamMembers, getTeamMembersByUserIdAndRole } from './teamMembers/selectors';
+import { getProjects } from './projects/selectors';
+import { UserWithProjects } from './user/selectors';
+import { UserRole } from './utilTypes';
 
 export const getUsersWithTheirProjects = createSelector(
   getTeamMembers, getProjects,
