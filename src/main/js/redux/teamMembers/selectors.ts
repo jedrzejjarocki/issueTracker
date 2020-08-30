@@ -5,6 +5,7 @@ import { getProjectById } from '../projects/selectors';
 import { getUser } from '../user/selectors';
 import { UserRole } from '../utilTypes';
 import { TeamMembersState } from './types';
+import TeamMember from '../../entities/TeamMember';
 
 export function getTeamMembers(state: RootState): TeamMembersState {
   return state.teamMembers;
@@ -24,11 +25,11 @@ export const getTeamMembersByProjectId = createSelector(
   getProjectById, getTeamMembers,
   (project, teamMembers) => {
     if (!project) return [];
-    return project.get('team').map((memberId) => teamMembers.get(`${memberId}`)).toArray();
+    return project.get('team').map((memberId) => teamMembers.get(`${memberId}`) as TeamMember).toArray();
   },
 );
 
 export const getCurrentUserRoleByProjectId = createSelector(
   getTeamMembersByProjectId, getUser,
-  (teamMembers, user) => teamMembers.find(({ userId }) => userId === user.id).role,
+  (teamMembers, user) => (user ? teamMembers.find(({ userId }) => userId === user.id)!.role : null),
 );

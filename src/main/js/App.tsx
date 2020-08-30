@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { BrowserRouter as Router, Redirect, Route, Switch, } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Redirect, Route, Switch,
+} from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import Index from './components/Index';

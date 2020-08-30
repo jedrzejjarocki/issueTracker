@@ -1,7 +1,7 @@
 import { List, Map, Record } from 'immutable';
 import { getIssueById, getIssuesByContainerId } from '../../../../main/js/redux/issues/selectors';
 import { RootState } from '../../../../main/js/redux/rootReducer';
-import { User } from '../../../../main/js/entities/User';
+import User from '../../../../main/js/entities/User';
 import Project from '../../../../main/js/entities/Project';
 import TeamMember from '../../../../main/js/entities/TeamMember';
 import Backlog from '../../../../main/js/entities/Backlog';

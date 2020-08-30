@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 import React, { useEffect, useState } from 'react';
-import { Chip, withStyles } from '@material-ui/core';
+import { Chip, Grid, withStyles } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Issue from '../../entities/Issue';
 import { IssueStatus } from '../../redux/utilTypes';
@@ -23,6 +23,7 @@ const getSummary = (issues: Issue[]): Summary => {
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    width: 'min-content',
     margin: theme.spacing(0, 2),
     '& div': {
       marginLeft: theme.spacing(1) / 2,
@@ -60,7 +61,7 @@ const StoryPointsSummary: React.FC<Props> = ({ issues }) => {
     <>
       {
         hasAnyPoints(summary) && (
-          <div className={classes.container}>
+          <Grid container wrap="nowrap" className={classes.container}>
             {
               summary.map(([status, points]) => (
                 <TinyChip
@@ -70,7 +71,7 @@ const StoryPointsSummary: React.FC<Props> = ({ issues }) => {
                 />
               ))
             }
-          </div>
+          </Grid>
         )
       }
     </>

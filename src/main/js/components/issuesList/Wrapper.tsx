@@ -3,7 +3,7 @@ import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    padding: theme.spacing(1, 2),
     marginBottom: theme.spacing(2),
     '& header': {
       display: 'flex',

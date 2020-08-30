@@ -9,6 +9,8 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "node",
+    "strict": true,
+    "downlevelIteration": true
   }
 }

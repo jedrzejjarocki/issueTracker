@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography, } from '@material-ui/core';
+import {
+  AppBar, Button, Divider, IconButton, makeStyles, MenuItem, Toolbar, Typography,
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import { fetchLogout } from '../../redux/user/actionCreators';
@@ -23,15 +25,12 @@ const useStyles = makeStyles((theme) => ({
   appBarLeft: {
     flexGrow: 1,
     padding: 0,
-    '& button': {
-      margin: theme.spacing(0, 1),
+    '& > *:not(:first-child)': {
+      marginRight: theme.spacing(2),
     },
   },
-  title: {
-    marginRight: theme.spacing(2),
-  },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginLeft: '-12px',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
@@ -48,7 +47,7 @@ const TopBar: React.FC<Props> = ({
   const classes = useStyles();
 
   const isAllProjectsUrl = match.url === '/projects' && match.isExact;
-  const hasProjects = projects && Object.keys(projects).length;
+  const hasProjects = projects && projects.length;
 
   return (
     <AppBar position="fixed" className={classes.appBar} variant="outlined">
@@ -62,7 +61,7 @@ const TopBar: React.FC<Props> = ({
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="primary" className={classes.title}>
+          <Typography variant="h6" color="primary">
             IssueTracker
           </Typography>
           {!isAllProjectsUrl && hasProjects && (
@@ -112,7 +111,7 @@ const TopBar: React.FC<Props> = ({
                 aria-haspopup={ariaHaspopup}
                 onClick={onClick}
               >
-                <UserAvatar name={username} isCurrentUser size="small" />
+                <UserAvatar username={username} currentUser size="small" />
               </IconButton>
             )}
           >
@@ -125,7 +124,7 @@ const TopBar: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: RootState) => ({
-  username: getUser(state).get('username'),
+  username: getUser(state)!.get('username'),
   projects: getProjectsAsArray(state),
 });
 

@@ -1,5 +1,9 @@
-import React, { KeyboardEventHandler, MouseEventHandler, MutableRefObject, useRef, useState, } from 'react';
-import { ClickAwayListener, Grow, MenuList, Paper, Popper, } from '@material-ui/core';
+import React, {
+  KeyboardEventHandler, MutableRefObject, useRef, useState,
+} from 'react';
+import {
+  ClickAwayListener, Grow, MenuList, Paper, Popper,
+} from '@material-ui/core';
 
 interface Props {
   render: (ref: MutableRefObject<any>, ariaHasPopup: boolean, toggleOpen: () => void) => React.ReactNode
@@ -11,13 +15,7 @@ const Dropdown: React.FC<Props> = ({ children, render }) => {
 
   const toggleOpen = () => setOpen(!open);
 
-  const handleClose: MouseEventHandler<Document> = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
+  const handleClickAway = () => setOpen(false);
 
   const handleListKeyDown: KeyboardEventHandler = (e) => {
     if (e.key === 'Tab') {
@@ -38,7 +36,7 @@ const Dropdown: React.FC<Props> = ({ children, render }) => {
         {({ TransitionProps }) => (
           <Grow {...TransitionProps}>
             <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
+              <ClickAwayListener onClickAway={handleClickAway}>
                 <MenuList
                   autoFocusItem={open}
                   onKeyDown={handleListKeyDown}

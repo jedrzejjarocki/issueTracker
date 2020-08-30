@@ -18,14 +18,6 @@ import java.util.Set;
 @ToString(exclude = {"sprints", "backlog"})
 @NoArgsConstructor
 public class Project extends BaseEntity {
-    public Project(TeamMember creator) {
-        creator.setProject(this);
-        this.team.add(creator);
-
-        Backlog backlog = new Backlog();
-        backlog.setProject(this);
-        this.backlog = backlog;
-    }
 
     @NotBlank(message = "Name must not be empty")
     private String name;

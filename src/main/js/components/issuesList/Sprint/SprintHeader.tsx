@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import clsx from 'clsx';
-import { Grid, IconButton, makeStyles, Typography, } from '@material-ui/core';
+import {
+  Grid, IconButton, makeStyles, Typography,
+} from '@material-ui/core';
 import format from 'date-fns/format';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
@@ -47,8 +49,8 @@ const SprintHeader: React.FC<Props> = ({
   })))();
 
   return (
-    <Grid container component="header" justify="space-between" wrap="nowrap">
-      <Grid item container direction="column" alignItems="flex-start" justify="flex-start">
+    <Grid container alignItems="flex-start" justify="space-between" wrap="nowrap" direction="row">
+      <Grid item container direction="column" alignItems="flex-start" justify="flex-start" wrap="nowrap">
         <Grid item>
           <Typography
             style={{ cursor: 'pointer' }}
@@ -64,6 +66,13 @@ const SprintHeader: React.FC<Props> = ({
             />
             {sprint.name}
           </Typography>
+          {sprint.startDate && (
+            <Typography
+              variant="caption"
+            >
+              {`${formatDate(sprint.startDate)} \u2022 ${formatDate(sprint.endDate)}`}
+            </Typography>
+          )}
         </Grid>
         {sprint.goal && (
         <Grid item>
@@ -72,22 +81,15 @@ const SprintHeader: React.FC<Props> = ({
         )}
       </Grid>
       <Grid container item wrap="nowrap" justify="flex-end" alignItems="center" className={classes.details}>
-        {sprint.startDate && (
-        <Typography
-          variant="caption"
-        >
-          {`${formatDate(sprint.startDate)} \u2022 ${formatDate(sprint.endDate)}`}
-        </Typography>
-        )}
         <StoryPointsSummary issues={issues} />
         <StartSprint sprint={sprint} projectId={project.id} />
         {userRole === UserRole.LEADER && (
           <Dropdown render={
-            (ref, ariaHaspopup, onClick) => (
+            (ref, ariaHaspopup, toggleOpen) => (
               <IconButton
                 ref={ref}
                 aria-haspopup={ariaHaspopup}
-                onClick={onClick}
+                onClick={toggleOpen}
               >
                 <MoreVertOutlinedIcon fontSize="small" />
               </IconButton>

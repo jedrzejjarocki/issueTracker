@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
-import { Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Typography, } from '@material-ui/core';
+import {
+  Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Typography,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import SubmitButton from '../../forms/SubmitButton';
 import { fetchDeleteSprint } from '../../../redux/issuesContainers/actionCreators';
 import Sprint from '../../../entities/Sprint';
@@ -12,12 +15,19 @@ interface Props extends ReduxProps {
   backlogId: number
 }
 
+const useStyles = makeStyles((theme) => ({
+  submitButton: {
+    backgroundColor: theme.palette.error.main,
+  },
+}));
+
 const DeleteSprint: React.FC<Props> = ({
   sprint, fetchDeleteSprint: fetchDelete, projectId, backlogId,
 }) => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
   const history = useHistory();
+  const classes = useStyles();
 
   const handleDelete = () => fetchDelete(sprint, backlogId, projectId, history);
 
@@ -39,7 +49,7 @@ const DeleteSprint: React.FC<Props> = ({
           </Typography>
         </DialogContent>
         <DialogActions>
-          <SubmitButton onClick={handleDelete} color="secondary" />
+          <SubmitButton onClick={handleDelete} className={classes.submitButton} />
         </DialogActions>
       </Dialog>
     </>

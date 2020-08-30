@@ -1,5 +1,6 @@
 package issuetracker.dtos;
 
+import issuetracker.models.Sprint;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,4 +14,6 @@ public class SprintDto extends IssueContainerDto {
     private Date startDate;
 
     private Date endDate;
+
+    private Sprint.SprintStatus status;
 }

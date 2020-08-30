@@ -9,7 +9,7 @@ const backlogLabel = (
   </Typography>
 );
 
-export default (issuesLists: (Sprint | Backlog)[]) => issuesLists.map((list) => ({
-  value: list.id,
-  label: list.type === 'Backlog' ? backlogLabel : <Typography>{list.name}</Typography>,
+export default (issuesContainers: (Sprint | Backlog)[]) => issuesContainers.map((container) => ({
+  value: container.id,
+  label: container instanceof Backlog ? backlogLabel : <Typography>{container.name}</Typography>,
 }));

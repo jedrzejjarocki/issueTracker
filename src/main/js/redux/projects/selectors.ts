@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 import { createSelector } from 'reselect';
 import { RootState } from '../rootReducer';
+import Project from '../../entities/Project';
 
 export function getProjects(state: RootState) {
   return state.projects;
@@ -11,5 +12,5 @@ export const getProjectsAsArray = createSelector(getProjects, (projects) => {
 });
 
 export function getProjectById(state: RootState, id: string) {
-  return state.projects.get(id);
+  return state.projects.get(id) as Project;
 }

@@ -8,7 +8,7 @@ type StateProps = {
   currentProject: {
     id: number,
     userRole: UserRole
-  }
+  } | null
 };
 
 export type UIState = Record<StateProps>;

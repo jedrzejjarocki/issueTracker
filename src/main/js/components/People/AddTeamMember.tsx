@@ -16,7 +16,11 @@ interface Props extends ReduxProps {
   userWithProjects: UserWithProjects
 }
 
-const AddTeamMember: React.FC<Props> = ({ projectsWhereCurrentUserIsLeader, userWithProjects, fetchAddTeamMember: addTeamMember }) => {
+const AddTeamMember: React.FC<Props> = ({
+  projectsWhereCurrentUserIsLeader,
+  userWithProjects,
+  fetchAddTeamMember: addTeamMember,
+}) => {
   const history = useHistory();
 
   const { userId, projects: userProjects, username } = userWithProjects;
@@ -83,7 +87,7 @@ const AddTeamMember: React.FC<Props> = ({ projectsWhereCurrentUserIsLeader, user
 
 const mapStateToProps = (state: RootState) => ({
   currentUser: getUser(state),
-  projectsWhereCurrentUserIsLeader: getProjectsWhereCurrentUserIsLeader(state, state.user.id),
+  projectsWhereCurrentUserIsLeader: getProjectsWhereCurrentUserIsLeader(state, state.user!.id),
 });
 
 const connector = connect(mapStateToProps, { fetchAddTeamMember });

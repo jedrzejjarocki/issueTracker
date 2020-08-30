@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography, } from '@material-ui/core';
+import {
+  Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { fetchDeleteIssue } from '../../redux/issues/actionCreators';
 import SubmitButton from '../forms/SubmitButton';

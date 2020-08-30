@@ -2,7 +2,9 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Card, CardActions, CardContent, Typography, } from '@material-ui/core';
+import {
+  Button, Card, CardActions, CardContent, Typography,
+} from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import schema from '../forms/validation/schemas/passwordRecoveryForm';
 import SubmitButton from '../forms/SubmitButton';

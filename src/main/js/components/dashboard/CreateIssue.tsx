@@ -19,6 +19,7 @@ import { getUser } from '../../redux/user/selectors';
 import { getIssuesContainersByProjectId } from '../../redux/issuesContainers/selectors';
 import { getTeamMembersByProjectId } from '../../redux/teamMembers/selectors';
 import { getProjectsAsArray } from '../../redux/projects/selectors';
+import User from '../../entities/User';
 
 const useStyles = makeStyles(() => ({
   halfWidth: {
@@ -41,7 +42,7 @@ const CreateIssue: React.FC<Props> = ({
   const classes = useStyles();
 
   const initialValues: CreateIssueFormFields = {
-    projectId: currentProjectId,
+    projectId: currentProjectId || 0,
     type: IssueType.TASK,
     summary: '',
     description: '',
@@ -63,7 +64,7 @@ const CreateIssue: React.FC<Props> = ({
       } : null,
       container: {
         id: values.containerId,
-        '@type': issuesContainers.find(({ id }) => id === values.containerId).type as 'Backlog' | 'Sprint',
+        '@type': issuesContainers.find(({ id }) => id === values.containerId)!.type as 'Backlog' | 'Sprint',
       },
       storyPointsEstimate: values.storyPointsEstimate,
     };
@@ -158,7 +159,7 @@ const CreateIssue: React.FC<Props> = ({
 const mapStateToProps = (state: RootState) => {
   const currentProjectId = getCurrentProject(state)?.id;
   return {
-    user: getUser(state),
+    user: getUser(state) as User,
     projects: getProjectsAsArray(state),
     issuesContainers: getIssuesContainersByProjectId(state, `${currentProjectId}`),
     teamMembers: getTeamMembersByProjectId(state, `${currentProjectId}`),

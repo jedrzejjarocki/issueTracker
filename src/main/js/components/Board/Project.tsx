@@ -1,8 +1,12 @@
 /* eslint-disable arrow-body-style */
 import React, { createContext, useState } from 'react';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
-import { DragDropContext, DraggableLocation, DragUpdate, DropResult, } from 'react-beautiful-dnd';
-import { Redirect, Route, RouteComponentProps, Switch, withRouter, } from 'react-router-dom';
+import {
+  DragDropContext, DraggableLocation, DragUpdate, DropResult,
+} from 'react-beautiful-dnd';
+import {
+  Redirect, Route, RouteComponentProps, Switch, withRouter,
+} from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { List } from 'immutable';
 import IssueDetails from '../Issue/IssueDetails';
@@ -17,8 +21,9 @@ import { getCurrentUserRoleByProjectId } from '../../redux/teamMembers/selectors
 import { reorderIssues } from '../../redux/issuesContainers/actionCreators';
 import { fetchReorderIssues, IssueRequestBody } from '../../redux/issues/actionCreators';
 import { getIssues } from '../../redux/issues/selectors';
+import ActiveSprint from '../activeSprintPage/ActiveSprint';
 
-export const DraggingOverContext = createContext(null);
+export const DraggingOverContext = createContext<number | null>(null);
 
 const Project: React.FC<RouteComponentProps<any> & ReduxProps> = ({
   project,
@@ -30,19 +35,16 @@ const Project: React.FC<RouteComponentProps<any> & ReduxProps> = ({
   fetchReorderIssues: fetchReorder,
 }) => {
   useSetCurrentProject(userRole);
-  const [draggingOver, setDraggingOver] = useState(null);
+  const [draggingOver, setDraggingOver] = useState<number | null>(null);
 
   const dispatch = useDispatch();
 
   const shouldNotBeReordered = (destination: DraggableLocation, source: DraggableLocation) => {
-    return (
-      !destination
-      || (destination.droppableId === source.droppableId && destination.index === source.index)
-    );
+    return destination.droppableId === source.droppableId && destination.index === source.index;
   };
 
   const getIssuesListOfContainer = (containerId: string): List<number> => {
-    return [...sprints, backlog].find((container) => container.id === +containerId).issues;
+    return [...sprints, backlog].find((container) => container.id === +containerId)!.issues;
   };
 
   const getPreviousOrderSnapshot = (sourceContainerId: string, destinationContainerId: string) => {
@@ -59,7 +61,7 @@ const Project: React.FC<RouteComponentProps<any> & ReduxProps> = ({
 
   const handleDragEnd = ({ draggableId, source, destination }: DropResult) => {
     setDraggingOver(null);
-    if (shouldNotBeReordered(destination, source)) return;
+    if (!destination || shouldNotBeReordered(destination, source)) return;
     const sourceContainerId = source.droppableId;
     const destinationContainerId = destination.droppableId;
 
@@ -74,7 +76,7 @@ const Project: React.FC<RouteComponentProps<any> & ReduxProps> = ({
       dispatch,
     );
 
-    const issue = issues.get(draggableId).toJS();
+    const issue = issues.get(draggableId)!.toJS();
 
     const requestBody: IssueRequestBody = {
       ...issue,
@@ -95,11 +97,11 @@ const Project: React.FC<RouteComponentProps<any> & ReduxProps> = ({
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd} onDragUpdate={handleDraggingOver}>
-      <DraggingOverContext.Provider value={draggingOver}>
-        <Grid container>
-          <Switch>
-            <Route path={`${match.path}/board`}>
+    <Grid container>
+      <Switch>
+        <Route path={`${match.path}/board`}>
+          <DragDropContext onDragEnd={handleDragEnd} onDragUpdate={handleDraggingOver}>
+            <DraggingOverContext.Provider value={draggingOver}>
               <Grid container spacing={2}>
                 <Grid item xs lg>
                   {sprints.map((sprint) => (
@@ -111,17 +113,22 @@ const Project: React.FC<RouteComponentProps<any> & ReduxProps> = ({
                   <IssueDetails project={project} />
                 </Route>
               </Grid>
-            </Route>
-            <Route path={`${match.path}/team`}>
-              <Team />
-            </Route>
-            <Route>
-              <Redirect to={`${match.url}/board`} />
-            </Route>
-          </Switch>
-        </Grid>
-      </DraggingOverContext.Provider>
-    </DragDropContext>
+            </DraggingOverContext.Provider>
+          </DragDropContext>
+        </Route>
+        <Route path={`${match.path}/team`}>
+          <Team />
+        </Route>
+        <Route path={`${match.path}/activeSprint`}>
+          <DragDropContext onDragEnd={handleDragEnd} onDragUpdate={handleDraggingOver}>
+            <ActiveSprint />
+          </DragDropContext>
+        </Route>
+        <Route>
+          <Redirect to={`${match.url}/board`} />
+        </Route>
+      </Switch>
+    </Grid>
   );
 };
 

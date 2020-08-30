@@ -7,14 +7,14 @@ export interface IssueProps extends BaseEntity {
   version: number
   priority: number
   type: IssueType
-  status: IssueStatus,
-  containerId: number,
-  description: string | undefined
-  assignee: number | undefined,
-  storyPointsEstimate: number | null
+  status: IssueStatus
+  containerId: number
+  description: string
+  assignee: number | null
+  storyPointsEstimate: number
   createdBy: string
   createdTime: string
-  lastModifiedBy: string,
+  lastModifiedBy: string
   lastModifiedTime: string
 }
 
@@ -22,17 +22,17 @@ const defaultIssueProps: IssueProps = {
   id: 0,
   summary: '',
   version: 0,
-  priority: null,
-  type: null,
-  status: null,
+  priority: 0,
+  type: IssueType.NEW_FEATURE,
+  status: IssueStatus.TO_DO,
   containerId: 0,
   description: '',
   assignee: 0,
   storyPointsEstimate: 0,
-  createdBy: null,
-  createdTime: null,
-  lastModifiedBy: null,
-  lastModifiedTime: null,
+  createdBy: '',
+  createdTime: '',
+  lastModifiedBy: '',
+  lastModifiedTime: '',
 };
 
 export default class Issue extends Record(defaultIssueProps) {}

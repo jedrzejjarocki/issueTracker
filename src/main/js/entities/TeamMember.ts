@@ -14,7 +14,7 @@ const defaultTeamMemberProps: TeamMemberProps = {
   projectId: 0,
   userId: 0,
   username: '',
-  role: null,
+  role: UserRole.DEVELOPER,
 };
 
 export default class TeamMember extends Record(defaultTeamMemberProps) {}

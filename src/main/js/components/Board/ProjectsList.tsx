@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { Divider, Link, List, ListItem, ListItemText, makeStyles, Paper, Typography, } from '@material-ui/core';
+import {
+  Divider, Link, List, ListItem, ListItemText, makeStyles, Paper, Typography,
+} from '@material-ui/core';
 import CreateProject from '../issuesList/CreateProject';
 import Loading from '../Loading';
 import { RootState } from '../../redux/rootReducer';

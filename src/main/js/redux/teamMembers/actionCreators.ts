@@ -60,25 +60,21 @@ export const fetchAddTeamMember: FetchAddTeamMember = (
   username,
   history,
 ) => async (dispatch) => {
-  let message: NotificationMessage;
-
   try {
     const { data } = await axios.post(TEAM_MEMBERS_URL, requestBody);
     const addMemberPayload = { ...data, username };
-    message = {
-      content: 'Team member successfully added',
-      severity: NotificationSeverity.SUCCESS,
-    };
 
     dispatch(addMember(new TeamMember(addMemberPayload)));
+    dispatch(setNotification({
+      content: 'Team member successfully added',
+      severity: NotificationSeverity.SUCCESS,
+    }));
     history.push('/app/people');
   } catch (err) {
-    message = {
+    dispatch(setNotification({
       content: 'Team member couldn\'t be added',
       severity: NotificationSeverity.ERROR,
-    };
-  } finally {
-    dispatch(setNotification(message));
+    }));
   }
 };
 
@@ -95,17 +91,14 @@ interface FetchInviteUser {
 }
 
 export const fetchInviteUser: FetchInviteUser = (requestBody) => async (dispatch) => {
-  let message: NotificationMessage;
   try {
     await axios.post(`${TEAM_MEMBERS_URL}/invitations`, requestBody);
-    message = {
+    dispatch(setNotification({
       content: 'User has been invited',
       severity: NotificationSeverity.SUCCESS,
-    };
+    }));
   } catch (err) {
-    message = defaultErrorNotificationMessage;
-  } finally {
-    dispatch(setNotification(message));
+    dispatch(setNotification(defaultErrorNotificationMessage));
   }
 };
 

@@ -6,7 +6,7 @@ import { SPRINTS_URL } from '../../api/commons';
 import { setNotification } from '../ui/actionCreators';
 import { RouterHistory } from '../utilTypes';
 import { RootThunk } from '../store';
-import Sprint from '../../entities/Sprint';
+import Sprint, { SprintStatus } from '../../entities/Sprint';
 import {
   ADD_SPRINT,
   AddSprintAction,
@@ -141,8 +141,9 @@ export interface UpdateSprintRequestBody {
     id: number,
   },
   '@type': 'Sprint'
-  startDate?: string
-  endDate?: string
+  startDate: string
+  endDate: string
+  status: SprintStatus
 }
 
 interface FetchUpdateSprint {
