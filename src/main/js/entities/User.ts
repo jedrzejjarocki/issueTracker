@@ -6,8 +6,8 @@ export interface UserProps extends BaseEntity {
 }
 
 const defaultUserProps: UserProps = {
-  id: null,
+  id: 0,
   username: '',
 };
 
-export class User extends Record(defaultUserProps) {}
+export default class User extends Record(defaultUserProps) {}

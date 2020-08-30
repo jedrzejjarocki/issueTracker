@@ -68,13 +68,13 @@ describe('issues reducer', () => {
     const newState = reducer(issues, action);
 
     expect(newState.size).toBe(issues.size);
-    expect(newState.get(`${issue.id}`).containerId).toBe(backlogId);
+    expect(newState.get(`${issue.id}`)!.containerId).toBe(backlogId);
   });
 
   it('should set assignee to null if equals deleted member id', () => {
-    const action = deleteMember(100, issue.assignee);
+    const action = deleteMember(100, issue.assignee as number);
     const newState = reducer(issues, action);
 
-    expect(newState.get(`${issue.id}`).assignee).toBeNull();
+    expect(newState.get(`${issue.id}`)!.assignee).toBeNull();
   });
 });

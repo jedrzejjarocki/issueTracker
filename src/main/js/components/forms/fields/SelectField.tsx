@@ -17,6 +17,7 @@ const SelectField: React.FC<Props > = ({ name, options, ...rest }) => (
     name={name}
     component={Select}
     options={options}
+    noHelper
     {...rest}
   />
 );

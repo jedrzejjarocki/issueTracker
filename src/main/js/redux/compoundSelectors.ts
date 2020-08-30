@@ -4,6 +4,7 @@ import { getTeamMembers, getTeamMembersByUserIdAndRole } from './teamMembers/sel
 import { getProjects } from './projects/selectors';
 import { UserWithProjects } from './user/selectors';
 import { UserRole } from './utilTypes';
+import Project from '../entities/Project';
 
 export const getUsersWithTheirProjects = createSelector(
   getTeamMembers, getProjects,
@@ -18,7 +19,7 @@ export const getUsersWithTheirProjects = createSelector(
       username,
       role,
     }) => {
-      const { name, id } = projects.get(`${projectId}`);
+      const { name, id } = projects.get(`${projectId}`) as Project;
 
       if (users[userId]) {
         users[userId].projects.push({
@@ -46,7 +47,7 @@ export const getUsersWithTheirProjects = createSelector(
 export const getProjectsWhereCurrentUserIsLeader = createSelector(
   getTeamMembersByUserIdAndRole(UserRole.LEADER), getProjects,
   (teamMembers, projects) => {
-    return teamMembers.map((member) => projects.get(`${member.projectId}`))
+    return teamMembers.map((member) => projects.get(`${member.projectId}`) as Project)
       .valueSeq().toArray();
   },
 );

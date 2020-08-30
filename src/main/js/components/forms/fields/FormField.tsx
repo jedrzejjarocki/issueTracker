@@ -3,10 +3,11 @@ import { Field } from 'formik';
 
 interface Props {
   name: string
-  error?: string,
+  error?: string
+  noHelper?: boolean
   touched?: boolean
   type?: 'password' | 'number' | 'text'
-  component: React.ComponentType
+  component: any
   options?: React.ReactNode
   multiline?: boolean
   rows?: number
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const FormField: React.FC<Props> = ({
-  name, error, touched, ...rest
+  name, error, touched, noHelper, ...rest
 }) => {
   const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
   return (
@@ -24,7 +25,7 @@ const FormField: React.FC<Props> = ({
       label={capitalize(name)}
       variant="outlined"
       error={!!error && touched}
-      helperText={(touched && error) || ' '}
+      helperText={!noHelper && ((touched && error) || ' ')}
       {...rest}
     />
   );

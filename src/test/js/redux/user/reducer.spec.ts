@@ -1,8 +1,8 @@
 import reducer from '../../../../main/js/redux/user/reducer';
-import { User } from '../../../../main/js/entities/User';
+import User from '../../../../main/js/entities/User';
 import { setUser } from '../../../../main/js/redux/user/actionCreators';
 
-const initialState: User = null;
+const initialState = null;
 
 describe('user reducer', () => {
   it('should set user', () => {

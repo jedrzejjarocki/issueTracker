@@ -12,17 +12,19 @@ import {
 } from '../../../../main/js/redux/issues/actionCreators';
 import { IssueStatus, IssueType } from '../../../../main/js/redux/utilTypes';
 import { ISSUES_URL } from '../../../../main/js/api/commons';
-import { ADD_ISSUE, AddIssueAction, DELETE_ISSUE, UPDATE_ISSUE, } from '../../../../main/js/redux/issues/types';
+import {
+  ADD_ISSUE, AddIssueAction, DELETE_ISSUE, UPDATE_ISSUE,
+} from '../../../../main/js/redux/issues/types';
 import Issue from '../../../../main/js/entities/Issue';
 import {
   defaultErrorNotificationMessage,
-  NotificationSeverity
+  NotificationSeverity,
 } from '../../../../main/js/redux/ui/NotificationMessage';
 import { SET_NOTIFICATION } from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as object),
   useHistory: () => ({
     push: jest.fn(),
   }),
@@ -61,8 +63,7 @@ describe('issues actions creators', () => {
       mocked(axios.post).mockImplementationOnce(() => Promise.resolve(successResponseBody));
 
       return dispatch(fetchCreateIssue(requestBody)).then(() => {
-        const url = ISSUES_URL;
-        expect(axios.post).toBeCalledWith(url, requestBody);
+        expect(axios.post).toBeCalledWith(ISSUES_URL, requestBody);
       });
     });
 
@@ -124,8 +125,7 @@ describe('issues actions creators', () => {
       mocked(axios.put).mockImplementationOnce(() => Promise.resolve(successResponseBody));
 
       return dispatch(fetchUpdateIssue(requestBody, projectId, history)).then(() => {
-        const url = ISSUES_URL;
-        expect(axios.put).toBeCalledWith(url, requestBody);
+        expect(axios.put).toBeCalledWith(ISSUES_URL, requestBody);
       });
     });
 

@@ -1,7 +1,9 @@
 import { Map } from 'immutable';
 import { RootAction } from '../rootReducer';
 import { DELETE_SPRINT } from '../issuesContainers/types';
-import { ADD_ISSUE, DELETE_ISSUE, IssuesState, SET_ISSUES, UPDATE_ISSUE, UPDATE_ISSUES, } from './types';
+import {
+  ADD_ISSUE, DELETE_ISSUE, IssuesState, SET_ISSUES, UPDATE_ISSUE, UPDATE_ISSUES,
+} from './types';
 import { DELETE_MEMBER } from '../teamMembers/types';
 import Issue from '../../entities/Issue';
 

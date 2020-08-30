@@ -13,7 +13,7 @@ import schema from '../../forms/validation/schemas/startSprint';
 import { fetchUpdateSprint, UpdateSprintRequestBody } from '../../../redux/issuesContainers/actionCreators';
 import { RootState } from '../../../redux/rootReducer';
 
-import Sprint from '../../../entities/Sprint';
+import Sprint, { SprintStatus } from '../../../entities/Sprint';
 import { UserRole } from '../../../redux/utilTypes';
 import { getSprintsByProjectId } from '../../../redux/issuesContainers/selectors';
 import { getCurrentProject } from '../../../redux/ui/selectors';
@@ -24,11 +24,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const isStarted = (sprint: Sprint) => !!sprint.startDate;
+const isStarted = ({ status }: Sprint) => status === SprintStatus.PENDING;
 
 const isEmpty = (sprint: Sprint) => !sprint.issues || !sprint.issues.size;
 
-const projectHasActiveSprint = (sprints: Sprint[]) => sprints.some((s) => !!s.startDate);
+const projectHasActiveSprint = (sprints: Sprint[]) => sprints.some(isStarted);
 
 const canBeStarted = (sprint: Sprint, sprints: Sprint[]) => !(isEmpty(sprint) || projectHasActiveSprint(sprints));
 
@@ -66,6 +66,7 @@ const StartSprint: React.FC<Props> = ({
       startDate: addMinutes(startDate, 15).toISOString(),
       endDate: addWeeks(startDate, duration).toISOString(),
       '@type': 'Sprint',
+      status: SprintStatus.PENDING,
     };
 
     fetchUpdate(requestBody);
@@ -107,7 +108,7 @@ const StartSprint: React.FC<Props> = ({
                 label="Start date"
                 value={startDate}
                 minDate={new Date()}
-                onChange={(date) => setStartDate(date)}
+                onChange={(date) => setStartDate(date as Date)}
                 className={classes.halfWidth}
                 KeyboardButtonProps={{
                   'aria-label': 'start date',

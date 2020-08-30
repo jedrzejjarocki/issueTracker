@@ -26,7 +26,7 @@ export default (teamMembers: TeamMember[], currentUserId: number) => {
             alignItems: 'center',
           }}
         >
-          <UserAvatar name={username} isCurrentUser={isCurrentUser} size="small" style={{ marginRight: '8px' }} />
+          <UserAvatar username={username} currentUser={isCurrentUser} size="small" style={{ marginRight: '8px' }} />
           <Typography style={{ display: 'inline' }}>
             {username}
             {isCurrentUser && (

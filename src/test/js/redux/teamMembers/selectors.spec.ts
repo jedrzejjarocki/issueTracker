@@ -9,7 +9,7 @@ import TeamMember from '../../../../main/js/entities/TeamMember';
 import { RootState } from '../../../../main/js/redux/rootReducer';
 import { UserRole } from '../../../../main/js/redux/utilTypes';
 import Project from '../../../../main/js/entities/Project';
-import { User } from '../../../../main/js/entities/User';
+import User from '../../../../main/js/entities/User';
 
 const user = new User({ id: 1 });
 const member1 = new TeamMember({ id: 1 });
@@ -68,7 +68,7 @@ describe('team members selectors', () => {
     const membersByProjectId = members
       .filter((member) => project.team.contains(member.id))
       .valueSeq().toArray();
-    const expectedRole = membersByProjectId.find(({ userId }) => userId === user.id).role;
+    const expectedRole = membersByProjectId.find(({ userId }) => userId === user.id)!.role;
 
     const result = getCurrentUserRoleByProjectId.resultFunc(membersByProjectId, user);
     expect(result).toBe(expectedRole);

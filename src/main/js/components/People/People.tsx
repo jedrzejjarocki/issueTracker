@@ -20,7 +20,7 @@ const People: React.FC<ReduxProps> = ({ usersWithProjects, currentUserId }) => (
 
 const mapStateToProps = (state: RootState) => ({
   usersWithProjects: getUsersWithTheirProjects(state),
-  currentUserId: getUser(state).id,
+  currentUserId: getUser(state)!.id,
 });
 
 const connector = connect(mapStateToProps);

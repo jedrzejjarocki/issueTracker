@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Card, Grid, IconButton, makeStyles, Typography, } from '@material-ui/core';
+import {
+  Card, Grid, IconButton, makeStyles, Typography,
+} from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
 import schema, { UpdateIssueFormFields } from '../forms/validation/schemas/updateIssue';
@@ -22,17 +24,13 @@ import { getIssueById } from '../../redux/issues/selectors';
 import Project from '../../entities/Project';
 
 const useStyles = makeStyles((theme) => ({
-  flexContainer: {
-    '& > *': {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      margin: theme.spacing(2),
-    },
+  header: {
+    paddingLeft: theme.spacing(2),
   },
-  flexRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     margin: theme.spacing(0, 2),
   },
   halfWidth: {
@@ -41,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
-  issueKey: {
-    padding: theme.spacing(2),
+  submitButton: {
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -86,18 +84,20 @@ const IssueDetails: React.FC<Props> = ({
     <>
       {project && issue && (
         <Grid item xs={4} lg={5}>
-          <Card variant="outlined" className={classes.flexContainer}>
-            <div className={classes.flexRow}>
-              <Typography className={classes.issueKey} variant="button">{`${project.projectKey}-${issue.id}`}</Typography>
-              <div>
+          <Card variant="outlined">
+            <Grid container className={classes.header} wrap="nowrap" direction="row" justify="space-between" alignItems="center">
+              <Grid item>
+                <Typography variant="button">{`${project.projectKey}-${issue.id}`}</Typography>
+              </Grid>
+              <Grid item>
                 <DeleteIssue issue={issue} projectId={project.id} history={history} />
                 <RouterLink to={`/app/projects/${project.id}/board`}>
                   <IconButton>
                     <CloseIcon />
                   </IconButton>
                 </RouterLink>
-              </div>
-            </div>
+              </Grid>
+            </Grid>
             <Formik
               enableReinitialize
               onSubmit={onSubmit}
@@ -116,7 +116,7 @@ const IssueDetails: React.FC<Props> = ({
               validationSchema={schema}
             >
               {(formikProps) => (
-                <Form>
+                <Form className={classes.form}>
                   <SelectField
                     name="type"
                     label="Issue type"
@@ -148,7 +148,7 @@ const IssueDetails: React.FC<Props> = ({
                     inputProps={{ min: '0', step: '1' }}
                     className={classes.halfWidth}
                   />
-                  {formikProps.dirty && <SubmitButton />}
+                  {formikProps.dirty && <SubmitButton className={classes.submitButton} />}
                 </Form>
               )}
             </Formik>
@@ -166,7 +166,7 @@ const mapStateToProps = (
   const { issueId, projectId } = props.match.params;
   return {
     issue: getIssueById(state, issueId),
-    userId: getUser(state).id,
+    userId: getUser(state)!.id,
     teamMembers: getTeamMembersByProjectId(state, projectId),
   };
 };

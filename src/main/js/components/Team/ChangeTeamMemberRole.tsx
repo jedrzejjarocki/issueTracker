@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography, } from '@material-ui/core';
+import {
+  Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography,
+} from '@material-ui/core';
 import SubmitButton from '../forms/SubmitButton';
 import { fetchChangeTeamMemberRole } from '../../redux/teamMembers/actionCreators';
 import TeamMember from '../../entities/TeamMember';

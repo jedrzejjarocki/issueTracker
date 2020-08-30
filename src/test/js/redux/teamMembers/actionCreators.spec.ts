@@ -32,7 +32,7 @@ import { SET_NOTIFICATION, SetNotificationAction } from '../../../../main/js/red
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as object),
   useHistory: () => ({
     push: jest.fn(),
   }),

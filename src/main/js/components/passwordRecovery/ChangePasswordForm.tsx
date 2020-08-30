@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { Button, Card, CardActions, CardContent, makeStyles, Typography, } from '@material-ui/core';
+import {
+  Button, Card, CardActions, CardContent, makeStyles, Typography,
+} from '@material-ui/core';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import schema from '../forms/validation/schemas/changePasswordForm';
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props extends ReduxProps {
-  token?: string
+  token: string
 }
 
 const ChangePasswordForm: React.FC<Props> = ({ token, fetchChangePassword: fetchChange }) => {

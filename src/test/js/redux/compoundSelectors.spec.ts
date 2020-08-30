@@ -50,7 +50,7 @@ describe('compound selectors', () => {
       expect(result.length).toBe(expectedNumOfUsers);
 
       const user1Result = result.find(({ userId }) => userId === 1);
-      expect(user1Result.projects).toEqual([{
+      expect(user1Result!.projects).toEqual([{
         id: project1.id,
         projectName: project1.name,
         userRole: UserRole.DEVELOPER,
@@ -62,7 +62,7 @@ describe('compound selectors', () => {
       ]);
 
       const user2Result = result.find(({ userId }) => userId === 2);
-      expect(user2Result.projects).toEqual([{
+      expect(user2Result!.projects).toEqual([{
         id: project2.id,
         projectName: project2.name,
         userRole: UserRole.DEVELOPER,

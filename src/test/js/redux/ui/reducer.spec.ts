@@ -4,10 +4,11 @@ import { setCurrentProject, setLoading, setNotification } from '../../../../main
 import { defaultErrorNotificationMessage } from '../../../../main/js/redux/ui/NotificationMessage';
 import { UserRole } from '../../../../main/js/redux/utilTypes';
 import { initialState } from '../../../../main/js/redux/ui/types';
+import { setUser } from '../../../../main/js/redux/user/actionCreators';
 
 describe('ui reducer', () => {
   it('should return initial state when action type doesn\'t match', () => {
-    const action = setProjects(null);
+    const action = setUser(null);
     const newState = reducer(initialState, action);
     expect(newState).toBe(initialState);
   });

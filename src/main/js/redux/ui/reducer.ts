@@ -1,5 +1,7 @@
 import { RootAction } from '../rootReducer';
-import { initialState, SET_CURRENT_PROJECT, SET_LOADING, SET_NOTIFICATION, UIState, } from './types';
+import {
+  initialState, SET_CURRENT_PROJECT, SET_LOADING, SET_NOTIFICATION, UIState,
+} from './types';
 
 export default (state: UIState = initialState, action: RootAction) => {
   switch (action.type) {

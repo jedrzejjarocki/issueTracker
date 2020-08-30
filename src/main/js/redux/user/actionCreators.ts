@@ -12,13 +12,12 @@ import { setIssues } from '../issues/actionCreators';
 import { setTeamMembers } from '../teamMembers/actionCreators';
 import { RouterHistory, UserRole } from '../utilTypes';
 import { RootThunk } from '../store';
-import { User } from '../../entities/User';
+import User from '../../entities/User';
 import {
   accountCreatedMessage,
   checkEmailForPasswordRecoveryLinkMessage,
   defaultErrorNotificationMessage,
   incorrectUsernameOrPasswordMessage,
-  NotificationMessage,
   NotificationSeverity,
   passwordChangedSuccessfullyMessage,
   userWithGivenEmailDoesNotExistMessage,
@@ -35,7 +34,7 @@ import { IssuesState } from '../issues/types';
 
 export const SET_USER = 'SET_USER';
 
-export const setUser = (user: User): SetUserAction => ({
+export const setUser = (user: User | null): SetUserAction => ({
   type: SET_USER,
   payload: user,
 });
@@ -238,11 +237,7 @@ const setData = (responseBody: CurrentUserResponseBody, dispatch: Dispatch) => {
 export const fetchCurrentUser = async (dispatch: Dispatch) => {
   try {
     const { status, data } = await axios.get(`${USERS_URL}/current`);
-    if (status === 200) {
-      setData(data, dispatch);
-    }
-    // eslint-disable-next-line no-empty
-  } catch (err) {
+    if (status === 200) setData(data, dispatch);
   } finally {
     dispatch(setLoading(false));
   }
@@ -254,21 +249,18 @@ interface FetchChangePassword {
 
 export const fetchChangePassword: FetchChangePassword = (password, token, history) => (
   async (dispatch) => {
-    let notificationMessage: NotificationMessage;
     try {
       await axios.put(`${USERS_URL}/reset-password`, {
         token,
         password,
       });
-      notificationMessage = passwordChangedSuccessfullyMessage;
+      dispatch(setNotification(passwordChangedSuccessfullyMessage));
       history.push('/signin');
     } catch (err) {
-      notificationMessage = {
+      dispatch(setNotification({
         content: err.response.data,
         severity: NotificationSeverity.ERROR,
-      };
-    } finally {
-      dispatch(setNotification(notificationMessage));
+      }));
     }
   }
 );
@@ -282,16 +274,13 @@ export const fetchRequestPasswordRecovery: FetchRequestPasswordRecovery = (
   history,
 ) => (
   async (dispatch) => {
-    let notificationMessage: NotificationMessage;
     try {
       await axios.post(`${USERS_URL}/reset-password`, requestBody);
-      notificationMessage = checkEmailForPasswordRecoveryLinkMessage;
+      dispatch(setNotification(checkEmailForPasswordRecoveryLinkMessage));
       history.push('/');
     } catch (err) {
-      notificationMessage = err?.response?.status === 401
+      dispatch(setNotification(err?.response?.status === 401
         ? userWithGivenEmailDoesNotExistMessage
-        : defaultErrorNotificationMessage;
-    } finally {
-      dispatch(setNotification(notificationMessage));
+        : defaultErrorNotificationMessage));
     }
   });

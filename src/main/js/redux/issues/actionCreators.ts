@@ -39,21 +39,21 @@ export interface IssueRequestBody {
 }
 
 interface IssueDto {
-  id: number,
-  containerId: number,
-  summary: string,
-  description: null,
-  version: 6,
-  type: IssueType,
-  status: IssueStatus,
-  priority: number,
+  id: number
+  containerId: number
+  summary: string
+  description: string
+  version: 6
+  type: IssueType
+  status: IssueStatus
+  priority: number
   assignee: {
     id: number
   },
-  storyPointsEstimate: number,
+  storyPointsEstimate: number
   createdBy: string,
   createdTime: string,
-  lastModifiedBy: string,
+  lastModifiedBy: string
   lastModifiedTime: string
 }
 
@@ -86,7 +86,7 @@ export const deleteIssue = (issueId: number, containerId: number): DeleteIssueAc
 });
 
 const issueFromDto = (dto: IssueDto): Issue => {
-  const assignee = dto.assignee ? dto.assignee.id : null;
+  const assignee = dto.assignee ? dto.assignee.id : undefined;
 
   return new Issue({
     ...dto,

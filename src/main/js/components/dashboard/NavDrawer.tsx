@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { Divider, Drawer, Hidden, List, ListItem, ListItemIcon, ListItemText, makeStyles, } from '@material-ui/core';
+import {
+  Divider, Drawer, Hidden, List, ListItem, ListItemIcon, ListItemText, makeStyles,
+} from '@material-ui/core';
 import ListOutlinedIcon from '@material-ui/icons/ListOutlined';
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined';
@@ -45,7 +47,7 @@ const NavDrawer: React.FC<Props> = ({
     icon: <PeopleAltOutlinedIcon />,
     text: 'Team',
   }, {
-    to: `/app/projects/${currentProjectId}/active`,
+    to: `/app/projects/${currentProjectId}/activeSprint`,
     icon: <TableChartOutlinedIcon />,
     text: 'Active sprint',
   }, {

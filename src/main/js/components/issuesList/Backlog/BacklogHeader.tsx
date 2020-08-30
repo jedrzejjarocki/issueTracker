@@ -11,7 +11,7 @@ interface Props {
 }
 
 const BacklogHeader: React.FC<Props> = ({ projectId, projectKey, issues }) => (
-  <Grid component="header" container justify="space-between" direction="row" alignItems="center" wrap="nowrap">
+  <Grid container justify="space-between" direction="row" alignItems="flex-start" wrap="nowrap">
     <Grid item><Typography variant="subtitle2">Backlog</Typography></Grid>
     <Grid container item style={{ margin: '4px 0px' }} justify="flex-end" alignItems="center">
       <StoryPointsSummary issues={issues} />

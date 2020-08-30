@@ -34,7 +34,7 @@ describe('issues containers selectors', () => {
 
   describe('get sprints by project id', () => {
     it('should return empty array', () => {
-      const result = getSprintsByProjectId.resultFunc(null, null);
+      const result = getSprintsByProjectId.resultFunc(new Project(), Map());
       expect(result).toEqual([]);
     });
 
@@ -53,9 +53,11 @@ describe('issues containers selectors', () => {
   });
 
   describe('get issues containers by project id', () => {
-    it('should return empty array', () => {
-      const result = getIssuesContainersByProjectId.resultFunc(null, null);
-      expect(result).toEqual([]);
+    it('should return array with backlog', () => {
+      const backlog = new Backlog();
+      const result = getIssuesContainersByProjectId.resultFunc(backlog, []);
+      expect(result.length).toBe(1);
+      expect(result[0]).toEqual(backlog);
     });
 
     it('should return array of containers with backlog as last', () => {

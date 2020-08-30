@@ -9,10 +9,11 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+
+import static issuetracker.models.Sprint.SprintStatus.PLANNED;
 
 @Entity
 @Getter
@@ -30,9 +31,15 @@ public class Sprint extends IssueContainer {
 
     private String goal;
 
-    @FutureOrPresent
     private Date startDate;
 
-    @FutureOrPresent
     private Date endDate;
+
+    private SprintStatus status = PLANNED;
+
+    public enum SprintStatus {
+        PLANNED,
+        PENDING,
+        COMPLETED
+    }
 }

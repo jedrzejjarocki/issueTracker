@@ -2,7 +2,9 @@ import { Map } from 'immutable';
 import TeamMember from '../../entities/TeamMember';
 import { RootAction } from '../rootReducer';
 import { ADD_PROJECT } from '../projects/types';
-import { ADD_MEMBER, DELETE_MEMBER, SET_TEAM_MEMBERS, TeamMembersState, UPDATE_MEMBER, } from './types';
+import {
+  ADD_MEMBER, DELETE_MEMBER, SET_TEAM_MEMBERS, TeamMembersState, UPDATE_MEMBER,
+} from './types';
 
 export default (state: TeamMembersState = Map(), action: RootAction) => {
   switch (action.type) {

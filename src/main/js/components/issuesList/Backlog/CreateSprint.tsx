@@ -13,10 +13,9 @@ interface CreateSprintFormFields {
 
 interface Props extends ReduxProps {
   projectId: number
-  userRole: UserRole
 }
 
-const CreateSprint: React.FC<Props> = ({ fetchCreateSprint, projectId, userRole }) => {
+const CreateSprint: React.FC<Props> = ({ fetchCreateSprint: fetchCreate, projectId, userRole }) => {
   const initialValues: CreateSprintFormFields = {
     name: '',
     goal: '',
@@ -31,7 +30,7 @@ const CreateSprint: React.FC<Props> = ({ fetchCreateSprint, projectId, userRole 
         id: projectId,
       },
     };
-    fetchCreateSprint(requestBody);
+    fetchCreate(requestBody);
   };
 
   return (

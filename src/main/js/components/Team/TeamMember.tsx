@@ -1,5 +1,7 @@
 import React from 'react';
-import { Grid, makeStyles, Paper, Typography, } from '@material-ui/core';
+import {
+  Grid, makeStyles, Paper, Typography,
+} from '@material-ui/core';
 import UserAvatar from '../commons/UserAvatar';
 import DeleteMember from './DeleteMember';
 import ChangeTeamMemberRole from './ChangeTeamMemberRole';
@@ -20,16 +22,15 @@ const useStyles = makeStyles(() => ({
 interface Props {
   member: Member
   userRole: UserRole
-  currentUserId: number
 }
 
-const TeamMember: React.FC<Props> = ({ member, userRole, currentUserId }) => {
+const TeamMember: React.FC<Props> = ({ member, userRole }) => {
   const classes = useStyles();
 
   return (
     <Grid item>
       <Paper variant="outlined" className={classes.root}>
-        <UserAvatar name={member.username} isCurrentUser={member.userId === currentUserId} size="large" />
+        <UserAvatar username={member.username} userId={member.userId} size="large" />
         <Typography variant="h5">{member.username}</Typography>
         <Typography variant="overline">{member.role}</Typography>
         {userRole === UserRole.LEADER && (

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Card, CardActions, CardContent, Collapse, Grid, IconButton, makeStyles, Typography, } from '@material-ui/core';
+import {
+  Card, CardActions, CardContent, Collapse, Grid, IconButton, makeStyles, Typography,
+} from '@material-ui/core';
 import clsx from 'clsx';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import UserAvatar from '../commons/UserAvatar';
@@ -45,7 +47,7 @@ const UserCard: React.FC<Props> = ({ userWithProjects, currentUserId }) => {
       <Card variant="outlined" className={classes.root}>
         <CardContent>
           <Grid container direction="column" alignItems="center" justify="space-between">
-            <UserAvatar name={username} isCurrentUser={userId === currentUserId} size="large" />
+            <UserAvatar username={username} userId={userId} size="large" />
             <Typography style={{ paddingTop: '12px' }} variant="h5">{username}</Typography>
           </Grid>
         </CardContent>

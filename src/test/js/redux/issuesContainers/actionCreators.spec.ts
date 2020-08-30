@@ -12,7 +12,7 @@ import {
   fetchUpdateSprint,
   UpdateSprintRequestBody,
 } from '../../../../main/js/redux/issuesContainers/actionCreators';
-import Sprint from '../../../../main/js/entities/Sprint';
+import Sprint, { SprintStatus } from '../../../../main/js/entities/Sprint';
 import { SPRINTS_URL } from '../../../../main/js/api/commons';
 import {
   ADD_SPRINT,
@@ -26,7 +26,7 @@ import { SET_NOTIFICATION } from '../../../../main/js/redux/ui/types';
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as object),
   useHistory: () => ({
     push: jest.fn(),
   }),
@@ -109,6 +109,9 @@ describe('issue containers action creators', () => {
         id: 1,
       },
       '@type': 'Sprint',
+      startDate: '',
+      endDate: '',
+      status: SprintStatus.PLANNED,
     };
 
     const successResponseBody = { data: { ...requestBody, issues: [{ id: 1 }, { id: 2 }] } };

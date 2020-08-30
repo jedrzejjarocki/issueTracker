@@ -15,7 +15,7 @@ import {
   RegisterRequestBody,
 } from '../../../../main/js/redux/user/actionCreators';
 import { LOGIN_URL, LOGOUT_URL, USERS_URL } from '../../../../main/js/api/commons';
-import { User } from '../../../../main/js/entities/User';
+import User from '../../../../main/js/entities/User';
 import {
   accountCreatedMessage,
   checkEmailForPasswordRecoveryLinkMessage,
@@ -34,7 +34,7 @@ import { SET_LOADING, SET_NOTIFICATION } from '../../../../main/js/redux/ui/type
 
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as object),
   useHistory: () => ({
     push: jest.fn(),
   }),

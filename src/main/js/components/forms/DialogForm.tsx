@@ -1,10 +1,12 @@
 import React, { MouseEventHandler, useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, Tooltip, } from '@material-ui/core';
+import {
+  Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, Tooltip,
+} from '@material-ui/core';
 import { Form, Formik, FormikProps } from 'formik';
 import { ObjectSchema } from 'yup';
 import SubmitButton from './SubmitButton';
 
-const WithTooltip: React.FC<{tooltipText: string}> = ({ children, tooltipText }) => (
+const WithTooltip: React.FC<{tooltipText: string | undefined}> = ({ children, tooltipText }) => (
   <>
     {
       tooltipText
